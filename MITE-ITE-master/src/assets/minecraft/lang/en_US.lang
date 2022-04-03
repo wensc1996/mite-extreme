@@ -1,0 +1,90 @@
+item.vibranium.name=Vibranium Ingot
+item.obsidian_stick.name=Obsidian Stick
+item.vibranium_nugget.name=Vibranium Nugget
+item.vibranium_helmet.name=Vibranium Helmet
+item.vibranium_chestplate.name=Vibranium Chestplate
+item.vibranium_leggings.name=Vibranium Leggings
+item.vibranium_boots.name=Vibranium Boots
+item.vibranium_sword.name=Vibranium Sword
+item.vibranium_shovel.name=Vibranium Shovel
+item.vibranium_pickaxe.name=Vibranium Pickaxe
+item.vibranium_axe.name=Vibranium Axe
+item.blaze_coal_powder.name=Blaze Coal Powder
+item.diamond_chunk.name=Diamond Chunk
+item.vibranium_dagger.name=Vibranium Dagger
+item.vibranium_war_hammer.name=Vibranium War Hammer
+item.vibranium_battle_axe.name=Vibranium Battle Axe
+item.vibranium_bow.name=Vibranium Bow
+
+item.enhance_stone/iron.name=Iron Enhance Stone
+item.enhance_stone/mithril.name=Mithril Enhance Stone
+item.enhance_stone/adamantium.name=Adamantium Enhance Stone
+item.enhance_stone/universal.name=Universal Enhance Stone
+
+tile.anvil_vibranium.name=Vibranium Anvil
+tile.anvil_vibranium.intact.name=Vibranium Anvil
+tile.anvil_vibranium.slightlyDamaged.name=Slightly Damaged Vibranium Anvil
+tile.anvil_vibranium.veryDamaged.name=Very Damaged Vibranium Anvil
+tile.block_vibranium.name=Vibranium Block
+tile.toolbench.vibranium.name=Vibranium Workbench
+tile.furnace_vibranium_idle.name=Vibranium Furnace
+tile.furnace_vibranium_burning.name=Vibranium Furnace
+tile.nether_adamantium_ore.name=Nether Adamantium Ore
+tile.vibranium_chest.name=Vibranium Chest
+
+tile.forging_table.iron.name=Iron Forging Table
+tile.forging_table.mithril.name=Mithril Forging Table
+tile.forging_table.adamantium.name=Adamantium Forging Table
+tile.forging_table.vibranium.name=Vibrantium Forging Table
+
+achievement.vibraniumIngot=Then am I going to be invincible?
+achievement.vibraniumIngot.desc=Make a vibranium in crafting table
+achievement.vibraniumAnvil=2000 years later....
+achievement.vibraniumAnvil.desc=Make a vibranium anvil in crafting table
+achievement.vibraniumArmor=Then am I not invincible?
+achievement.vibraniumArmor.desc=Wear all vibranium armors
+achievement.vibraniumFurnace="Atomic Reconstruction Machine"
+achievement.vibraniumFurnace.desc=Make a vibranium furnace(it can turn coal into diamond!)
+commands.version.playing=You are playing
+commands.day.msg=It is day %s of this world
+
+enchantment.defence=Defence
+enchantment.crit=Crit
+enchantment.extend=Extend
+enchantment.emergency=Emergency
+enchantment.beheading=Beheading
+enchantment.conqueror=Conqueror
+
+entity.EntityZombieLord.name=Zombie Lord
+entity.EntityAnnihilationSkeleton.name=Annihilation Skeleton
+entity.EntityWanderingWitch.name=Wandering Witch
+
+gui.forgingTable.start=Start Forging
+gui.forgingTable.item_req=Forging require materials
+gui.forgingTable.failed=Enhancing Failed!
+gui.forgingTable.succeed=Enhancing Succeed!
+gui.forgingTable.time=Time of forging
+gui.forgingTable.chanceOfFailure=Chance of failure
+gui.forgingTable.ifFail=If fail
+gui.forgingTable.axeCost=Axe durability cost
+gui.forgingTable.hammerCost=Hammer durability cost
+gui.forgingTable.needAxe=Need an axe
+gui.forgingTable.needHammer=Need a war hammer
+gui.forgingTable.max_level_or_not_found=The tool has reached its max forging level or the recipe doesn't exist
+
+gui.forgingTable.levelToLow.iron=The level of forging table is too low,requires §n§7 Iron§r
+gui.forgingTable.levelToLow.ancient_metal=The level of forging table is too low,requires §n§g Ancient metal§r
+gui.forgingTable.levelToLow.mithril=The level of forging table is too low,requires §n§h Mithril§r
+gui.forgingTable.levelToLow.adamantium=The level of forging table is too low,requires §n§d Adamantium§r
+gui.forgingTable.levelToLow.vibranium=The level of forging table is too low,requires §n§9 Vibrantium§r
+
+forging.failFeedback.break=break
+forging.failFeedback.durability.amount=drop durability of amount %s
+forging.failFeedback.durability.percentage=drop durability of percentage %s
+forging.failFeedback.downgrade=downgrade item for %s level(s)
+
+gameplay.portal_door.interact=§nPlayer %s is entering portal door
+command.sleep_check.msg=The following players are not sleeping:
+command.sleep_check.none=All players are sleeping now
+container.workbench.boost=Crafting speed boost:
+container.strongbox.vibranium=Vibrantium Chest
