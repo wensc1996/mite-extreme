@@ -158,7 +158,7 @@ public class ForgingTableRecipes {
                 setAxeDurabilityCost(2048).
                 setHammerDurabilityCost(2048).
                 setTimeReq(20 * 20).
-                addFaultFeedback(DurabilityFeedback.of(DurabilityFeedback.Type.ofPercentage(5))).
+                addFaultFeedback(DurabilityFeedback.of(DurabilityFeedback.Type.ofPercentage(3))).
                 addMaterials(new ItemStack(Items.ingotGold,1),
                         new ItemStack(Items.ingotIron,1),
                         new ItemStack(Items.IRON_ENHANCE_STONE,1)).
@@ -168,7 +168,7 @@ public class ForgingTableRecipes {
                 setAxeDurabilityCost(2048).
                 setHammerDurabilityCost(3072).
                 setTimeReq(30 * 20).
-                addFaultFeedback(DurabilityFeedback.of(DurabilityFeedback.Type.ofPercentage(5))).
+                addFaultFeedback(DurabilityFeedback.of(DurabilityFeedback.Type.ofPercentage(3))).
                 setQualityReward(EnumQuality.fine).
                 addMaterials(new ItemStack(Items.ingotGold,1),
                         new ItemStack(Items.ingotIron,2),
@@ -179,7 +179,7 @@ public class ForgingTableRecipes {
                 setAxeDurabilityCost(3072).
                 setHammerDurabilityCost(3072).
                 setTimeReq(40 * 20).
-                addFaultFeedback(DurabilityFeedback.of(DurabilityFeedback.Type.ofPercentage(5))).
+                addFaultFeedback(DurabilityFeedback.of(DurabilityFeedback.Type.ofPercentage(3))).
                 setQualityReward(EnumQuality.fine).
                 addMaterials(new ItemStack(Items.ingotGold,2),
                         new ItemStack(Items.ingotIron,2),

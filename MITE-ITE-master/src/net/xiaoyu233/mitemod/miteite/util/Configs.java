@@ -26,36 +26,10 @@ public class Configs {
     }
     public static class wenscConfig {
         public static ConfigItem <Boolean> BlnGravel = new ConfigItem("BlnGravel", true, "是否增加燧石概率");
-        public static ConfigItem <Boolean> BlnHealth = new ConfigItem("BlnHealth", true, "是否开启最大等级500级");
-        public static ConfigItem <Boolean> BlnNutrition = new ConfigItem("BlnNutrition", true, "是否开启增加玩家营养值");
-
-        public static ConfigItem <Integer> ExpModifier = new ConfigItem("ExpModifier", 5120, "怪经验上限，最大5120");
-        public static ConfigItem <Integer> MobExpValue = new ConfigItem("MobExpValue", 100, "怪物经验倍率（1-100）");
-        public static ConfigItem <Integer> RockExpValue = new ConfigItem("RockExpValue", 10, "宝石经验倍率（1-10）");
-        public static ConfigItem <Integer> MeatExpValue = new ConfigItem("MeatExpValue", 10, "烧肉经验倍率（1-10）");
-        public static ConfigItem <Integer> OreExpValue = new ConfigItem("OreExpValue", 10, "烧旷经验倍率（1-10）");
-        public static ConfigItem <Integer> MobDropValue = new ConfigItem("MobDropValue", 100, "娱乐物品掉落几率（1-100）");
-        public static ConfigItem <Integer> DeadMod = new ConfigItem("DeadMod", 0, "死亡复活模式，0是正常掉落，1是死亡不掉落");
-        public static ConfigItem <String> ExpMod = new ConfigItem("ExpMod", "2", "怪物掉落经验模式，0基础经验，1随天数增加，2随等级增加");
-        public static ConfigItem <Integer> netherWartDifficulty = new ConfigItem("netherWartDifficulty", 2, "地狱疣生长难度");
-
         public static ConfigItem <Boolean> isOpenStrongBoxBreakRecord = new ConfigItem("isOpenStrongBoxBreakRecord", true, "是否开启私人箱子破坏记录");
-        public static ConfigItem <Boolean> isOpenGAFish = new ConfigItem("isOpenGAFish", true, "是否开启娱乐版钓鱼");
-        public static ConfigItem <Boolean> isDropZombieBrain = new ConfigItem("isDropZombieBrain", true, "是否掉落僵尸脑子");
-        public static ConfigItem <Boolean> isRecipeRottenSoup = new ConfigItem("isRecipeRottenSoup", true, "是否有腐肉汤配方");
-        public static ConfigItem <Boolean> isRecipeGAGoldApple = new ConfigItem("isRecipeGAGoldApple", true, "是否有娱乐版金苹果配方");
-        public static ConfigItem <Boolean> isRecipeGAPickaxe = new ConfigItem("isRecipeGAPickaxe", true, "是否有娱乐版镐子配方");
         public static ConfigItem <Boolean> isDropBlueGem = new ConfigItem("isDropBlueGem", true, "是否掉落蓝宝石");
-        public static ConfigItem <Boolean> isDropGAStones = new ConfigItem("isDropGAStones", true, "是否掉落石粒");
-        public static ConfigItem <Boolean> isDropSpiderLegs = new ConfigItem("isDropSpiderLegs", true, "是否掉落蜘蛛腿");
-        public static ConfigItem <Boolean> isRecipeGATorch = new ConfigItem("isRecipeGATorch", true, "是否有娱乐版火把，木材配方");
-        public static ConfigItem <Boolean> isRecipeMineralBag = new ConfigItem("isRecipeMineralBag", true, "是否有矿物袋配方");
-        public static ConfigItem <Boolean> isRecipeGABag = new ConfigItem("isRecipeGABag", true, "是否有纳戒配方");
+        public static ConfigItem <Boolean> isRecipeGATorch = new ConfigItem("isRecipeGATorch", true, "是否有一捆火把配方");
         public static ConfigItem <Boolean> isRecipeRingKiller = new ConfigItem("isRecipeRingKiller", true, "是否有魔灵刃配方");
-        public static ConfigItem <Boolean> isRecipeDrugProtection = new ConfigItem("isRecipeDrugProtection", true, "是否有筑基丹配方");
-        public static ConfigItem <Boolean> isDropCreeper = new ConfigItem("isDropCreeper", true, "是否掉落苦力怕宝宝");
-        public static ConfigItem <Boolean> isRecipeDrugFull = new ConfigItem("isRecipeDrugFull", true, "是否有辟谷丹配方");
-
         public static ConfigItem <Float> inWallDamageForPlayer = new ConfigItem("inWallDamageForPlayer", 10.0F, "玩家墙内窒息伤害(小数)");
         public static ConfigItem <Double> steppedMobDamageFactor = new ConfigItem("steppedMobDamageFactor", 1d, "渐进伤害每次增幅点数基础值(小数)");
         public static ConfigItem <Double> steppedMobDamageProgressMax = new ConfigItem("steppedMobDamageProgressMax", 4d, "渐进伤害增幅最大值(小数)");
@@ -144,60 +118,39 @@ public class Configs {
         public static ConfigItem <Boolean> overworldAdamantiteOre = new ConfigItem("overworldAdamantiteOre", false, "主世界生成艾德曼");
         public static ConfigItem <Integer> copperFrequencyOverworld = new ConfigItem("copperFrequencyOverworld", 40, "主世界铜矿生成频率");
         public static ConfigItem <Integer> silverFrequencyOverworld = new ConfigItem("silverFrequencyOverworld", 10, "主世界银矿生成频率");
-        public static ConfigItem <Integer> ironFrequencyOverworld = new ConfigItem("ironFrequencyOverworld", 40, "主世界铁矿生成频率");
-        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld", 20, "主世界金矿生成频率");
-        public static ConfigItem <Integer> mithrilFrequencyOverworld = new ConfigItem("mithrilFrequencyOverworld", 10, "主世界秘银矿生成频率");
+        public static ConfigItem <Integer> ironFrequencyOverworld = new ConfigItem("ironFrequencyOverworld", 20, "主世界铁矿生成频率");
+        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld", 10, "主世界金矿生成频率");
+        public static ConfigItem <Integer> mithrilFrequencyOverworld = new ConfigItem("mithrilFrequencyOverworld", 5, "主世界秘银矿生成频率");
         public static ConfigItem <Integer> lapisFrequencyOverworld = new ConfigItem("lapisFrequencyOverworld", 4, "主世界青金石矿生成频率");
-        public static ConfigItem <Integer> diamondFrequencyOverworld = new ConfigItem("diamondFrequencyOverworld", 5, "主世界钻石矿生成频率");
+        public static ConfigItem <Integer> diamondFrequencyOverworld = new ConfigItem("diamondFrequencyOverworld", 3, "主世界钻石矿生成频率");
         public static ConfigItem <Integer> adamantiumFrequencyOverworld = new ConfigItem("adamantiumFrequencyOverworld", 1, "主世界艾德曼矿生成频率");
-        public static ConfigItem <Integer> copperFrequencyUnderworld = new ConfigItem("copperFrequencyUnderworld", 40, "地底世界铜矿生成频率");
+        public static ConfigItem <Integer> copperFrequencyUnderworld = new ConfigItem("copperFrequencyUnderworld", 20, "地底世界铜矿生成频率");
         public static ConfigItem <Integer> silverFrequencyUnderworld = new ConfigItem("silverFrequencyUnderworld", 10, "地底世界银矿生成频率");
-        public static ConfigItem <Integer> ironFrequencyUnderworld = new ConfigItem("ironFrequencyUnderworld", 60, "地底世界铁矿生成频率");
-        public static ConfigItem <Integer> goldFrequencyUnderworld = new ConfigItem("goldFrequencyUnderworld", 20, "地底世界金矿生成频率");
-        public static ConfigItem <Integer> mithrilFrequencyUnderworld = new ConfigItem("mithrilFrequencyUnderworld", 10, "地底世界秘银矿生成频率");
+        public static ConfigItem <Integer> ironFrequencyUnderworld = new ConfigItem("ironFrequencyUnderworld", 30, "地底世界铁矿生成频率");
+        public static ConfigItem <Integer> goldFrequencyUnderworld = new ConfigItem("goldFrequencyUnderworld", 10, "地底世界金矿生成频率");
+        public static ConfigItem <Integer> mithrilFrequencyUnderworld = new ConfigItem("mithrilFrequencyUnderworld", 5, "地底世界秘银矿生成频率");
         public static ConfigItem <Integer> lapisFrequencyUnderworld = new ConfigItem("lapisFrequencyUnderworld", 5, "地底世界青金石矿生成频率");
         public static ConfigItem <Integer> diamondFrequencyUnderworld = new ConfigItem("diamondFrequencyUnderworld", 5, "地底世界钻石矿生成频率");
         public static ConfigItem <Integer> adamantiumFrequencyUnderworld = new ConfigItem("adamantiumFrequencyUnderworld", 2, "地底世界艾德曼矿生成频率");
-        public static ConfigItem <Integer> underworldMantleBlockOffset = new ConfigItem("underworldMantleBlockOffset", 0, "地底世界地幔位置向上偏移");
-        public static ConfigItem <Integer> netherAdamantiumMaxCountPerChunk = new ConfigItem("netherAdamantiumMaxCountPerChunk", 3, "地狱艾德曼每个区块最大生成数量");
-        public static ConfigItem <Integer> netherAdamantiumMaxCountPerVein = new ConfigItem("netherAdamantiumMaxCountPerVein", 2, "地狱艾德曼每个矿脉最大矿物生成数量");
+        public static ConfigItem <Integer> underworldMantleBlockOffset = new ConfigItem("underworldMantleBlockOffset_v0.0.2", 75, "地底世界地幔位置向上偏移");
+        public static ConfigItem <Integer> netherAdamantiumMaxCountPerChunk = new ConfigItem("netherAdamantiumMaxCountPerChunk", 2, "地狱艾德曼每个区块最大生成数量");
+        public static ConfigItem <Integer> netherAdamantiumMaxCountPerVein = new ConfigItem("netherAdamantiumMaxCountPerVein", 1, "地狱艾德曼每个矿脉最大矿物生成数量");
         public static ConfigItem <Integer> healthBarXOffset = new ConfigItem("healthBarXOffset", 0, "营养条GUI横向偏移");
         public static ConfigItem <Integer> healthBarYOffset = new ConfigItem("healthBarYOffset", 0, "营养条GUI纵向偏移");
         public static ConfigItem <Boolean> logPlayersInteractWithPortal = new ConfigItem("logPlayersInteractWithPortal", true, "玩家通过传送门时发送警告(开关)");
         public static ConfigItem <Integer> underworldGateOpenDay = new ConfigItem("underworldGateOpenDay", 1, "地下世界传送门多少天可以打开(主世界天数)");
         public static ConfigItem <Integer> netherGateOpenDay = new ConfigItem("netherGateOpenDay", 1, "地狱传送门多少天可以打开(主世界天数)");
+        public static ConfigItem <Boolean> isAfterDeathKeep = new ConfigItem("isAfterDeathKeep", false, "是否死亡不掉落");
+
     }
 
     public static void loadConfigs(){
 
         wenscMap.put("BlnGravel", wenscConfig.BlnGravel);
-        wenscMap.put("BlnHealth", wenscConfig.BlnHealth);
-        wenscMap.put("BlnNutrition", wenscConfig.BlnNutrition);
-        wenscMap.put("ExpModifier", wenscConfig.ExpModifier);
-        wenscMap.put("MobExpValue", wenscConfig.MobExpValue);
-        wenscMap.put("RockExpValue", wenscConfig.RockExpValue);
-        wenscMap.put("MeatExpValue", wenscConfig.MeatExpValue);
-        wenscMap.put("OreExpValue", wenscConfig.OreExpValue);
-        wenscMap.put("MobDropValue", wenscConfig.MobDropValue);
-        wenscMap.put("DeadMod", wenscConfig.DeadMod);
-        wenscMap.put("ExpMod", wenscConfig.ExpMod);
-        wenscMap.put("netherWartDifficulty", wenscConfig.netherWartDifficulty);
         wenscMap.put("isOpenStrongBoxBreakRecord", wenscConfig.isOpenStrongBoxBreakRecord);
-        wenscMap.put("isOpenGAFish", wenscConfig.isOpenGAFish);
-        wenscMap.put("isDropZombieBrain", wenscConfig.isDropZombieBrain);
-        wenscMap.put("isRecipeRottenSoup", wenscConfig.isRecipeRottenSoup);
-        wenscMap.put("isRecipeGAGoldApple", wenscConfig.isRecipeGAGoldApple);
-        wenscMap.put("isRecipeGAPickaxe", wenscConfig.isRecipeGAPickaxe);
         wenscMap.put("isDropBlueGem", wenscConfig.isDropBlueGem);
-        wenscMap.put("isDropGAStones", wenscConfig.isDropGAStones);
-        wenscMap.put("isDropSpiderLegs", wenscConfig.isDropSpiderLegs);
         wenscMap.put("isRecipeGATorch", wenscConfig.isRecipeGATorch);
-        wenscMap.put("isRecipeMineralBag", wenscConfig.isRecipeMineralBag);
-        wenscMap.put("isRecipeGABag", wenscConfig.isRecipeGABag);
         wenscMap.put("isRecipeRingKiller", wenscConfig.isRecipeRingKiller);
-        wenscMap.put("isRecipeDrugProtection", wenscConfig.isRecipeDrugProtection);
-        wenscMap.put("isDropCreeper", wenscConfig.isDropCreeper);
-        wenscMap.put("isRecipeDrugFull", wenscConfig.isRecipeDrugFull);
 
         wenscMap.put("inWallDamageForPlayer", wenscConfig.inWallDamageForPlayer);
         wenscMap.put("steppedMobDamageFactor", wenscConfig.steppedMobDamageFactor);
@@ -301,7 +254,7 @@ public class Configs {
         wenscMap.put("lapisFrequencyUnderworld", wenscConfig.lapisFrequencyUnderworld);
         wenscMap.put("diamondFrequencyUnderworld", wenscConfig.diamondFrequencyUnderworld);
         wenscMap.put("adamantiumFrequencyUnderworld", wenscConfig.adamantiumFrequencyUnderworld);
-        wenscMap.put("underworldMantleBlockOffset", wenscConfig.underworldMantleBlockOffset);
+        wenscMap.put("underworldMantleBlockOffset_v0.0.2", wenscConfig.underworldMantleBlockOffset);
         wenscMap.put("netherAdamantiumMaxCountPerChunk", wenscConfig.netherAdamantiumMaxCountPerChunk);
         wenscMap.put("netherAdamantiumMaxCountPerVein", wenscConfig.netherAdamantiumMaxCountPerVein);
         wenscMap.put("healthBarXOffset", wenscConfig.healthBarXOffset);
@@ -309,10 +262,12 @@ public class Configs {
         wenscMap.put("logPlayersInteractWithPortal", wenscConfig.logPlayersInteractWithPortal);
         wenscMap.put("underworldGateOpenDay", wenscConfig.underworldGateOpenDay);
         wenscMap.put("netherGateOpenDay", wenscConfig.netherGateOpenDay);
+        wenscMap.put("isAfterDeathKeep", wenscConfig.isAfterDeathKeep);
 
 
 
-        String filePth = "wensc.cfg";
+
+        String filePth = "wensc-extreme.cfg";
         File file_mite = new File(filePth);
         if (file_mite.exists()) {
             Properties properties = new Properties();

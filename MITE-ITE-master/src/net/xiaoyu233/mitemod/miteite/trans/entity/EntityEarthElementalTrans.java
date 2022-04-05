@@ -157,26 +157,6 @@ public abstract class EntityEarthElementalTrans extends EntityAnimalWatcher {
 
    @Shadow protected abstract void entityInit();
 
-   @Override
-   public int getExperienceValue() {
-      int baseExp = 5;
-      int day = Math.max(this.getWorld().getDayOfWorld(), 1);
-      int Temp = baseExp * day;
-      int exp1 = Math.min(Temp, Configs.wenscConfig.ExpModifier.ConfigValue) * Configs.wenscConfig.MobExpValue.ConfigValue / 100;
-      int level = 0;
-      if (this.getLastHarmingEntity() instanceof EntityPlayer) {
-         level = this.getLastHarmingEntity().getAsPlayer().getExperienceLevel();
-      }
-
-      Temp = baseExp * Math.max(level, 1);
-      int exp2 = Math.min(Temp, Configs.wenscConfig.ExpModifier.ConfigValue) * Configs.wenscConfig.MobExpValue.ConfigValue / 100;
-      if (Configs.wenscConfig.ExpMod.ConfigValue.equals("1")) {
-         return exp1;
-      } else {
-         return Configs.wenscConfig.ExpMod.ConfigValue.equals("2") ? exp2 : baseExp;
-      }
-   }
-
    @Overwrite
    public void setTypeForBlock(Block block, boolean heated) {
       this.setType(block == Block.planks ? WOOD : (block == Block.whiteStone ? END_STONE_NORMAL : (block == Block.netherrack ? NETHERRACK_NORMAL : (block == Block.obsidian ? OBSIDIAN_NORMAL : STONE_NORMAL))));

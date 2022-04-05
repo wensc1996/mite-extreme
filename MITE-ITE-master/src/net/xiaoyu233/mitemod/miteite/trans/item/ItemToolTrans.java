@@ -143,7 +143,8 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
    }
 
    public EnumItemInUseAction getItemInUseAction(ItemStack par1ItemStack, EntityPlayer player) {
-      return EnchantmentManager.hasEnchantment(par1ItemStack, Enchantments.DEFENCED) ? EnumItemInUseAction.BLOCK : null;
+//      return EnchantmentManager.hasEnchantment(par1ItemStack, Enchantments.DEFENCED) ? EnumItemInUseAction.BLOCK : null;
+      return EnumItemInUseAction.BLOCK;
    }
 
    @Overwrite

@@ -35,7 +35,7 @@ public class EntityZombieDoor extends EntityZombie {
             rate = day / 16;
         }
         this.setEntityAttribute(GenericAttributes.attackDamage, 4.0D + rate * 4D);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 10.0D + rate * 10D);
+        this.setEntityAttribute(GenericAttributes.maxHealth, 10.0D + rate * 20D);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
     }
 
@@ -85,7 +85,7 @@ public class EntityZombieDoor extends EntityZombie {
                     }
                 }
                 if(haveTryToSpawnExchanger == false) {
-                    if( rand.nextInt(20) == 0) {
+                    if( rand.nextInt(5) == 0) {
                         EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
                         entityExchanger.setPosition(this.posX, this.posY, this.posZ);
                         entityExchanger.refreshDespawnCounter(-9600);

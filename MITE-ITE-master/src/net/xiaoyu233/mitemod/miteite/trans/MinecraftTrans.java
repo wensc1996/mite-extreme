@@ -13,7 +13,7 @@ public class MinecraftTrans {
     @Overwrite
     public static String getVersionDescriptor(boolean include_formatting) {
         String red = include_formatting ? EnumChatFormat.RED.toString() : "";
-        return "1.6.4-MITE" + "-GA-P14-" + Constant.MITE_ITE_VERSION + (Main.is_MITE_DS ? "-DS" : "") + " overwrited by wensc " + (Minecraft
+        return "1.6.4-MITE" + "-Extreme-" + Constant.MITE_ITE_VERSION + (Main.is_MITE_DS ? "-DS" : "") + " overwrited by wensc " + (Minecraft
                 .inDevMode() ? red + " DEV" : "");
     }
 }

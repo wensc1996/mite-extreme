@@ -100,50 +100,50 @@ public class WorldGenMinableTrans {
          return min_height + (int)(relative_height * (float)height_range);
       }
    }
-   @Shadow
-   public int getMinVeinHeight(World world) {
-      return 0;
-   };
-
-//   @Overwrite
+//   @Shadow
 //   public int getMinVeinHeight(World world) {
-//      Block block = Block.blocksList[this.minableBlockId];
-//      if (world.isUnderworld()) {
+//      return 0;
+//   };
+
+   @Overwrite
+   public int getMinVeinHeight(World world) {
+      Block block = Block.blocksList[this.minableBlockId];
+      if (world.isUnderworld()) {
 //         if (block == Block.oreAdamantium){
 //            return 130;
 //         }
-//         return 140;
-//      } else if (block == Block.dirt) {
-//         return 32;
-//      } else if (block == Block.gravel) {
-//         return 24;
-//      } else if (block == Block.oreCoal) {
-//         return 16;
-//      } else if (block == Block.oreCopper) {
-//         return 0;
-//      } else if (block == Block.oreSilver) {
-//         return 0;
-//      } else if (block == Block.oreGold) {
-//         return 0;
-//      } else if (block == Block.oreIron) {
-//         return 0;
-//      } else if (block == Block.oreMithril) {
-//         return 0;
-//      } else if (block == Block.oreAdamantium || block == Block.silverfish) {
-//         return 0;
-//      } else if (block == Block.oreRedstone) {
-//         return 0;
-//      } else if (block == Block.oreDiamond) {
-//         return 0;
-//      } else if (block == Block.oreLapis) {
-//         return 8;
-//      } else if(world.isTheNether()){
-//         return 35;
-//      }else {
-//         Minecraft.setErrorMessage("WorldGenMinable: unknown ore id " + block.blockID);
-//         return -1;
-//      }
-//   }
+         return 140;
+      } else if (block == Block.dirt) {
+         return 32;
+      } else if (block == Block.gravel) {
+         return 24;
+      } else if (block == Block.oreCoal) {
+         return 16;
+      } else if (block == Block.oreCopper) {
+         return 0;
+      } else if (block == Block.oreSilver) {
+         return 0;
+      } else if (block == Block.oreGold) {
+         return 0;
+      } else if (block == Block.oreIron) {
+         return 0;
+      } else if (block == Block.oreMithril) {
+         return 0;
+      } else if (block == Block.oreAdamantium || block == Block.silverfish) {
+         return 0;
+      } else if (block == Block.oreRedstone) {
+         return 0;
+      } else if (block == Block.oreDiamond) {
+         return 0;
+      } else if (block == Block.oreLapis) {
+         return 8;
+      } else if(world.isTheNether()){
+         return 35;
+      }else {
+         Minecraft.setErrorMessage("WorldGenMinable: unknown ore id " + block.blockID);
+         return -1;
+      }
+   }
 
 //   @Inject(method = "generate(Lnet/minecraft/World;Ljava/util/Random;IIIZ)Z",at = @At("HEAD"),cancellable = true)
 //   private void injectMinableGenerate(World world, Random rand, int x, int y, int z, boolean vein_size_increases_with_depth,CallbackInfoReturnable<Boolean> callback){

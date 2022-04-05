@@ -95,7 +95,7 @@ public class EntityAnnihilationSkeleton extends EntitySkeleton {
             EntityLiving target = this.getAttackTarget();
             if(target instanceof EntityPlayer) {
                 if(!haveTryToSpawnExchanger ) {
-                    if(rand.nextInt(50) == 0) {
+                    if(rand.nextInt(20) == 0) {
                         EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
                         entityExchanger.setPosition(this.posX, this.posY, this.posZ);
                         entityExchanger.refreshDespawnCounter(-9600);

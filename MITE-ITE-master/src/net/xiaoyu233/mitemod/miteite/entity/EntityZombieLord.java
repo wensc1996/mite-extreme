@@ -64,7 +64,7 @@ public class EntityZombieLord extends EntityZombie {
             EntityLiving target = this.getAttackTarget();
             if(target instanceof EntityPlayer) {
                 if(!haveTryToSpawnExchanger) {
-                    if(rand.nextInt(30) == 0) {
+                    if(rand.nextInt(10) == 0) {
                         EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
                         entityExchanger.setPosition(this.posX, this.posY, this.posZ);
                         entityExchanger.refreshDespawnCounter(-9600);

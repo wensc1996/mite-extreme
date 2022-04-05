@@ -18,7 +18,7 @@ public class  GameRulesTrans {
         } else if (rule_name.equals("mobGriefing")) {
             return true;
         } else if (rule_name.equals("keepInventory")) {
-            return Configs.wenscConfig.DeadMod.ConfigValue == 1;
+            return Configs.wenscConfig.isAfterDeathKeep.ConfigValue;
         } else if (rule_name.equals("doMobSpawning")) {
             return true;
         } else if (rule_name.equals("doMobLoot")) {

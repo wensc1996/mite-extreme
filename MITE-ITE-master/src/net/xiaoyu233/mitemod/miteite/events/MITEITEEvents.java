@@ -279,19 +279,14 @@ public class MITEITEEvents {
     @Subscribe
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         EntityPlayer player = event.getPlayer();
-        player.sendChatToPlayer(ChatMessage.createFromTranslationKey("[Server] ").appendComponent(ChatMessage.createFromTranslationKey("MITE-ITE-GA-P14模组已加载,当前版本:").setColor(EnumChatFormat.DARK_GREEN)).appendComponent(ChatMessage.createFromText(Constant.MITE_ITE_VERSION).setColor(EnumChatFormat.DARK_RED)));
-        player.sendChatToPlayer(ChatMessage.createFromTranslationKey("[MITE-ITE-GA-P14]:").setColor(EnumChatFormat.WHITE)
-                .appendComponent(ChatMessage.createFromTranslationKey("MITE-ITE-GA-P14由 ")
+        player.sendChatToPlayer(ChatMessage.createFromTranslationKey("[Server] ").appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme模组已加载,当前版本:").setColor(EnumChatFormat.DARK_GREEN)).appendComponent(ChatMessage.createFromText(Constant.MITE_ITE_VERSION).setColor(EnumChatFormat.DARK_RED)));
+        player.sendChatToPlayer(ChatMessage.createFromTranslationKey("[MITE-Extreme]:").setColor(EnumChatFormat.WHITE)
+                .appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme由 ")
                 .appendComponent(ChatMessage.createFromTranslationKey("wensc").setColor(EnumChatFormat.WHITE)))
                 .addText(" 重写,开放下载地址:").setColor(EnumChatFormat.DARK_RED)
                 .appendComponent(ChatMessage.createFromTranslationKey("https://www.wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
-//                ;
         if (player.isFirstLogin == true) {
-//            ItemStack book = ItemReferencedBook.generateBook(10);
-//            player.bn.addItemStackToInventoryOrDropIt(book);
-//            player.bn.addItemStackToInventoryOrDropIt(new ItemStack(Items.GABag, 1, 0));
             player.isFirstLogin = false;
-            player.getAsEntityLivingBase().addPotionEffect(new MobEffect(MobEffectList.field_76443_y.id, 12000, 0));
         }
 
     }

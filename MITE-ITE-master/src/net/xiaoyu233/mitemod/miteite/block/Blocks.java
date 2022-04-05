@@ -1,7 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.ga.BlockGotchaChest;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.Materials;
 import net.xiaoyu233.mitemod.miteite.item.recipe.ForgingTableLevel;
@@ -37,8 +36,6 @@ public class Blocks extends Block{
             .setStepSound_(soundMetalFootstep);
 
     public static final BlockGotcha blockGotcha = (new BlockGotcha(getNextBlockID(), Material.glass, false)).setCraftingDifficultyAsComponent(1.0E-11F);
-
-    public static final BlockGotchaChest GotchaBox = new BlockGotchaChest(180);
 
     public static final Block blockColorful = (ReflectHelper.createInstance(BlockColorful.class, new Class[] {int.class,Material.class}, getNextBlockID(), Materials.stone)).setUnlocalizedName("blockColorful");
     public static final Block blockColorfulBrick = (ReflectHelper.createInstance(BlockColorfulBrick.class, new Class[] {int.class,Material.class}, getNextBlockID(), Materials.stone)).setUnlocalizedName("blockColorfulBrick");
@@ -114,8 +111,6 @@ public class Blocks extends Block{
         registerItemBlock(chestVibranium,"vibranium_chest");
 
         registerItemBlock(blockGotcha, "gotcha");
-
-        registerItemBlock(GotchaBox, "gotchabox");
 
         registerItemBlock(blockColorful, "colorful");
         registerItemBlock(blockColorfulBrick, "colorful_brick");

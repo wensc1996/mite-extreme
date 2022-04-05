@@ -8,7 +8,6 @@ import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.network.CPacketSyncItems;
 import net.xiaoyu233.mitemod.miteite.network.SPacketCraftingBoost;
 import net.xiaoyu233.mitemod.miteite.network.SPacketOverlayMessage;
-import net.xiaoyu233.mitemod.miteite.ga.InventoryEnderChestTrans;
 import net.xiaoyu233.mitemod.miteite.util.BlockPos;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
@@ -72,18 +71,14 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    private int defenseCooldown;
    private boolean cooldownEmergencyNextTick;
    public boolean isFirstLogin = true;
-   private int hurlByLavaCoolDown = 2000;
 
    private int surroundHurtCollDown = 20;
-
-   private InventoryEnderChestTrans enderTrans = new InventoryEnderChestTrans();
 
    ItemStack itemRingKiller;
 
    @Shadow
    public PlayerAbilities capabilities;
 
-//   public PlayerInventory bn = ;
    private int protein;
 
    private int essential_fats;
@@ -93,11 +88,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    protected int respawn_experience = 0;
 
    public long StoneCount = 0L;
-
-   public InventoryEnderChestTrans getInventoryEnderChestTrans() {
-      return this.enderTrans;
-   }
-
 
    public long getStoneCount() {
       return this.StoneCount;
@@ -111,26 +101,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.protein = MathHelper.clamp_int(protein, 0, 10240000);
    }
 
-   public void setEssentialFats(int essential_fats) {
-      this.essential_fats = MathHelper.clamp_int(essential_fats, 0, 10240000);
-   }
-
-   public void setPhytonutrients(int phytonutrients) {
-      this.phytonutrients = MathHelper.clamp_int(phytonutrients, 0, 10240000);
-   }
-
-   @Overwrite
-   public static int getHealthLimit(int level) {
-
-      return Configs.wenscConfig.BlnHealth.ConfigValue ? Math.max(Math.min(6 + level / 5 * 2, 200), 6) : Math.max(Math.min(6 + level / 5 * 2, 40), 6);
-   }
-
-   @Overwrite
-   public static final int getHighestPossibleLevel() {
-      return Configs.wenscConfig.BlnHealth.ConfigValue ? 500 : 200;
-   }
-
-
    private void activeEmergency(List<ItemStack> emergencyItemList) {
 
       this.addPotionEffect(new MobEffect(11, 60, 1));
@@ -142,6 +112,11 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       for (ItemStack itemStack : emergencyItemList) {
          itemStack.setEmergencyCooldown((int) (Configs.wenscConfig.emergencyCooldown.ConfigValue * reduce));
       }
+   }
+
+   @Overwrite
+   public static final int getHighestPossibleLevel() {
+      return 200;
    }
 
    protected float getDisarmingChance(ItemStack itemStack){
@@ -335,10 +310,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       super.addPotionEffect(par1PotionEffect);
    }
 
-//   @Overwrite
-//   public static int getHealthLimit(int level) {
-//      return Math.max(Math.min(6 + level / 5 * 2, 40), 6);
-//   }
+   @Overwrite
+   public static int getHealthLimit(int level) {
+      return Math.max(Math.min(6 + level / 5 * 2, 40), 6);
+   }
 
    public boolean canDefense(){
       return this.defenseCooldown <= 0;
@@ -375,7 +350,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    @Inject(method = "clonePlayer",at = @At("RETURN"))
    public void clonePlayerInject(EntityPlayer par1EntityPlayer, boolean par2, CallbackInfo callbackInfo) {
-      this.enderTrans = par1EntityPlayer.getInventoryEnderChestTrans();
       this.isFirstLogin = par1EntityPlayer.isFirstLogin;
    }
 
@@ -393,10 +367,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.inRainCounter = par1NBTTagCompound.getInteger("InRainCounter");
       this.vision_dimming = par1NBTTagCompound.getFloat("vision_dimming");
 
-      if (par1NBTTagCompound.hasKey("EnderTransItems")) {
-         NBTTagList var3 = par1NBTTagCompound.getTagList("EnderTransItems");
-         this.enderTrans.loadInventoryFromNBT(var3);
-      }
 
       if (par1NBTTagCompound.hasKey("AttackCountMap")) {
          NBTTagList attackCountMap = par1NBTTagCompound.getTagList("AttackCountMap");
@@ -909,16 +879,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       }
    }
 
-   @Override
-   public int getExperienceValue() {
-//      this.getAsPlayer().addChatMessage("isKeepInventory:"+this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")+"experience:"+this.experience);
-      if (this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {
-         return 0;
-      } else {
-         return Configs.wenscConfig.DeadMod.ConfigValue == 2 ? this.experience : this.experience / 2;
-      }
-   }
-
    @Inject(method = "writeEntityToNBT", at = @At("RETURN"))
    public void injectWriteNBT(NBTTagCompound par1NBTTagCompound,CallbackInfo callback) {
       par1NBTTagCompound.setLong("StoneCount", this.StoneCount);
@@ -930,8 +890,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       par1NBTTagCompound.setInteger("NetherDebuffTime", this.netherDebuffTime);
       par1NBTTagCompound.setInteger("InRainCounter", this.inRainCounter);
       par1NBTTagCompound.setFloat("vision_dimming", this.vision_dimming);
-
-      par1NBTTagCompound.setTag("EnderTransItems", this.enderTrans.saveInventoryToNBT());
 
       NBTTagList nbtTagList = new NBTTagList();
       for (Entry<Entity, Integer> integerEntry : this.attackCountMap.entrySet()) {

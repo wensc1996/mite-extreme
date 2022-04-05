@@ -21,17 +21,13 @@ public class DedicatedServerTrans {
 
     @Inject(method = "playerLoggedIn",at = @At("RETURN"))
     public void playerLoggedIn(ServerPlayer par1EntityPlayerMP, CallbackInfo callbackInfo) {
-        par1EntityPlayerMP.sendChatToPlayer(ChatMessage.createFromTranslationKey("[MITE-ITE-GA-P14]:").setColor(EnumChatFormat.WHITE)
-                .appendComponent(ChatMessage.createFromTranslationKey("MITE-ITE-GA-P1由 ")
+        par1EntityPlayerMP.sendChatToPlayer(ChatMessage.createFromTranslationKey("[MITE-Extreme]:").setColor(EnumChatFormat.WHITE)
+                .appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme由 ")
                         .appendComponent(ChatMessage.createFromTranslationKey("wensc").setColor(EnumChatFormat.WHITE)))
                 .addText(" 重写,开放下载地址:").setColor(EnumChatFormat.DARK_RED)
                 .appendComponent(ChatMessage.createFromTranslationKey("https://www.wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
         if (par1EntityPlayerMP.isFirstLogin == true) {
-//            ItemStack book = ItemReferencedBook.generateBook(10);
-//            MMPlayer.bn.addItemStackToInventoryOrDropIt(book);
-//            MMPlayer.bn.addItemStackToInventoryOrDropIt(new ItemStack(Items.GABag, 1, 0));
             par1EntityPlayerMP.isFirstLogin = false;
-            par1EntityPlayerMP.getAsEntityLivingBase().addPotionEffect(new MobEffect(MobEffectList.field_76443_y.id, 12000, 0));
         }
         this.updatePlayersFile();
     }

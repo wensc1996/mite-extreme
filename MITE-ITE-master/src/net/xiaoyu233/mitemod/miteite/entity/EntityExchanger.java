@@ -2,7 +2,11 @@ package net.xiaoyu233.mitemod.miteite.entity;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.Items;
+import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.thread.ExchangerSkillThread;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityExchanger extends EntitySkeleton {
     private int teleportDelay;
@@ -26,8 +30,8 @@ public class EntityExchanger extends EntitySkeleton {
         } else {
             rate = day / 16;
         }
-        this.setEntityAttribute(GenericAttributes.attackDamage, 2.0D + rate * 3D);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 10.0D +  rate * 10D);
+        this.setEntityAttribute(GenericAttributes.attackDamage, 2.0D + rate * 8D);
+        this.setEntityAttribute(GenericAttributes.maxHealth, 10.0D +  rate * 20D);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.2572D);
     }
 
@@ -69,20 +73,29 @@ public class EntityExchanger extends EntitySkeleton {
             if(this.entityToAttack == null) {
                 entityToAttack = this.findPlayerToAttack(32F);
                 if (entityToAttack instanceof EntityPlayer) {
-                    ((EntityPlayer) entityToAttack).addChatMessage("你已被转移骷髅注视,3S后转移");
+
+                    ((EntityPlayer) entityToAttack).sendChatToPlayer(ChatMessage.createFromTranslationKey("[转移骷髅] ").setColor(EnumChatFormat.BLUE).appendComponent(ChatMessage.createFromTranslationKey("你已被注视，3S后转移").setColor(EnumChatFormat.RED)));
                 }
                 this.teleportDelay = 0;
             } else {
                 if(entityToAttack.isDead || getDistanceToEntity(entityToAttack) > 32F) {
                     if (entityToAttack instanceof EntityPlayer) {
-                        ((EntityPlayer) entityToAttack).addChatMessage("转移骷髅已放弃注视你");
+                        ((EntityPlayer) entityToAttack).sendChatToPlayer(ChatMessage.createFromTranslationKey("[转移骷髅] ").setColor(EnumChatFormat.BLUE).appendComponent(ChatMessage.createFromTranslationKey("已放弃注视").setColor(EnumChatFormat.GREEN)));
                     }
                     this.entityToAttack = null;
                     return;
                 }
-                if (this.teleportDelay < 70 && ++this.teleportDelay > 60) {
-                    (new ExchangerSkillThread(this)).start();
-                    this.teleportDelay = 70;
+                if (entityToAttack instanceof EntityPlayer) {
+                    ItemStack[] var3 = ((EntityPlayer) entityToAttack).getWornItems();
+                    for (ItemStack wornItem : var3) {
+                        if (wornItem != null && wornItem.hasEnchantment(Enchantments.enchantmentFixed, false)) {
+                            return;
+                        }
+                    }
+                    if (this.teleportDelay < 70 && ++this.teleportDelay > 60) {
+                        (new ExchangerSkillThread(this)).start();
+                        this.teleportDelay = 70;
+                    }
                 }
             }
         }
