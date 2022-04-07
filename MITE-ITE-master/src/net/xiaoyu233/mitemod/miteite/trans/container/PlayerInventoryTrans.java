@@ -326,8 +326,14 @@ public class PlayerInventoryTrans {
                if (var3 == this.mainInventory && !this.player.worldObj.isRemote) {
                   this.inventorySlotChangedOnServer(par1);
                }
+            } else {
+               var3[par1] = null;
+               if (var3 == this.mainInventory && !this.player.worldObj.isRemote) {
+                  this.inventorySlotChangedOnServer(par1);
+               }
             }
          } else {
+
             var3[par1] = par2ItemStack;
             if (var3 == this.mainInventory && !this.player.worldObj.isRemote) {
                this.inventorySlotChangedOnServer(par1);
