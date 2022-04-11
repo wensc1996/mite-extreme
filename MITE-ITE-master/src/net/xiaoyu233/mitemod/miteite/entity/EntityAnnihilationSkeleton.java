@@ -91,20 +91,22 @@ public class EntityAnnihilationSkeleton extends EntitySkeleton {
             this.generateRandomParticles(EnumParticle.largesmoke);
             this.generateRandomParticles(EnumParticle.largesmoke);
         }
-        if (!this.getWorld().isRemote){
-            EntityLiving target = this.getAttackTarget();
-            if(target instanceof EntityPlayer) {
-                if(!haveTryToSpawnExchanger ) {
-                    if(rand.nextInt(20) == 0) {
-                        EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
-                        entityExchanger.setPosition(this.posX, this.posY, this.posZ);
-                        entityExchanger.refreshDespawnCounter(-9600);
-                        this.worldObj.spawnEntityInWorld(entityExchanger);
-                        entityExchanger.onSpawnWithEgg(null);
-                        entityExchanger.setAttackTarget(this.getTarget());
-                        entityExchanger.entityFX(EnumEntityFX.summoned);
+        if(Configs.wenscConfig.isSpawnExchanger.ConfigValue) {
+            if (!this.getWorld().isRemote) {
+                EntityLiving target = this.getAttackTarget();
+                if (target instanceof EntityPlayer) {
+                    if (!haveTryToSpawnExchanger) {
+                        if (rand.nextInt(20) == 0) {
+                            EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
+                            entityExchanger.setPosition(this.posX, this.posY, this.posZ);
+                            entityExchanger.refreshDespawnCounter(-9600);
+                            this.worldObj.spawnEntityInWorld(entityExchanger);
+                            entityExchanger.onSpawnWithEgg(null);
+                            entityExchanger.setAttackTarget(this.getTarget());
+                            entityExchanger.entityFX(EnumEntityFX.summoned);
+                        }
+                        this.haveTryToSpawnExchanger = true;
                     }
-                    this.haveTryToSpawnExchanger = true;
                 }
             }
         }

@@ -34,6 +34,38 @@ public abstract class ItemTrans {
    @Shadow
    protected List materials;
 
+   private double price = -1;
+
+   private boolean isCanBuy = false;
+
+   public Item setItemCanBuy(boolean isCanBuy){
+      return this.setCanBuy(isCanBuy);
+   }
+
+   public Item setCanBuy(boolean isCanBuy) {
+      this.isCanBuy = isCanBuy;
+      return (Item) ReflectHelper.dyCast(this);
+   }
+
+   public boolean getCanBuy() {
+      return this.isCanBuy;
+   }
+
+   // 在本mod进行引用 否则会造成无法找到方法的异常
+   public Item setItemPrice(double price) {
+      return this.setPrice(price);
+   }
+
+   // 向源类进行注入
+   public Item setPrice(double price) {
+      this.price = price;
+      return (Item) ReflectHelper.dyCast(this);
+   }
+
+   public double getPrice() {
+      return this.price;
+   }
+
    public void setSugarContent(int sugarContent){
       this.sugar_content = sugarContent;
    }

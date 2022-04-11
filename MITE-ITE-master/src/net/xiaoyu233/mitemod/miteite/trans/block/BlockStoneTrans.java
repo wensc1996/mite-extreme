@@ -29,14 +29,6 @@ public class BlockStoneTrans extends Block {
     }
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
-        if(Configs.wenscConfig.isDropBlueGem.ConfigValue) {
-            if(Constant.GARandom.nextInt(100) == 0) {
-                return this.dropBlockAsEntityItem(info, Items.Gem_Blue.itemID);
-            } else {
-                return this.dropBlockAsEntityItem(info, Blocks.cobblestone.blockID);
-            }
-        } else {
-            return this.dropBlockAsEntityItem(info, cobblestone);
-        }
+        return this.dropBlockAsEntityItem(info, cobblestone);
     }
 }

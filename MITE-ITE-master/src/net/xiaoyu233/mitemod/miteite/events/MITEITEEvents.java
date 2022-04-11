@@ -5,6 +5,7 @@ import net.minecraft.*;
 import net.xiaoyu233.fml.reload.event.HandleChatCommandEvent;
 import net.xiaoyu233.fml.reload.event.PacketRegisterEvent;
 import net.xiaoyu233.fml.reload.event.PlayerLoggedInEvent;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.item.ArmorModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
 import net.xiaoyu233.mitemod.miteite.network.*;
@@ -170,7 +171,17 @@ public class MITEITEEvents {
                 event.setExecuteSuccess(true);
             }
 
+            if (par2Str.startsWith("plusMoney")) {
+                double money = Double.parseDouble(par2Str.substring(10));
+                player.addChatMessage("现有余额：" + player.plusMoney(money));
+                event.setExecuteSuccess(true);
+            }
 
+            if (par2Str.startsWith("subMoney")) {
+                double money = Double.parseDouble(par2Str.substring(9));
+                player.addChatMessage("现有余额：" + player.subMoney(money));
+                event.setExecuteSuccess(true);
+            }
 
             if (par2Str.startsWith("setday")) {
                 id = Integer.parseInt(par2Str.substring(7));
@@ -198,6 +209,53 @@ public class MITEITEEvents {
                 player.addChatMessage("[Server]:设置天气=" + id);
                 event.setExecuteSuccess(true);
             }
+        }
+
+        if (par2Str.startsWith("money")) {
+            player.addChatMessage("现有余额：" + String.format("%.2f", player.money));
+            event.setExecuteSuccess(true);
+        }
+
+        if (par2Str.startsWith("buy")) {
+            System.out.println(par2Str);
+            String sid = par2Str.substring(4);
+            String[] pos = sid.split(" ");
+            int[] poses = new int[3];
+            int Rx = 0;
+
+            for(int Rz = pos.length; Rx < Rz; ++Rx) {
+                String po = pos[Rx];
+                poses[Rx] = Integer.parseInt(po);
+            }
+
+            ItemStack buyGoods = null;
+            if(pos.length == 3) {
+                buyGoods = new ItemStack(poses[0], poses[1], poses[2]);
+            } else if(pos.length == 2) {
+                buyGoods = new ItemStack(poses[0], poses[1], 0);
+            }
+            if(buyGoods == null) {
+                player.addChatMessage("商品ID输入错误");
+            } else {
+                if(buyGoods.getPrice() == -1D) {
+                    player.addChatMessage("商店暂不可兑换该商品");
+                } else {
+                    if(buyGoods.getItem().getCanBuy()) {
+                        if(player.money <= 0) {
+                            player.addChatMessage("钱包空空");
+                        } else if(player.money - buyGoods.getPrice() * poses[1] < 0){
+                            player.addChatMessage("余额不足，无法购买");
+                        } else {
+                            player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney(buyGoods.getPrice() * poses[1])));
+                            player.addContainedItem(poses[0]);
+                            player.dropItemStack(buyGoods, 1.0F);
+                        }
+                    } else {
+                        player.addChatMessage("商店暂不可兑换该商品");
+                    }
+                }
+            }
+            event.setExecuteSuccess(true);
         }
 
         if (par2Str.startsWith("sleep")) {
@@ -286,6 +344,7 @@ public class MITEITEEvents {
                 .addText(" 重写,开放下载地址:").setColor(EnumChatFormat.DARK_RED)
                 .appendComponent(ChatMessage.createFromTranslationKey("https://www.wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
         if (player.isFirstLogin == true) {
+
             player.isFirstLogin = false;
         }
 

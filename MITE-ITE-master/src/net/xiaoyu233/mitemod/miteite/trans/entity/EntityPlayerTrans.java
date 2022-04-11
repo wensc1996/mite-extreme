@@ -74,6 +74,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    private int surroundHurtCollDown = 20;
 
+   public double money = 0D;
+
    ItemStack itemRingKiller;
 
    @Shadow
@@ -351,8 +353,16 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    @Inject(method = "clonePlayer",at = @At("RETURN"))
    public void clonePlayerInject(EntityPlayer par1EntityPlayer, boolean par2, CallbackInfo callbackInfo) {
       this.isFirstLogin = par1EntityPlayer.isFirstLogin;
+      this.money = par1EntityPlayer.money;
    }
 
+   public double plusMoney(double singleMoney){
+      return this.money += singleMoney;
+   }
+
+   public double subMoney(double singleMoney){
+      return this.money -= singleMoney;
+   }
 
    @Inject(method = "readEntityFromNBT",at = @At("RETURN"))
    public void injectReadNBT(NBTTagCompound par1NBTTagCompound,CallbackInfo ci) {
@@ -366,7 +376,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.netherDebuffTime = par1NBTTagCompound.getInteger("NetherDebuffTime");
       this.inRainCounter = par1NBTTagCompound.getInteger("InRainCounter");
       this.vision_dimming = par1NBTTagCompound.getFloat("vision_dimming");
-
+      this.money = par1NBTTagCompound.getDouble("money");
 
       if (par1NBTTagCompound.hasKey("AttackCountMap")) {
          NBTTagList attackCountMap = par1NBTTagCompound.getTagList("AttackCountMap");
@@ -890,6 +900,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       par1NBTTagCompound.setInteger("NetherDebuffTime", this.netherDebuffTime);
       par1NBTTagCompound.setInteger("InRainCounter", this.inRainCounter);
       par1NBTTagCompound.setFloat("vision_dimming", this.vision_dimming);
+      par1NBTTagCompound.setDouble("money", this.money);
 
       NBTTagList nbtTagList = new NBTTagList();
       for (Entry<Entity, Integer> integerEntry : this.attackCountMap.entrySet()) {

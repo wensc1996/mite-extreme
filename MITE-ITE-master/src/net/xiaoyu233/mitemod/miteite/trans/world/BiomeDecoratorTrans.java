@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.world;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Random;
@@ -140,8 +141,28 @@ public class BiomeDecoratorTrans {
    protected void genMinable(int frequency, WorldGenMinable world_gen_minable) {
    }
 
-   @Shadow
+   @Overwrite
    protected void genMinable(int frequency, WorldGenMinable world_gen_minable, boolean vein_size_increases_with_depth) {
+      int resource_multiplier = 1;
+      frequency *= resource_multiplier;
+      if (this.currentWorld.underworld_y_offset != 0 && world_gen_minable != this.gravelGen) {
+         frequency *= 8;
+         if (world_gen_minable == this.adamantiteGen) {
+            frequency /= 4;
+         }
+      }
+
+      while(frequency-- > 0) {
+         if (this.randomGenerator.nextInt(10) == 0) {
+            int x = this.chunk_X + this.randomGenerator.nextInt(16);
+            int y = world_gen_minable.getRandomVeinHeight(this.currentWorld, this.randomGenerator);
+            int z = this.chunk_Z + this.randomGenerator.nextInt(16);
+            if (y >= 0) {
+               world_gen_minable.generate(this.currentWorld, this.randomGenerator, x, y, z, vein_size_increases_with_depth);
+            }
+         }
+      }
+
    }
 
    protected void generateOres() {

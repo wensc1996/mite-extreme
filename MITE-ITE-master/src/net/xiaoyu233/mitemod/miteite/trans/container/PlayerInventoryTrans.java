@@ -16,7 +16,7 @@ public class PlayerInventoryTrans {
    @Shadow
    public ItemStack[] mainInventory = new ItemStack[36];
 
-   public ItemStack[] jewelryInventory = new ItemStack[5];
+   public ItemStack[] jewelryInventory = new ItemStack[6];
 
    @Shadow
    public ItemStack[] armorInventory = new ItemStack[4];
@@ -96,7 +96,7 @@ public class PlayerInventoryTrans {
    @Overwrite
    public void readFromNBT(NBTTagList par1NBTTagList) {
       this.mainInventory = new ItemStack[36];
-      this.jewelryInventory = new ItemStack[5];
+      this.jewelryInventory = new ItemStack[6];
       this.armorInventory = new ItemStack[4];
 
       for(int var2 = 0; var2 < par1NBTTagList.tagCount(); ++var2) {
@@ -124,6 +124,7 @@ public class PlayerInventoryTrans {
 
    @Overwrite
    public ItemStack decrStackSize(int par1, int par2) {
+
       ItemStack[] var3 = this.mainInventory;
       ItemStack[] val4 = this.jewelryInventory;
       if(par1 >= var3.length + val4.length) {
@@ -308,7 +309,6 @@ public class PlayerInventoryTrans {
 
    @Overwrite
    public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
-
       ItemStack[] var3 = this.mainInventory;
       ItemStack[] val4 = this.jewelryInventory;
       if(par1 >= var3.length + val4.length) {
@@ -318,7 +318,15 @@ public class PlayerInventoryTrans {
          par1 -= var3.length;
          var3 = this.jewelryInventory;
       }
-
+      if(var3 == this.jewelryInventory && par1 == 5 && par2ItemStack != null) {
+         if(par2ItemStack.getPrice() != -1D) {
+            if(!this.player.worldObj.isRemote) {
+               player.addChatMessage("现有余额：" + String.format("%.2f", player.plusMoney(par2ItemStack.stackSize * par2ItemStack.getPrice())));
+            }
+         }
+         var3[par1] = null;
+         return;
+      }
       if (var3[par1] != par2ItemStack) {
          if(par2ItemStack != null ) {
             if(par2ItemStack.getItem().itemID != Items.lavaInPipes.itemID) {

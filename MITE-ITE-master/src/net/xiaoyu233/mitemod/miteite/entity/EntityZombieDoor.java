@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.entity;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.Items;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 
 public class EntityZombieDoor extends EntityZombie {
@@ -84,17 +85,19 @@ public class EntityZombieDoor extends EntityZombie {
                         ++spawnSums;
                     }
                 }
-                if(haveTryToSpawnExchanger == false) {
-                    if( rand.nextInt(5) == 0) {
-                        EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
-                        entityExchanger.setPosition(this.posX, this.posY, this.posZ);
-                        entityExchanger.refreshDespawnCounter(-9600);
-                        this.worldObj.spawnEntityInWorld(entityExchanger);
-                        entityExchanger.onSpawnWithEgg(null);
-                        entityExchanger.setAttackTarget(this.getTarget());
-                        entityExchanger.entityFX(EnumEntityFX.summoned);
+                if(Configs.wenscConfig.isSpawnExchanger.ConfigValue) {
+                    if(haveTryToSpawnExchanger == false) {
+                        if( rand.nextInt(5) == 0) {
+                            EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
+                            entityExchanger.setPosition(this.posX, this.posY, this.posZ);
+                            entityExchanger.refreshDespawnCounter(-9600);
+                            this.worldObj.spawnEntityInWorld(entityExchanger);
+                            entityExchanger.onSpawnWithEgg(null);
+                            entityExchanger.setAttackTarget(this.getTarget());
+                            entityExchanger.entityFX(EnumEntityFX.summoned);
+                        }
+                        this.haveTryToSpawnExchanger = true;
                     }
-                    this.haveTryToSpawnExchanger = true;
                 }
             }
         }

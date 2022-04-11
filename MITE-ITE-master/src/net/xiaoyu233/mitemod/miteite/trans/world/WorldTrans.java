@@ -1,9 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.trans.world;
 
-import net.minecraft.AxisAlignedBB;
-import net.minecraft.Block;
-import net.minecraft.World;
-import net.minecraft.WorldData;
+import net.minecraft.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,6 +11,8 @@ import static net.xiaoyu233.mitemod.miteite.util.WorldUtil.isBloodMoonDay;
 
 @Mixin(World.class)
 public abstract class WorldTrans {
+   @Shadow public abstract ChunkCoordinates getSpawnPoint();
+
    @Shadow public static int getDayOfWorld(long unadjusted_tick){
       return 0;
    }

@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.entity;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.Items;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 
 public class EntityZombieLord extends EntityZombie {
     private int fx_counter;
@@ -61,19 +62,21 @@ public class EntityZombieLord extends EntityZombie {
                 this.fx_counter = 60;
                 this.entityFX(EnumEntityFX.summoned);
             }
-            EntityLiving target = this.getAttackTarget();
-            if(target instanceof EntityPlayer) {
-                if(!haveTryToSpawnExchanger) {
-                    if(rand.nextInt(10) == 0) {
-                        EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
-                        entityExchanger.setPosition(this.posX, this.posY, this.posZ);
-                        entityExchanger.refreshDespawnCounter(-9600);
-                        this.worldObj.spawnEntityInWorld(entityExchanger);
-                        entityExchanger.onSpawnWithEgg(null);
-                        entityExchanger.setAttackTarget(this.getTarget());
-                        entityExchanger.entityFX(EnumEntityFX.summoned);
+            if(Configs.wenscConfig.isSpawnExchanger.ConfigValue) {
+                EntityLiving target = this.getAttackTarget();
+                if(target instanceof EntityPlayer) {
+                    if(!haveTryToSpawnExchanger) {
+                        if(rand.nextInt(10) == 0) {
+                            EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
+                            entityExchanger.setPosition(this.posX, this.posY, this.posZ);
+                            entityExchanger.refreshDespawnCounter(-9600);
+                            this.worldObj.spawnEntityInWorld(entityExchanger);
+                            entityExchanger.onSpawnWithEgg(null);
+                            entityExchanger.setAttackTarget(this.getTarget());
+                            entityExchanger.entityFX(EnumEntityFX.summoned);
+                        }
+                        this.haveTryToSpawnExchanger = true;
                     }
-                    this.haveTryToSpawnExchanger = true;
                 }
             }
         }

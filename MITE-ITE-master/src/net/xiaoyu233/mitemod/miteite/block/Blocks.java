@@ -138,6 +138,8 @@ public class Blocks extends Block{
         block.setUnlocalizedName(resourceLocation);
         block.setResourceLocation(resourceLocation);
         Item item = new ItemBlock(block).setUnlocalizedName(resourceLocation);
+        item.setItemPrice(block.getPrice());
+        item.setItemCanBuy(block.getCanBuy());
         Item.itemsList[Constant.getNextItemID()] = item;
         item.setMaxStackSize(block.getItemStackLimit());
     }

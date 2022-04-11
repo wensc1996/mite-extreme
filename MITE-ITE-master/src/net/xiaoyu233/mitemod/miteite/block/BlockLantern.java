@@ -5,6 +5,8 @@ import net.minecraft.*;
 public class BlockLantern extends Blocks {
     BlockLantern(int par1, Material material) {
         super(par1, material, (new BlockConstants()).setNeverHidesAdjacentFaces().setNotAlwaysLegal());
+        this.setBlockPrice(0.5D);
+        this.setBlockCanBuy(true);
         this.setMaxStackSize(64);
         this.setLightValue(1F);
         this.setBounds(true);

@@ -35,8 +35,6 @@ public class Items extends Item{
     public static final ItemEnhanceStone UNIVERSAL_ENHANCE_STONE = (ItemEnhanceStone) new ItemEnhanceStone(ItemEnhanceStone.Types.universal).setCraftingDifficultyAsComponent(ItemRock.getCraftingDifficultyAsComponent(Material.ender_pearl) * 2f);
 
 
-    public static final Item Gem_Blue = createInstance(Item.class, new Class[]{int.class, Material.class, String.class}, Constant.getNextItemID(), Material.diamond, "gem_blue").setCraftingDifficultyAsComponent(1.0E-9F);
-
     public static final Item Stack_Torch = createInstance(Item.class, new Class[]{int.class, Material.class, String.class}, Constant.getNextItemID(), Material.seed, "stack_torch");
 
 
@@ -70,6 +68,69 @@ public class Items extends Item{
     }
 
     public static void registerItems() {
+        Items.manure.setItemPrice(0.1D).setItemCanBuy(false);
+        Items.seeds.setItemPrice(0.1D).setItemCanBuy(false);
+        Items.sinew.setItemPrice(0.1D).setItemCanBuy(false);
+        Items.silk.setItemPrice(0.1D).setItemCanBuy(false);
+        Items.feather.setItemPrice(0.1D).setItemCanBuy(false);
+        Items.flint.setItemPrice(0.2D).setItemCanBuy(false);
+
+        Items.fishCooked.setItemPrice(0.3D).setItemCanBuy(true);
+        Items.egg.setItemPrice(0.2D).setItemCanBuy(false);
+        Items.lambchopCooked.setItemPrice(0.3D).setItemCanBuy(true);
+        Items.chickenCooked.setItemPrice(0.3D).setItemCanBuy(true);
+        Items.porkCooked.setItemPrice(0.4D).setItemCanBuy(true);
+        Items.beefCooked.setItemPrice(0.5D).setItemCanBuy(true);
+
+        Items.redstone.setItemPrice(1D).setItemCanBuy(false);
+
+        Items.coal.setItemPrice(1D).setItemCanBuy(false);
+        Items.bone.setItemPrice(1D).setItemCanBuy(false);
+        Items.gunpowder.setItemPrice(1D).setItemCanBuy(false);
+        Items.rottenFlesh.setItemPrice(1D).setItemCanBuy(false);
+        Items.spiderEye.setItemPrice(1D).setItemCanBuy(false);
+
+        Items.doorWood.setItemPrice(1.5D).setItemCanBuy(false);
+        Items.doorCopper.setItemPrice(30D).setItemCanBuy(false);
+        Items.doorSilver.setItemPrice(30D).setItemCanBuy(false);
+        Items.doorGold.setItemPrice(30D).setItemCanBuy(false);
+        Items.doorIron.setItemPrice(60D).setItemCanBuy(false);
+        Items.doorMithril.setItemPrice(120D).setItemCanBuy(false);
+        Items.doorAdamantium.setItemPrice(180D).setItemCanBuy(false);
+
+        Items.ingotCopper.setItemPrice(10D).setItemCanBuy(false);
+        Items.ingotSilver.setItemPrice(10D).setItemCanBuy(false);
+        Items.ingotGold.setItemPrice(10D).setItemCanBuy(false);
+        Items.ingotIron.setItemPrice(20D).setItemCanBuy(false);
+        Items.ingotAncientMetal.setItemPrice(30D).setItemCanBuy(false);
+        Items.ingotMithril.setItemPrice(40D).setItemCanBuy(false);
+        Items.ingotAdamantium.setItemPrice(60D).setItemCanBuy(false);
+        VIBRANIUM_INGOT.setItemPrice(100D).setItemCanBuy(false);
+
+        Items.copperNugget.setItemPrice(1D).setItemCanBuy(false);
+        Items.silverNugget.setItemPrice(1D).setItemCanBuy(false);
+        Items.goldNugget.setItemPrice(1D).setItemCanBuy(false);
+        Items.ironNugget.setItemPrice(2D).setItemCanBuy(false);
+        Items.ancientMetalNugget.setItemPrice(3D).setItemCanBuy(false);
+        Items.mithrilNugget.setItemPrice(4D).setItemCanBuy(false);
+        Items.adamantiumNugget.setItemPrice(6D).setItemCanBuy(false);
+        VIBRANIUM_NUGGET.setItemPrice(10D).setItemCanBuy(false);
+
+        Items.getItem(Blocks.plantYellow.blockID).setItemPrice(0.1D).setItemCanBuy(false);
+        Items.getItem(Blocks.plantRed.blockID).setItemPrice(0.1D).setItemCanBuy(false);
+        Items.getItem(Blocks.torchWood.blockID).setItemPrice(0.2D).setItemCanBuy(false);
+
+        Items.getItem(Blocks.leaves.blockID).setItemPrice(0.25D).setItemCanBuy(false);
+        Items.getItem(Blocks.planks.blockID).setItemPrice(0.25D).setItemCanBuy(false);
+        Items.getItem(Blocks.pumpkin.blockID).setItemPrice(0.25D).setItemCanBuy(false);
+        Items.getItem(Blocks.dirt.blockID).setItemPrice(0.5D).setItemCanBuy(false);
+        Items.getItem(Blocks.sand.blockID).setItemPrice(0.5D).setItemCanBuy(false);
+        Items.getItem(Blocks.cobblestone.blockID).setItemPrice(1D).setItemCanBuy(false);
+        Items.getItem(Blocks.stone.blockID).setItemPrice(2D).setItemCanBuy(false);
+        Items.getItem(Blocks.cobblestoneWall.blockID).setItemPrice(1D).setItemCanBuy(false);
+        Items.getItem(Blocks.wood.blockID).setItemPrice(1D).setItemCanBuy(false);
+
+
         register("obsidian_stick", OBSIDIAN_STICK, CreativeModeTab.tabMaterials);
         register("vibranium", VIBRANIUM_INGOT, CreativeModeTab.tabMaterials);
         register("vibranium_nugget", VIBRANIUM_NUGGET, CreativeModeTab.tabMaterials);
@@ -92,10 +153,6 @@ public class Items extends Item{
         register("enhance_stone/adamantium",ADAMANTIUM_ENHANCE_STONE , CreativeModeTab.tabMaterials);
         register("enhance_stone/universal",UNIVERSAL_ENHANCE_STONE , CreativeModeTab.tabMaterials);
 
-        Gem_Blue.setCreativeTab(CreativeModeTab.tabMaterials);
-
-        register("gem_blue", Gem_Blue).setUnlocalizedName("gem_blue").setMaxStackSize(64);
-
         register("stack_torch", Stack_Torch).setUnlocalizedName("stack_torch").setMaxStackSize(64).setCraftingDifficultyAsComponent(1.0E-9F);
 
 
@@ -112,32 +169,6 @@ public class Items extends Item{
 
     public static void registerRecipes(RecipeRegister register) {
         register.registerShapelessRecipe(new ItemStack(Blocks.blockLantern, 1), true,Blocks.torchWood, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget);
-
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockGotcha, 64, 4), true, new Object[]{Gem_Blue});
-
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful0, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 0)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful1, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 1)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful2, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 2)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful3, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 3)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful4, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 4)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful5, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 5)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful6, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 6)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful7, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 7)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful8, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 8)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful9, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 9)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful10, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 10)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful11, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 11)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful12, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 12)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful13, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 13)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful14, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 14)});
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockStairsColorful15, 64), true, new Object[]{Gem_Blue,redstone, Blocks.stairsCobblestone, new ItemStack(Item.dyePowder, 1, 15)});
-
-
-        for(int i = 0; i < 16; ++i) {
-            register.registerShapelessRecipe(new ItemStack(Blocks.blockColorful, 64, i), true, Gem_Blue, redstone, new ItemStack(Item.dyePowder, 1, i));
-            register.registerShapelessRecipe(new ItemStack(Blocks.blockColorfulBrick, 64, i), true, Gem_Blue, redstone, Blocks.stoneBrick, new ItemStack(Item.dyePowder, 1, i));
-            register.registerShapelessRecipe(new ItemStack(Blocks.blockGotcha, 64, i), true, new Object[]{Gem_Blue, new ItemStack(Item.dyePowder, 1, i)});
-        }
 
 
         if(Configs.wenscConfig.isRecipeGATorch.ConfigValue) {

@@ -298,6 +298,10 @@ public class ItemStackTrans {
       this.is_artifact = par1NBTTagCompound.getBoolean("is_artifact");
    }
 
+   public double getPrice() {
+      return this.getItem().getPrice();
+   }
+
    public void setIsArtifact(boolean is_artifact) {
       this.is_artifact = is_artifact;
    }

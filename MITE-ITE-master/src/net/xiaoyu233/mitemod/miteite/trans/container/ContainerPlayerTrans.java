@@ -21,6 +21,7 @@ public abstract class ContainerPlayerTrans extends MITEContainerCrafting {
         for(hotbar_index = 0; hotbar_index < 5; ++hotbar_index) {
             this.addSlotToContainer(new Slot(this.player.inventory, 36 + hotbar_index, 80 + hotbar_index * 18, 64));
         }
+        this.addSlotToContainer(new Slot(this.player.inventory, 41, 125 , 8));
     }
 
     @Overwrite
