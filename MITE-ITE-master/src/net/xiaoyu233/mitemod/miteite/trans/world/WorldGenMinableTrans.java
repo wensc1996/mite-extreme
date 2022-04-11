@@ -17,24 +17,18 @@ public class WorldGenMinableTrans {
    private int minableBlockId;
 
 //   @Overwrite
-   @Shadow
+   @Overwrite
    public int getRandomVeinHeight(World world, Random rand) {
       Block block = Block.blocksList[this.minableBlockId];
       if (world.isUnderworld()) {
-         if (world.underworld_y_offset == 0) {
-            return rand.nextInt(256);
-         }
-
-         if (block == Block.oreAdamantium) {
-            if (rand.nextFloat() < 0.75F) {
-               return 0;
-            }else {
-               return Math.max(world.underworld_y_offset,250);
+         if (world.underworld_y_offset != 0) {
+            if (block == Block.oreAdamantium) {
+               return this.getMinVeinHeight(world) + rand.nextInt(this.getMaxVeinHeight(world) - this.getMinVeinHeight(world));
             }
-         }
 
-         if (block instanceof BlockOre && rand.nextFloat() < 0.75F) {
-            return Math.max(world.underworld_y_offset,250);
+            if (block instanceof BlockOre && rand.nextFloat() < 0.75F) {
+               return this.getMinVeinHeight(world) + rand.nextInt(this.getMaxVeinHeight(world) - this.getMinVeinHeight(world));
+            }
          }
 
          return rand.nextInt(256);
@@ -43,56 +37,60 @@ public class WorldGenMinableTrans {
          if (block == Block.dirt) {
             do {
                relative_height = rand.nextFloat();
-            } while(!(relative_height > rand.nextFloat()));
+            } while(relative_height <= rand.nextFloat());
          } else if (block == Block.gravel) {
             do {
                relative_height = rand.nextFloat();
-            } while(!(relative_height > rand.nextFloat()));
+            } while(relative_height <= rand.nextFloat());
          } else if (block == Block.oreCoal) {
             do {
                relative_height = rand.nextFloat();
-            } while(!(relative_height > rand.nextFloat()));
+            } while(relative_height <= rand.nextFloat());
          } else if (block == Block.oreCopper) {
             if (rand.nextInt(2) == 0) {
                relative_height = rand.nextFloat() * 0.6F + 0.4F;
-            } else do {
-               relative_height = rand.nextFloat();
-            } while (!(relative_height < rand.nextFloat()));
+            } else {
+               do {
+                  relative_height = rand.nextFloat();
+               } while(relative_height >= rand.nextFloat());
+            }
          } else if (block == Block.oreSilver) {
             do {
                relative_height = rand.nextFloat();
-            } while(!(relative_height < rand.nextFloat()));
+            } while(relative_height >= rand.nextFloat());
          } else if (block == Block.oreGold) {
             do {
                relative_height = rand.nextFloat();
-            } while(!(relative_height < rand.nextFloat()));
+            } while(relative_height >= rand.nextFloat());
          } else if (block == Block.oreIron) {
             do {
                relative_height = rand.nextFloat();
-            } while(!(relative_height < rand.nextFloat()));
+            } while(relative_height >= rand.nextFloat());
          } else if (block == Block.oreMithril) {
             do {
                relative_height = rand.nextFloat();
-            } while(!(relative_height < rand.nextFloat()));
-         } else if (block == Block.oreAdamantium || block == Block.silverfish) {
+            } while(relative_height >= rand.nextFloat());
+         } else if (block != Block.oreAdamantium && block != Block.silverfish) {
+            if (block == Block.oreRedstone) {
+               do {
+                  relative_height = rand.nextFloat();
+               } while(relative_height >= rand.nextFloat());
+            } else if (block == Block.oreDiamond) {
+               do {
+                  relative_height = rand.nextFloat();
+               } while(relative_height >= rand.nextFloat());
+            } else {
+               if (block != Block.oreLapis) {
+                  Minecraft.setErrorMessage("WorldGenMinable: unknown ore id " + this.minableBlockId);
+                  return -1;
+               }
+
+               relative_height = (rand.nextFloat() + rand.nextFloat()) / 2.0F;
+            }
+         } else {
             do {
                relative_height = rand.nextFloat();
-            } while(!(relative_height < rand.nextFloat()));
-         } else if (block == Block.oreRedstone) {
-            do {
-               relative_height = rand.nextFloat();
-            } while (!(relative_height < rand.nextFloat()));
-         } else if (block == Block.oreDiamond) {
-            do {
-               relative_height = rand.nextFloat();
-            } while (!(relative_height < rand.nextFloat()));
-         } else if (block == Block.oreLapis) {
-            relative_height = (rand.nextFloat() + rand.nextFloat()) / 2.0F;
-         } else if (block == Blocks.netherAdamantiumOre){
-            relative_height = rand.nextFloat();
-         }else {
-            Minecraft.setErrorMessage("WorldGenMinable: unknown ore id " + this.minableBlockId);
-            return -1;
+            } while(relative_height >= rand.nextFloat());
          }
 
          int min_height = this.getMinVeinHeight(world);
