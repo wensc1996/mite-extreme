@@ -122,6 +122,9 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
       return Math.min(0.05f + this.worldObj.getDayOfOverworld() / 800f,0.25f);
    }
 
+
+
+
    @Overwrite
    public int getRandomSkeletonType(World world) {
       if (world.isTheNether()) {

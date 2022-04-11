@@ -163,15 +163,15 @@ public class BiomeDecoratorTrans {
          }
       } else if (this.currentWorld.isUnderworld()) {
          this.genMinable(300, this.gravelGen);
-         this.genMinable(COPPER_FREQUENCY_UNDERWORLD, this.copperGen, false);
-         this.genMinable(SILVER_FREQUENCY_UNDERWORLD, this.silverGen, false);
-         this.genMinable(GOLD_FREQUENCY_UNDERWORLD, this.goldGen, false);
-         this.genMinable(IRON_FREQUENCY_UNDERWORLD, this.ironGen, false);
-         this.genMinable(MITHRIL_FREQUENCY_UNDERWORLD, this.mithrilGen, false);
+         this.genMinable(COPPER_FREQUENCY_UNDERWORLD / 2, this.copperGen, false);
+         this.genMinable(SILVER_FREQUENCY_UNDERWORLD / 2, this.silverGen, false);
+         this.genMinable(GOLD_FREQUENCY_UNDERWORLD / 2, this.goldGen, false);
+         this.genMinable(IRON_FREQUENCY_UNDERWORLD / 2, this.ironGen, false);
+         this.genMinable(MITHRIL_FREQUENCY_UNDERWORLD / 2, this.mithrilGen, false);
          this.genMinable(ADAMANTIUM_FREQUENCY_UNDERWORLD / 2, this.adamantiteGen, false);
-         this.genMinable(10, this.redstoneGen);
-         this.genMinable(DIAMOND_FREQUENCY_UNDERWORLD, this.diamondGen);
-         this.genMinable(LAPIS_FREQUENCY_UNDERWORLD, this.lapisGen);
+         this.genMinable(10 / 2, this.redstoneGen);
+         this.genMinable(DIAMOND_FREQUENCY_UNDERWORLD / 2, this.diamondGen);
+         this.genMinable(LAPIS_FREQUENCY_UNDERWORLD / 2, this.lapisGen);
          if (this.currentWorld.underworld_y_offset != 0) {
             this.genMinable(50, this.silverfishGen);
          }
