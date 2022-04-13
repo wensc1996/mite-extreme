@@ -103,6 +103,7 @@ tile.colorful.name=彩石
 tile.colorful_brick.name=彩石石砖
 tile.colorful_stair.name=彩石楼梯
 tile.block_lantern.name=灯笼
+tile.block_spawn.name=复活传送阵
 item.stack_torch.name=一捆火把
 item.gem_blue.name=蓝宝石
 item.lava_in_pipes.name=管道岩浆

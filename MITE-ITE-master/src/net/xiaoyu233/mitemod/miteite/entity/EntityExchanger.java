@@ -30,8 +30,8 @@ public class EntityExchanger extends EntitySkeleton {
         } else {
             rate = day / 16;
         }
-        this.setEntityAttribute(GenericAttributes.attackDamage, 2.0D + rate * 8D);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 10.0D +  rate * 20D);
+        this.setEntityAttribute(GenericAttributes.attackDamage, 2.0D + rate * 5D);
+        this.setEntityAttribute(GenericAttributes.maxHealth, 10.0D +  rate * 10D);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.2572D);
     }
 

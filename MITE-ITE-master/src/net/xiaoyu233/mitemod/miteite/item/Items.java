@@ -75,12 +75,12 @@ public class Items extends Item{
         Items.feather.setItemPrice(0.1D).setItemCanBuy(false);
         Items.flint.setItemPrice(0.2D).setItemCanBuy(false);
 
-        Items.fishCooked.setItemPrice(0.3D).setItemCanBuy(true);
+        Items.fishCooked.setItemPrice(0.6D).setItemCanBuy(true);
         Items.egg.setItemPrice(0.2D).setItemCanBuy(false);
-        Items.lambchopCooked.setItemPrice(0.3D).setItemCanBuy(true);
-        Items.chickenCooked.setItemPrice(0.3D).setItemCanBuy(true);
-        Items.porkCooked.setItemPrice(0.4D).setItemCanBuy(true);
-        Items.beefCooked.setItemPrice(0.5D).setItemCanBuy(true);
+        Items.lambchopCooked.setItemPrice(0.6D).setItemCanBuy(true);
+        Items.chickenCooked.setItemPrice(0.6D).setItemCanBuy(true);
+        Items.porkCooked.setItemPrice(0.8D).setItemCanBuy(true);
+        Items.beefCooked.setItemPrice(1D).setItemCanBuy(true);
 
         Items.redstone.setItemPrice(1D).setItemCanBuy(false);
 

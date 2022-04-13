@@ -58,6 +58,7 @@ public class Blocks extends Block{
     public static final Block blockStairsColorful14 = new BlockStairsColorful(190, blockColorful, 14);
     public static final Block blockStairsColorful15 = new BlockStairsColorful(191, blockColorful, 15);
 
+    public static final BlockSpawn blockSpawn = (new BlockSpawn(192, Material.stone));
     static {
         try {
             Field field = Block.class.getDeclaredField("is_normal_cube_lookup");
@@ -111,6 +112,7 @@ public class Blocks extends Block{
         registerItemBlock(chestVibranium,"vibranium_chest");
 
         registerItemBlock(blockGotcha, "gotcha");
+        registerItemBlock(blockSpawn, "block_spawn");
 
         registerItemBlock(blockColorful, "colorful");
         registerItemBlock(blockColorfulBrick, "colorful_brick");
@@ -172,6 +174,13 @@ public class Blocks extends Block{
         register.registerShapelessRecipe(new ItemStack(blockColorful, 9, 0), true, new ItemStack(blockColorful, 9, 15));
         register.registerShapelessRecipe(new ItemStack(blockColorfulBrick, 9, 0), true, new ItemStack(blockColorfulBrick, 9, 15));
 
+        register.registerShapedRecipe(new ItemStack(blockSpawn), true,
+                "ABA",
+                "BCB",
+                "ABA",
+                'A', Blocks.obsidian,
+                'B', Items.diamond,
+                'C', Items.enderPearl);
         register.registerShapedRecipe(new ItemStack(anvilVibranium),true,
                 "AVA",
                 " I ",

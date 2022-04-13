@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
+import net.xiaoyu233.mitemod.miteite.block.BlockSpawn;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
 import net.xiaoyu233.mitemod.miteite.item.*;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
@@ -25,6 +26,8 @@ import java.util.Map.Entry;
 
 @Mixin(EntityPlayer.class)
 public abstract class EntityPlayerTrans extends EntityLiving implements ICommandListener {
+   @Shadow public abstract World getEntityWorld();
+
    @Shadow public abstract void addSkill(Skill skill);
 
    @Shadow public abstract EntityDamageResult attackEntityFrom(Damage damage);
@@ -73,6 +76,11 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public boolean isFirstLogin = true;
 
    private int surroundHurtCollDown = 20;
+
+   public int spawnStoneX;
+   public int spawnStoneY;
+   public int spawnStoneZ;
+   public int spawnStoneWorldId = -999;
 
    public double money = 0D;
 
@@ -342,10 +350,28 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             result.setEntity_was_destroyed(false);
             this.activeEmergency(readyEmergencyItemList);
          }
+         if(this.spawnStoneWorldId != -999) {
+            result.setEntity_was_destroyed(false);
+            this.setHealth(20, true, this.getHealFX());
+            this.addPotionEffect(new MobEffect(MobEffectList.regeneration.id, 1200, 1));
+            this.addPotionEffect(new MobEffect(MobEffectList.resistance.id, 600, 1));
+            this.addPotionEffect(new MobEffect(MobEffectList.fireResistance.id, 1200, 0));
+            if (!(this.isPotionActive(MobEffectList.field_76444_x) && this.getActivePotionEffect(MobEffectList.field_76444_x).getAmplifier() > 0)) {
+               this.addPotionEffect(new MobEffect(MobEffectList.heal.id, 2, 0));
+               this.removePotionEffect(MobEffectList.field_76444_x.id);
+               this.addPotionEffect(new MobEffect(MobEffectList.field_76444_x.id, 20 * 20, 2));
+            }
+
+            if (this.getWorld().getDimensionId() != this.spawnStoneWorldId) {
+               this.travelToDimension(this.spawnStoneWorldId);
+            }
+            this.setPositionAndUpdate(this.spawnStoneX, this.spawnStoneY, this.spawnStoneZ);
+
+            this.getWorld().setBlockToAir(this.spawnStoneX, this.spawnStoneY - 1, this.spawnStoneZ);
+            this.spawnStoneWorldId = -999;
+         }
       }
-
    }
-
 
    @Shadow
    protected abstract float calcRawMeleeDamageVs(Entity var1, boolean var2, boolean var3);
@@ -366,6 +392,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    @Inject(method = "readEntityFromNBT",at = @At("RETURN"))
    public void injectReadNBT(NBTTagCompound par1NBTTagCompound,CallbackInfo ci) {
+      NBTTagCompound nb = par1NBTTagCompound.getCompoundTag("spawn");
+
       this.StoneCount = par1NBTTagCompound.getLong("StoneCount");
       this.isFirstLogin = par1NBTTagCompound.getBoolean("isFirstLogin");
       NBTTagList var2 = par1NBTTagCompound.getTagList("Inventory");
@@ -377,6 +405,11 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.inRainCounter = par1NBTTagCompound.getInteger("InRainCounter");
       this.vision_dimming = par1NBTTagCompound.getFloat("vision_dimming");
       this.money = par1NBTTagCompound.getDouble("money");
+
+      this.spawnStoneX = par1NBTTagCompound.getInteger("spawnStoneX");
+      this.spawnStoneY = par1NBTTagCompound.getInteger("spawnStoneY");
+      this.spawnStoneZ = par1NBTTagCompound.getInteger("spawnStoneZ");
+      this.spawnStoneWorldId = par1NBTTagCompound.getInteger("spawnStoneWorldId");
 
       if (par1NBTTagCompound.hasKey("AttackCountMap")) {
          NBTTagList attackCountMap = par1NBTTagCompound.getTagList("AttackCountMap");
@@ -720,8 +753,30 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
          if (readyEmergencyItems.size() > 0){
             this.activeEmergency(readyEmergencyItems);
          }
+         if(this.spawnStoneWorldId != -999) {
+            entityDamageResult.setEntity_was_destroyed(false);
+            this.setHealth(20, true, this.getHealFX());
+            this.addPotionEffect(new MobEffect(MobEffectList.regeneration.id, 1200, 1));
+            this.addPotionEffect(new MobEffect(MobEffectList.resistance.id, 600, 1));
+            this.addPotionEffect(new MobEffect(MobEffectList.fireResistance.id, 1200, 0));
+            if (!(this.isPotionActive(MobEffectList.field_76444_x) && this.getActivePotionEffect(MobEffectList.field_76444_x).getAmplifier() > 0)) {
+               this.addPotionEffect(new MobEffect(MobEffectList.heal.id, 2, 0));
+               this.removePotionEffect(MobEffectList.field_76444_x.id);
+               this.addPotionEffect(new MobEffect(MobEffectList.field_76444_x.id, 20 * 20, 2));
+            }
+            if (this.getWorld().getDimensionId() != this.spawnStoneWorldId) {
+               this.travelToDimension(this.spawnStoneWorldId);
+            }
+            this.setPositionAndUpdate(this.spawnStoneX, this.spawnStoneY, this.spawnStoneZ);
+            this.getWorld().setBlockToAir(this.spawnStoneX, this.spawnStoneY - 1, this.spawnStoneZ);
+            this.spawnStoneWorldId = -999;
+         }
       }
       return entityDamageResult;
+   }
+
+   public void setSpawnStoneWorldId(int worldId) {
+      this.spawnStoneWorldId = worldId;
    }
 
    private ItemStack damageItem(ItemStack itemStack, int damage) {
@@ -751,7 +806,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    private void injectTick(CallbackInfo c){
       this.inventory.decrementAnimations();
       if (!this.worldObj.isRemote) {
-
          this.itemRingKiller = this.inventory.getRingKiller();
          if(this.itemRingKiller != null) {
             float range = ((ItemRingKiller)this.itemRingKiller.getItem()).getRingKillerSkillRange();
@@ -901,6 +955,11 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       par1NBTTagCompound.setInteger("InRainCounter", this.inRainCounter);
       par1NBTTagCompound.setFloat("vision_dimming", this.vision_dimming);
       par1NBTTagCompound.setDouble("money", this.money);
+
+      par1NBTTagCompound.setInteger("spawnStoneX", this.spawnStoneX);
+      par1NBTTagCompound.setInteger("spawnStoneY", this.spawnStoneY);
+      par1NBTTagCompound.setInteger("spawnStoneZ", this.spawnStoneZ);
+      par1NBTTagCompound.setInteger("spawnStoneWorldId", this.spawnStoneWorldId);
 
       NBTTagList nbtTagList = new NBTTagList();
       for (Entry<Entity, Integer> integerEntry : this.attackCountMap.entrySet()) {
