@@ -367,6 +367,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             this.setPositionAndUpdate(this.spawnStoneX, this.spawnStoneY, this.spawnStoneZ);
 
             this.getWorld().setBlockToAir(this.spawnStoneX, this.spawnStoneY - 1, this.spawnStoneZ);
+            this.experience = this.experience / 2;
             this.spawnStoneWorldId = -999;
          }
       }
@@ -767,6 +768,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             }
             this.setPositionAndUpdate(this.spawnStoneX, this.spawnStoneY, this.spawnStoneZ);
             this.getWorld().setBlockToAir(this.spawnStoneX, this.spawnStoneY - 1, this.spawnStoneZ);
+            this.experience = this.experience / 2;
             this.spawnStoneWorldId = -999;
          }
       }

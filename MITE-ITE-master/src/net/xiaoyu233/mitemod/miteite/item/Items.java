@@ -80,7 +80,7 @@ public class Items extends Item{
         Items.lambchopCooked.setItemPrice(0.6D).setItemCanBuy(true);
         Items.chickenCooked.setItemPrice(0.6D).setItemCanBuy(true);
         Items.porkCooked.setItemPrice(0.8D).setItemCanBuy(true);
-        Items.beefCooked.setItemPrice(1D).setItemCanBuy(true);
+            Items.beefCooked.setItemPrice(1D).setItemCanBuy(true);
 
         Items.redstone.setItemPrice(1D).setItemCanBuy(false);
 
