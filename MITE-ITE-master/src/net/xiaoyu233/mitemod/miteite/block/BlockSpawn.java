@@ -9,7 +9,7 @@ public class BlockSpawn extends Block {
     BlockSpawn(int par1, Material material) {
         super(par1, material, (new BlockConstants()).setNeverHidesAdjacentFaces().setNotAlwaysLegal());
         this.setMaxStackSize(1);
-        this.setBlockHardness(2F);
+        this.setBlockUnbreakable();
         this.setCreativeTab(CreativeModeTab.tabBlock);
         this.setStepSound(Block.soundStoneFootstep);
     }
@@ -21,17 +21,19 @@ public class BlockSpawn extends Block {
         }
     }
 
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer) {
-        if(!par1World.isRemote) {
-            if(par5EntityPlayer.getEntityName() == this.belongto) {
-                this.setBlockHardness(0);
-                this.setMinHarvestLevel(0);
-            } else {
-                this.setBlockHardness(-1.0F);
-                this.setMinHarvestLevel(100);
-            }
-        }
-    }
+//    public void onBlockClicked(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer) {
+//        if(!par1World.isRemote) {
+//            par5EntityPlayer.addChatMessage("复活石归属于："+this.belongto);
+//            if(par5EntityPlayer.getEntityName() == this.belongto) {
+//                this.setHardness(2F);
+//                this.setMinHarvestLevel(2);
+//            } else {
+//                this.setBlockUnbreakable();
+//                this.setHardness(-1.0F);
+//                this.setMinHarvestLevel(100);
+//            }
+//        }
+//    }
 
     public boolean tryPlaceBlock(World world, int x, int y, int z, EnumFace face, int metadata, Entity placer, boolean perform_placement_check, boolean drop_existing_block, boolean test_only) {
         if (!test_only && placer instanceof EntityPlayer) {

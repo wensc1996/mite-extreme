@@ -349,8 +349,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
          if (readyEmergencyItemList.size() > 0){
             result.setEntity_was_destroyed(false);
             this.activeEmergency(readyEmergencyItemList);
-         }
-         if(this.spawnStoneWorldId != -999) {
+         } else if(this.spawnStoneWorldId != -999) {
             result.setEntity_was_destroyed(false);
             this.setHealth(20, true, this.getHealFX());
             this.addPotionEffect(new MobEffect(MobEffectList.regeneration.id, 1200, 1));
@@ -752,8 +751,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
          }
          if (readyEmergencyItems.size() > 0){
             this.activeEmergency(readyEmergencyItems);
-         }
-         if(this.spawnStoneWorldId != -999) {
+         } else if(this.spawnStoneWorldId != -999) {
             entityDamageResult.setEntity_was_destroyed(false);
             this.setHealth(20, true, this.getHealFX());
             this.addPotionEffect(new MobEffect(MobEffectList.regeneration.id, 1200, 1));
