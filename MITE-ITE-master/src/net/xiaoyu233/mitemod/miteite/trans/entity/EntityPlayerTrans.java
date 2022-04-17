@@ -378,6 +378,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    @Inject(method = "clonePlayer",at = @At("RETURN"))
    public void clonePlayerInject(EntityPlayer par1EntityPlayer, boolean par2, CallbackInfo callbackInfo) {
+      this.spawnStoneWorldId = par1EntityPlayer.spawnStoneWorldId;
+      this.spawnStoneX = par1EntityPlayer.spawnStoneX;
+      this.spawnStoneY = par1EntityPlayer.spawnStoneY;
+      this.spawnStoneZ = par1EntityPlayer.spawnStoneZ;
       this.isFirstLogin = par1EntityPlayer.isFirstLogin;
       this.money = par1EntityPlayer.money;
    }

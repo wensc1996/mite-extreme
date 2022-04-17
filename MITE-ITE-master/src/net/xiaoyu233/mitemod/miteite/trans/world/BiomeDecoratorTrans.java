@@ -146,12 +146,12 @@ public class BiomeDecoratorTrans {
       int resource_multiplier = 1;
       frequency *= resource_multiplier;
       if (this.currentWorld.underworld_y_offset != 0 && world_gen_minable != this.gravelGen) {
-         frequency *= 8;
          if (world_gen_minable == this.adamantiteGen) {
-            frequency /= 4;
+            frequency *= 3;
+         } else {
+            frequency *= 8;
          }
       }
-
       while(frequency-- > 0) {
          if (this.randomGenerator.nextInt(10) == 0) {
             int x = this.chunk_X + this.randomGenerator.nextInt(16);
@@ -162,7 +162,6 @@ public class BiomeDecoratorTrans {
             }
          }
       }
-
    }
 
    protected void generateOres() {
