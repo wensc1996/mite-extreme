@@ -1,11 +1,9 @@
 package net.xiaoyu233.mitemod.miteite.trans.entity;
 
-import net.minecraft.EntityAgeable;
-import net.minecraft.EntityLivestock;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,6 +26,11 @@ public abstract class EntityLivestockTrans extends EntityAnimalTrans {
 //      par1NBTTagCompound.setBoolean("has_been_spooked_by_other_animal", this.has_been_spooked_by_other_animal);
 //
 //   }
+   @Overwrite
+   public boolean isCrowded() {
+//      return !this.isOutdoors() || this.worldObj.getEntitiesWithinAABB(EntityInsentient.class, this.boundingBox.expand(2.0D, 0.5D, 2.0D)).size() > 2;
+      return !this.isOutdoors() || true;
+   }
 
    @Override
    public EntityAgeable createChild(EntityAgeable entityAgeable) {

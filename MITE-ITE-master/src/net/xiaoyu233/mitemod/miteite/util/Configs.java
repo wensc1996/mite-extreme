@@ -119,7 +119,7 @@ public class Configs {
         public static ConfigItem <Integer> copperFrequencyOverworld = new ConfigItem("copperFrequencyOverworld", 40, "主世界铜矿生成频率");
         public static ConfigItem <Integer> silverFrequencyOverworld = new ConfigItem("silverFrequencyOverworld", 10, "主世界银矿生成频率");
         public static ConfigItem <Integer> ironFrequencyOverworld = new ConfigItem("ironFrequencyOverworld", 20, "主世界铁矿生成频率");
-        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld", 10, "主世界金矿生成频率");
+        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld_v0.0.5", 15, "主世界金矿生成频率");
         public static ConfigItem <Integer> mithrilFrequencyOverworld = new ConfigItem("mithrilFrequencyOverworld", 5, "主世界秘银矿生成频率");
         public static ConfigItem <Integer> lapisFrequencyOverworld = new ConfigItem("lapisFrequencyOverworld", 4, "主世界青金石矿生成频率");
         public static ConfigItem <Integer> diamondFrequencyOverworld = new ConfigItem("diamondFrequencyOverworld", 3, "主世界钻石矿生成频率");
@@ -241,7 +241,7 @@ public class Configs {
         wenscMap.put("copperFrequencyOverworld", wenscConfig.copperFrequencyOverworld);
         wenscMap.put("silverFrequencyOverworld", wenscConfig.silverFrequencyOverworld);
         wenscMap.put("ironFrequencyOverworld", wenscConfig.ironFrequencyOverworld);
-        wenscMap.put("goldFrequencyOverworld", wenscConfig.goldFrequencyOverworld);
+        wenscMap.put("goldFrequencyOverworld_v0.0.5", wenscConfig.goldFrequencyOverworld);
         wenscMap.put("mithrilFrequencyOverworld", wenscConfig.mithrilFrequencyOverworld);
         wenscMap.put("lapisFrequencyOverworld", wenscConfig.lapisFrequencyOverworld);
         wenscMap.put("diamondFrequencyOverworld", wenscConfig.diamondFrequencyOverworld);

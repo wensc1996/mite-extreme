@@ -7,6 +7,8 @@ public class BlockStairsColorful extends BlockStairs {
     BlockStairsColorful(int par1, Block par2Block, int par3) {
         super(par1, par2Block, par3);
         this.setBlockPrice(0.5D);
+        this.setBlockSoldPrice(0.5D);
+        this.setCushioning(1000.0F);
         this.setBlockCanBuy(true);
         this.setMaxStackSize(64);
         this.setLightValue(0.7F);

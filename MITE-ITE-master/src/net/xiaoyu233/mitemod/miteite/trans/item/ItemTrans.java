@@ -34,7 +34,8 @@ public abstract class ItemTrans {
    @Shadow
    protected List materials;
 
-   private double price = -1;
+   private double soldPrice = -1D;
+   private double price = -1D;
 
    private boolean isCanBuy = false;
 
@@ -64,6 +65,20 @@ public abstract class ItemTrans {
 
    public double getPrice() {
       return this.price;
+   }
+
+   public Item setItemSoldPrice(double price) {
+      return this.setSoldPrice(price);
+   }
+
+   // 向源类进行注入
+   public Item setSoldPrice(double price) {
+      this.soldPrice = price;
+      return (Item) ReflectHelper.dyCast(this);
+   }
+
+   public double getSoldPrice() {
+      return this.soldPrice;
    }
 
    public void setSugarContent(int sugarContent){

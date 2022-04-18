@@ -8,6 +8,7 @@ public class BlockColorful extends Blocks implements IBlockWithSubtypes {
     public BlockColorful(int par1, Material par2Material) {
         super(par1, par2Material, new BlockConstants());
         this.setBlockPrice(0.5D);
+        this.setBlockSoldPrice(0.5D);
         this.setBlockCanBuy(true);
         this.setMaxStackSize(64);
         this.setBlockHardness(2.0F);

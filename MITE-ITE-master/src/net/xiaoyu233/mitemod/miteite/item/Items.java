@@ -68,68 +68,70 @@ public class Items extends Item{
     }
 
     public static void registerItems() {
-        Items.manure.setItemPrice(0.1D).setItemCanBuy(false);
-        Items.seeds.setItemPrice(0.1D).setItemCanBuy(false);
-        Items.sinew.setItemPrice(0.1D).setItemCanBuy(false);
-        Items.silk.setItemPrice(0.1D).setItemCanBuy(false);
-        Items.feather.setItemPrice(0.1D).setItemCanBuy(false);
-        Items.flint.setItemPrice(0.2D).setItemCanBuy(false);
+        Items.manure.setItemPrice(0.1D).setSoldPrice(0.1D).setItemCanBuy(false);
+        Items.seeds.setItemPrice(0.1D).setSoldPrice(0.1D).setItemCanBuy(false);
+        Items.sinew.setItemPrice(0.1D).setSoldPrice(0.1D).setItemCanBuy(false);
+        Items.silk.setItemPrice(0.1D).setSoldPrice(0.1D).setItemCanBuy(false);
+        Items.feather.setItemPrice(0.1D).setSoldPrice(0.1D).setItemCanBuy(false);
+        Items.flint.setItemPrice(0.2D).setSoldPrice(0.1D).setItemCanBuy(false);
 
-        Items.fishCooked.setItemPrice(0.6D).setItemCanBuy(true);
-        Items.egg.setItemPrice(0.2D).setItemCanBuy(false);
-        Items.lambchopCooked.setItemPrice(0.6D).setItemCanBuy(true);
-        Items.chickenCooked.setItemPrice(0.6D).setItemCanBuy(true);
-        Items.porkCooked.setItemPrice(0.8D).setItemCanBuy(true);
-            Items.beefCooked.setItemPrice(1D).setItemCanBuy(true);
 
-        Items.redstone.setItemPrice(1D).setItemCanBuy(false);
+//        Items.egg.setItemPrice(0.2D).setSoldPrice(0.2D).setItemCanBuy(false);
+//        Items.lambchopCooked.setItemPrice(0.6D).setSoldPrice(0.6D).setItemCanBuy(true);
+//        Items.chickenCooked.setItemPrice(0.6D).setSoldPrice(0.6D).setItemCanBuy(true);
+//        Items.fishCooked.setItemPrice(0.6D).setSoldPrice(0.6D).setItemCanBuy(true);
+//        Items.porkCooked.setItemPrice(0.8D).setSoldPrice(0.8D).setItemCanBuy(true);
+//        Items.beefCooked.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(true);
+        Items.bread.setItemPrice(0.2D).setSoldPrice(0.2D).setCanBuy(true);
 
-        Items.coal.setItemPrice(1D).setItemCanBuy(false);
-        Items.bone.setItemPrice(1D).setItemCanBuy(false);
-        Items.gunpowder.setItemPrice(1D).setItemCanBuy(false);
-        Items.rottenFlesh.setItemPrice(1D).setItemCanBuy(false);
-        Items.spiderEye.setItemPrice(1D).setItemCanBuy(false);
+        Items.redstone.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
 
-        Items.doorWood.setItemPrice(1.5D).setItemCanBuy(false);
-        Items.doorCopper.setItemPrice(30D).setItemCanBuy(false);
-        Items.doorSilver.setItemPrice(30D).setItemCanBuy(false);
-        Items.doorGold.setItemPrice(30D).setItemCanBuy(false);
-        Items.doorIron.setItemPrice(60D).setItemCanBuy(false);
-        Items.doorMithril.setItemPrice(120D).setItemCanBuy(false);
-        Items.doorAdamantium.setItemPrice(180D).setItemCanBuy(false);
+        Items.coal.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.bone.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.gunpowder.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.rottenFlesh.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.spiderEye.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
 
-        Items.ingotCopper.setItemPrice(10D).setItemCanBuy(false);
-        Items.ingotSilver.setItemPrice(10D).setItemCanBuy(false);
-        Items.ingotGold.setItemPrice(10D).setItemCanBuy(false);
-        Items.ingotIron.setItemPrice(20D).setItemCanBuy(false);
-        Items.ingotAncientMetal.setItemPrice(30D).setItemCanBuy(false);
-        Items.ingotMithril.setItemPrice(40D).setItemCanBuy(false);
-        Items.ingotAdamantium.setItemPrice(60D).setItemCanBuy(false);
-        VIBRANIUM_INGOT.setItemPrice(100D).setItemCanBuy(false);
+        Items.doorWood.setItemPrice(1.5D).setSoldPrice(1.5D).setItemCanBuy(false);
+        Items.doorCopper.setItemPrice(30D).setSoldPrice(30D).setItemCanBuy(false);
+        Items.doorSilver.setItemPrice(30D).setSoldPrice(30D).setItemCanBuy(false);
+        Items.doorGold.setItemPrice(30D).setSoldPrice(30D).setItemCanBuy(false);
+        Items.doorIron.setItemPrice(60D).setSoldPrice(60D).setItemCanBuy(false);
+        Items.doorMithril.setItemPrice(120D).setSoldPrice(120D).setItemCanBuy(false);
+        Items.doorAdamantium.setItemPrice(180D).setSoldPrice(180D).setItemCanBuy(false);
 
-        Items.copperNugget.setItemPrice(1D).setItemCanBuy(false);
-        Items.silverNugget.setItemPrice(1D).setItemCanBuy(false);
-        Items.goldNugget.setItemPrice(1D).setItemCanBuy(false);
-        Items.ironNugget.setItemPrice(2D).setItemCanBuy(false);
-        Items.ancientMetalNugget.setItemPrice(3D).setItemCanBuy(false);
-        Items.mithrilNugget.setItemPrice(4D).setItemCanBuy(false);
-        Items.adamantiumNugget.setItemPrice(6D).setItemCanBuy(false);
-        VIBRANIUM_NUGGET.setItemPrice(10D).setItemCanBuy(false);
+        Items.ingotCopper.setItemPrice(10D).setSoldPrice(5D).setItemCanBuy(false);
+        Items.ingotSilver.setItemPrice(10D).setSoldPrice(10D).setItemCanBuy(false);
+        Items.ingotGold.setItemPrice(10D).setSoldPrice(10D).setItemCanBuy(false);
+        Items.ingotIron.setItemPrice(20D).setSoldPrice(20D).setItemCanBuy(false);
+        Items.ingotAncientMetal.setItemPrice(30D).setSoldPrice(30D).setItemCanBuy(false);
+        Items.ingotMithril.setItemPrice(40D).setSoldPrice(40D).setItemCanBuy(false);
+        Items.ingotAdamantium.setItemPrice(60D).setSoldPrice(60D).setItemCanBuy(false);
+        VIBRANIUM_INGOT.setItemPrice(100D).setSoldPrice(100D).setItemCanBuy(false);
 
-        Items.getItem(Blocks.plantYellow.blockID).setItemPrice(0.1D).setItemCanBuy(false);
-        Items.getItem(Blocks.plantRed.blockID).setItemPrice(0.1D).setItemCanBuy(false);
-        Items.getItem(Blocks.torchWood.blockID).setItemPrice(0.2D).setItemCanBuy(false);
+        Items.copperNugget.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.silverNugget.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.goldNugget.setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.ironNugget.setItemPrice(2D).setSoldPrice(2D).setItemCanBuy(false);
+        Items.ancientMetalNugget.setItemPrice(3D).setSoldPrice(3D).setItemCanBuy(false);
+        Items.mithrilNugget.setItemPrice(4D).setSoldPrice(4D).setItemCanBuy(false);
+        Items.adamantiumNugget.setItemPrice(6D).setSoldPrice(6D).setItemCanBuy(false);
+        VIBRANIUM_NUGGET.setItemPrice(10D).setSoldPrice(10D).setItemCanBuy(false);
 
-        Items.getItem(Blocks.leaves.blockID).setItemPrice(0.25D).setItemCanBuy(false);
-        Items.getItem(Blocks.planks.blockID).setItemPrice(0.25D).setItemCanBuy(false);
-        Items.getItem(Blocks.pumpkin.blockID).setItemPrice(0.25D).setItemCanBuy(false);
-        Items.getItem(Blocks.dirt.blockID).setItemPrice(0.5D).setItemCanBuy(false);
-        Items.getItem(Blocks.sand.blockID).setItemPrice(0.5D).setItemCanBuy(false);
-        Items.getItem(Blocks.cobblestone.blockID).setItemPrice(1D).setItemCanBuy(false);
-        Items.getItem(Blocks.stone.blockID).setItemPrice(2D).setItemCanBuy(false);
-        Items.getItem(Blocks.cobblestoneWall.blockID).setItemPrice(1D).setItemCanBuy(false);
-        Items.getItem(Blocks.wood.blockID).setItemPrice(1D).setItemCanBuy(false);
+        Items.getItem(Blocks.plantYellow.blockID).setItemPrice(0.1D).setSoldPrice(0.1D).setItemCanBuy(false);
+        Items.getItem(Blocks.plantRed.blockID).setItemPrice(0.1D).setSoldPrice(0.1D).setItemCanBuy(false);
+        Items.getItem(Blocks.torchWood.blockID).setItemPrice(0.2D).setSoldPrice(0.2D).setItemCanBuy(false);
 
+        Items.getItem(Blocks.leaves.blockID).setItemPrice(0.25D).setSoldPrice(0.25D).setItemCanBuy(false);
+        Items.getItem(Blocks.planks.blockID).setItemPrice(0.25D).setSoldPrice(0.25D).setItemCanBuy(false);
+        Items.getItem(Blocks.pumpkin.blockID).setItemPrice(0.25D).setSoldPrice(0.25D).setItemCanBuy(false);
+        Items.getItem(Blocks.dirt.blockID).setItemPrice(0.5D).setSoldPrice(0.5D).setItemCanBuy(false);
+        Items.getItem(Blocks.sand.blockID).setItemPrice(0.5D).setSoldPrice(0.5D).setItemCanBuy(false);
+        Items.getItem(Blocks.cobblestone.blockID).setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.getItem(Blocks.stone.blockID).setItemPrice(2D).setSoldPrice(2D).setItemCanBuy(false);
+        Items.getItem(Blocks.cobblestoneWall.blockID).setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.getItem(Blocks.wood.blockID).setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
+        Items.getItem(Blocks.brewingStand.blockID).setItemPrice(100D).setItemCanBuy(true);
 
         register("obsidian_stick", OBSIDIAN_STICK, CreativeModeTab.tabMaterials);
         register("vibranium", VIBRANIUM_INGOT, CreativeModeTab.tabMaterials);

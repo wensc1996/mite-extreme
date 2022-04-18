@@ -6,8 +6,10 @@ public class BlockLantern extends Blocks {
     BlockLantern(int par1, Material material) {
         super(par1, material, (new BlockConstants()).setNeverHidesAdjacentFaces().setNotAlwaysLegal());
         this.setBlockPrice(0.5D);
+        this.setBlockSoldPrice(0.5D);
         this.setBlockCanBuy(true);
         this.setMaxStackSize(64);
+        this.setCushioning(1000.0F);
         this.setLightValue(1F);
         this.setBounds(true);
         this.setCreativeTab(CreativeModeTab.tabBlock);
@@ -22,6 +24,10 @@ public class BlockLantern extends Blocks {
 //    public boolean isLegalOn(int metadata, Block block_below, int block_below_metadata) {
 //        return block_below != null && block_below != leaves && block_below.isTopFlatAndSolid(block_below_metadata);
 //    }
+
+    public boolean canBeReplacedBy(int metadata, Block other_block, int other_block_metadata) {
+        return false;
+    }
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         if (!info.wasExploded() && !info.wasCrushed()) {
