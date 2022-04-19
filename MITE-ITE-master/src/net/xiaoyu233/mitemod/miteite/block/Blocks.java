@@ -58,9 +58,6 @@ public class Blocks extends Block{
     public static final Block blockStairsColorful14 = new BlockStairsColorful(190, blockColorful, 14);
     public static final Block blockStairsColorful15 = new BlockStairsColorful(191, blockColorful, 15);
 
-    public static final BlockStepColorful blockStepColorful = (BlockStepColorful)(new BlockStepColorful(193, Material.stone));
-//    public static final Block stoneDoubleSlab = (BlockDoubleSlab)(new BlockDoubleSlab(43, stoneSingleSlab)).setStepSound(soundStoneFootstep);
-
     public static final BlockSpawn blockSpawn = (new BlockSpawn(192, Material.stone));
     static {
         try {
@@ -137,8 +134,6 @@ public class Blocks extends Block{
         registerItemBlock(blockStairsColorful13, "colorful_stair");
         registerItemBlock(blockStairsColorful14, "colorful_stair");
         registerItemBlock(blockStairsColorful15, "colorful_stair");
-
-        registerItemBlock(blockStepColorful, "colorful");
     }
 
     private static void registerItemBlock(Block block,String resourceLocation){

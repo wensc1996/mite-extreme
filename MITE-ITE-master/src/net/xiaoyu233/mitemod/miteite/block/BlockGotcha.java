@@ -28,6 +28,7 @@ public class BlockGotcha extends BlockHalfTransparant implements IBlockWithSubty
         this.setCreativeTab(CreativeModeTab.tabBlock);
         this.setStepSound(Block.soundGlassFootstep);
         this.setLightValue(1.0F);
+        this.setResistance(1000F);
     }
 
     public BlockGotcha setCraftingDifficultyAsComponent(float difficulty) {

@@ -20,7 +20,7 @@ public class BlockSpawn extends Block {
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         EntityPlayer entityPlayer = info.getResponsiblePlayer();
-        if (entityPlayer.spawnStoneWorldId != -999) {
+        if (entityPlayer != null && entityPlayer.spawnStoneWorldId != -999) {
             if (info.x == entityPlayer.spawnStoneX && info.y == (entityPlayer.spawnStoneY - 1) && info.z == entityPlayer.spawnStoneZ) {
                 entityPlayer.spawnStoneWorldId = -999;
                 return super.dropBlockAsEntityItem(info);

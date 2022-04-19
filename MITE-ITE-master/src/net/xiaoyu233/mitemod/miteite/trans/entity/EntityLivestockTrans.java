@@ -29,7 +29,7 @@ public abstract class EntityLivestockTrans extends EntityAnimalTrans {
    @Overwrite
    public boolean isCrowded() {
 //      return !this.isOutdoors() || this.worldObj.getEntitiesWithinAABB(EntityInsentient.class, this.boundingBox.expand(2.0D, 0.5D, 2.0D)).size() > 2;
-      return !this.isOutdoors() || true;
+      return !this.isOutdoors() || this.worldObj.getEntitiesWithinAABB(EntityInsentient.class, this.boundingBox.expand(2.0D, 0.5D, 2.0D)).size() > 10;
    }
 
    @Override

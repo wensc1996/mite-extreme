@@ -27,7 +27,6 @@ public class Configs {
     public static class wenscConfig {
         public static ConfigItem <Boolean> BlnGravel = new ConfigItem("BlnGravel", true, "是否增加燧石概率");
         public static ConfigItem <Boolean> isOpenStrongBoxBreakRecord = new ConfigItem("isOpenStrongBoxBreakRecord", true, "是否开启私人箱子破坏记录");
-        public static ConfigItem <Boolean> isDropBlueGem = new ConfigItem("isDropBlueGem", true, "是否掉落蓝宝石");
         public static ConfigItem <Boolean> isRecipeGATorch = new ConfigItem("isRecipeGATorch", true, "是否有一捆火把配方");
         public static ConfigItem <Boolean> isRecipeRingKiller = new ConfigItem("isRecipeRingKiller", true, "是否有魔灵刃配方");
         public static ConfigItem <Float> inWallDamageForPlayer = new ConfigItem("inWallDamageForPlayer", 10.0F, "玩家墙内窒息伤害(小数)");
@@ -116,20 +115,20 @@ public class Configs {
         public static ConfigItem <Integer> breedXpCow = new ConfigItem("breedXpCow", 25, "牛繁殖获得经验");
         public static ConfigItem <Integer> emeraldFrequencyBigHills = new ConfigItem("emeraldFrequencyBigHills", 6, "山地绿宝石矿每区块最少生成个数");
         public static ConfigItem <Boolean> overworldAdamantiteOre = new ConfigItem("overworldAdamantiteOre", false, "主世界生成艾德曼");
-        public static ConfigItem <Integer> copperFrequencyOverworld = new ConfigItem("copperFrequencyOverworld", 40, "主世界铜矿生成频率");
-        public static ConfigItem <Integer> silverFrequencyOverworld = new ConfigItem("silverFrequencyOverworld", 10, "主世界银矿生成频率");
-        public static ConfigItem <Integer> ironFrequencyOverworld = new ConfigItem("ironFrequencyOverworld", 20, "主世界铁矿生成频率");
-        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld_v0.0.5", 15, "主世界金矿生成频率");
-        public static ConfigItem <Integer> mithrilFrequencyOverworld = new ConfigItem("mithrilFrequencyOverworld", 5, "主世界秘银矿生成频率");
+        public static ConfigItem <Integer> copperFrequencyOverworld = new ConfigItem("copperFrequencyOverworld_v0.0.5", 40, "主世界铜矿生成频率");
+        public static ConfigItem <Integer> silverFrequencyOverworld = new ConfigItem("silverFrequencyOverworld_v0.0.5", 20, "主世界银矿生成频率");
+        public static ConfigItem <Integer> ironFrequencyOverworld = new ConfigItem("ironFrequencyOverworld_v0.0.5", 30, "主世界铁矿生成频率");
+        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld_v0.0.5", 20, "主世界金矿生成频率");
+        public static ConfigItem <Integer> mithrilFrequencyOverworld = new ConfigItem("mithrilFrequencyOverworld_v0.0.5", 0, "主世界秘银矿生成频率");
         public static ConfigItem <Integer> lapisFrequencyOverworld = new ConfigItem("lapisFrequencyOverworld", 4, "主世界青金石矿生成频率");
-        public static ConfigItem <Integer> diamondFrequencyOverworld = new ConfigItem("diamondFrequencyOverworld", 3, "主世界钻石矿生成频率");
+        public static ConfigItem <Integer> diamondFrequencyOverworld = new ConfigItem("diamondFrequencyOverworld_v0.0.5", 0, "主世界钻石矿生成频率");
         public static ConfigItem <Integer> adamantiumFrequencyOverworld = new ConfigItem("adamantiumFrequencyOverworld", 1, "主世界艾德曼矿生成频率");
-        public static ConfigItem <Integer> copperFrequencyUnderworld = new ConfigItem("copperFrequencyUnderworld", 20, "地底世界铜矿生成频率");
-        public static ConfigItem <Integer> silverFrequencyUnderworld = new ConfigItem("silverFrequencyUnderworld", 10, "地底世界银矿生成频率");
-        public static ConfigItem <Integer> ironFrequencyUnderworld = new ConfigItem("ironFrequencyUnderworld", 30, "地底世界铁矿生成频率");
-        public static ConfigItem <Integer> goldFrequencyUnderworld = new ConfigItem("goldFrequencyUnderworld", 10, "地底世界金矿生成频率");
+        public static ConfigItem <Integer> copperFrequencyUnderworld = new ConfigItem("copperFrequencyUnderworld_v0.0.5", 0, "地底世界铜矿生成频率");
+        public static ConfigItem <Integer> silverFrequencyUnderworld = new ConfigItem("silverFrequencyUnderworld_v0.0.5", 0, "地底世界银矿生成频率");
+        public static ConfigItem <Integer> ironFrequencyUnderworld = new ConfigItem("ironFrequencyUnderworld_v0.0.5", 0, "地底世界铁矿生成频率");
+        public static ConfigItem <Integer> goldFrequencyUnderworld = new ConfigItem("goldFrequencyUnderworld_v0.0.5", 0, "地底世界金矿生成频率");
         public static ConfigItem <Integer> mithrilFrequencyUnderworld = new ConfigItem("mithrilFrequencyUnderworld", 5, "地底世界秘银矿生成频率");
-        public static ConfigItem <Integer> lapisFrequencyUnderworld = new ConfigItem("lapisFrequencyUnderworld", 5, "地底世界青金石矿生成频率");
+        public static ConfigItem <Integer> lapisFrequencyUnderworld = new ConfigItem("lapisFrequencyUnderworld_v0.0.5", 0, "地底世界青金石矿生成频率");
         public static ConfigItem <Integer> diamondFrequencyUnderworld = new ConfigItem("diamondFrequencyUnderworld", 5, "地底世界钻石矿生成频率");
         public static ConfigItem <Integer> adamantiumFrequencyUnderworld = new ConfigItem("adamantiumFrequencyUnderworld", 2, "地底世界艾德曼矿生成频率");
         public static ConfigItem <Integer> underworldMantleBlockOffset = new ConfigItem("underworldMantleBlockOffset_v0.0.2", 75, "地底世界地幔位置向上偏移");
@@ -148,7 +147,6 @@ public class Configs {
 
         wenscMap.put("BlnGravel", wenscConfig.BlnGravel);
         wenscMap.put("isOpenStrongBoxBreakRecord", wenscConfig.isOpenStrongBoxBreakRecord);
-        wenscMap.put("isDropBlueGem", wenscConfig.isDropBlueGem);
         wenscMap.put("isRecipeGATorch", wenscConfig.isRecipeGATorch);
         wenscMap.put("isRecipeRingKiller", wenscConfig.isRecipeRingKiller);
 
@@ -238,20 +236,20 @@ public class Configs {
         wenscMap.put("breedXpCow", wenscConfig.breedXpCow);
         wenscMap.put("emeraldFrequencyBigHills", wenscConfig.emeraldFrequencyBigHills);
         wenscMap.put("overworldAdamantiteOre", wenscConfig.overworldAdamantiteOre);
-        wenscMap.put("copperFrequencyOverworld", wenscConfig.copperFrequencyOverworld);
-        wenscMap.put("silverFrequencyOverworld", wenscConfig.silverFrequencyOverworld);
-        wenscMap.put("ironFrequencyOverworld", wenscConfig.ironFrequencyOverworld);
+        wenscMap.put("copperFrequencyOverworld_v0.0.5", wenscConfig.copperFrequencyOverworld);
+        wenscMap.put("silverFrequencyOverworld_v0.0.5", wenscConfig.silverFrequencyOverworld);
+        wenscMap.put("ironFrequencyOverworld_v0.0.5", wenscConfig.ironFrequencyOverworld);
         wenscMap.put("goldFrequencyOverworld_v0.0.5", wenscConfig.goldFrequencyOverworld);
-        wenscMap.put("mithrilFrequencyOverworld", wenscConfig.mithrilFrequencyOverworld);
+        wenscMap.put("mithrilFrequencyOverworld_v0.0.5", wenscConfig.mithrilFrequencyOverworld);
         wenscMap.put("lapisFrequencyOverworld", wenscConfig.lapisFrequencyOverworld);
-        wenscMap.put("diamondFrequencyOverworld", wenscConfig.diamondFrequencyOverworld);
+        wenscMap.put("diamondFrequencyOverworld_v0.0.5", wenscConfig.diamondFrequencyOverworld);
         wenscMap.put("adamantiumFrequencyOverworld", wenscConfig.adamantiumFrequencyOverworld);
-        wenscMap.put("copperFrequencyUnderworld", wenscConfig.copperFrequencyUnderworld);
-        wenscMap.put("silverFrequencyUnderworld", wenscConfig.silverFrequencyUnderworld);
-        wenscMap.put("ironFrequencyUnderworld", wenscConfig.ironFrequencyUnderworld);
-        wenscMap.put("goldFrequencyUnderworld", wenscConfig.goldFrequencyUnderworld);
+        wenscMap.put("copperFrequencyUnderworld_v0.0.5", wenscConfig.copperFrequencyUnderworld);
+        wenscMap.put("silverFrequencyUnderworld_v0.0.5", wenscConfig.silverFrequencyUnderworld);
+        wenscMap.put("ironFrequencyUnderworld_v0.0.5", wenscConfig.ironFrequencyUnderworld);
+        wenscMap.put("goldFrequencyUnderworld_v0.0.5", wenscConfig.goldFrequencyUnderworld);
         wenscMap.put("mithrilFrequencyUnderworld", wenscConfig.mithrilFrequencyUnderworld);
-        wenscMap.put("lapisFrequencyUnderworld", wenscConfig.lapisFrequencyUnderworld);
+        wenscMap.put("lapisFrequencyUnderworld_v0.0.5", wenscConfig.lapisFrequencyUnderworld);
         wenscMap.put("diamondFrequencyUnderworld", wenscConfig.diamondFrequencyUnderworld);
         wenscMap.put("adamantiumFrequencyUnderworld", wenscConfig.adamantiumFrequencyUnderworld);
         wenscMap.put("underworldMantleBlockOffset_v0.0.2", wenscConfig.underworldMantleBlockOffset);

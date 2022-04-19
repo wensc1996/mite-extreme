@@ -117,6 +117,9 @@ public class Items extends Item{
         Items.mithrilNugget.setItemPrice(4D).setSoldPrice(4D).setItemCanBuy(false);
         Items.adamantiumNugget.setItemPrice(6D).setSoldPrice(6D).setItemCanBuy(false);
         VIBRANIUM_NUGGET.setItemPrice(10D).setSoldPrice(10D).setItemCanBuy(false);
+        Items.brewingStand.setItemPrice(500D).setItemCanBuy(true);
+        Items.netherStalkSeeds.setItemPrice(10D).setItemCanBuy(true);
+
 
         Items.getItem(Blocks.plantYellow.blockID).setItemPrice(0.1D).setSoldPrice(0.1D).setItemCanBuy(false);
         Items.getItem(Blocks.plantRed.blockID).setItemPrice(0.1D).setSoldPrice(0.1D).setItemCanBuy(false);
@@ -131,7 +134,6 @@ public class Items extends Item{
         Items.getItem(Blocks.stone.blockID).setItemPrice(2D).setSoldPrice(2D).setItemCanBuy(false);
         Items.getItem(Blocks.cobblestoneWall.blockID).setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
         Items.getItem(Blocks.wood.blockID).setItemPrice(1D).setSoldPrice(1D).setItemCanBuy(false);
-        Items.getItem(Blocks.brewingStand.blockID).setItemPrice(100D).setItemCanBuy(true);
 
         register("obsidian_stick", OBSIDIAN_STICK, CreativeModeTab.tabMaterials);
         register("vibranium", VIBRANIUM_INGOT, CreativeModeTab.tabMaterials);

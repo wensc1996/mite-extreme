@@ -12,8 +12,11 @@ public class BlockLantern extends Blocks {
         this.setCushioning(1000.0F);
         this.setLightValue(1F);
         this.setBounds(true);
+        this.setResistance(1000F);
         this.setCreativeTab(CreativeModeTab.tabBlock);
     }
+
+
     private void setBounds(boolean for_all_threads) {
         float var1 = 0.375F;
         float var2 = var1 / 2.0F;
