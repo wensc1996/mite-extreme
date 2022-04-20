@@ -142,8 +142,9 @@ public class Blocks extends Block{
         Item item = new ItemBlock(block).setUnlocalizedName(resourceLocation);
         item.setItemPrice(block.getPrice());
         item.setItemCanBuy(block.getCanBuy());
-        Item.itemsList[Constant.getNextItemID()] = item;
+        item.setItemSoldPrice(block.getSoldPrice());
         item.setMaxStackSize(block.getItemStackLimit());
+        Item.itemsList[Constant.getNextItemID()] = item;
     }
 
     public static void registerRecipes(RecipeRegister register) {
