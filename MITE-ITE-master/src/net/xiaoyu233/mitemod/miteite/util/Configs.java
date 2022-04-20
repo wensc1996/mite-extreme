@@ -140,6 +140,7 @@ public class Configs {
         public static ConfigItem <Integer> underworldGateOpenDay = new ConfigItem("underworldGateOpenDay", 1, "地下世界传送门多少天可以打开(主世界天数)");
         public static ConfigItem <Integer> netherGateOpenDay = new ConfigItem("netherGateOpenDay", 1, "地狱传送门多少天可以打开(主世界天数)");
         public static ConfigItem <Boolean> isAfterDeathKeep = new ConfigItem("isAfterDeathKeep", false, "是否死亡不掉落");
+        public static ConfigItem <Boolean> isCloseShop = new ConfigItem("isCloseShop", false, "关闭商店系统");
 
     }
 
@@ -261,6 +262,9 @@ public class Configs {
         wenscMap.put("underworldGateOpenDay", wenscConfig.underworldGateOpenDay);
         wenscMap.put("netherGateOpenDay", wenscConfig.netherGateOpenDay);
         wenscMap.put("isAfterDeathKeep", wenscConfig.isAfterDeathKeep);
+        wenscMap.put("isCloseShop", wenscConfig.isCloseShop);
+
+
 
 
 

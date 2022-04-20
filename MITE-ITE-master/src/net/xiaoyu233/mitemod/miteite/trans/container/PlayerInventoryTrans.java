@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.ItemRingKiller;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.network.CPacketSyncItems;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -319,9 +320,11 @@ public class PlayerInventoryTrans {
          var3 = this.jewelryInventory;
       }
       if(var3 == this.jewelryInventory && par1 == 5 && par2ItemStack != null) {
-         if(par2ItemStack.getItem().getSoldPrice() != -1D) {
-            if(!this.player.worldObj.isRemote) {
-               player.addChatMessage("现有余额：" + String.format("%.2f", player.plusMoney(par2ItemStack.stackSize * par2ItemStack.getItem().getSoldPrice())));
+         if(!Configs.wenscConfig.isCloseShop.ConfigValue) {
+            if(par2ItemStack.getItem().getSoldPrice() != -1D) {
+               if(!this.player.worldObj.isRemote) {
+                  player.addChatMessage("现有余额：" + String.format("%.2f", player.plusMoney(par2ItemStack.stackSize * par2ItemStack.getItem().getSoldPrice())));
+               }
             }
          }
          var3[par1] = null;

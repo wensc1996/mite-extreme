@@ -36,7 +36,7 @@ public enum ToolModifierTypes implements ItemModifierTypes{
     UNNATURAL_MODIFIER(0.1f,"超自然",EnumChatFormat.LIGHT_GRAY,6, itemStack -> !ToolModifierTypes.isWeapon(itemStack),5),
     DEMON_POWER(0.25f,"恶魔之力",EnumChatFormat.RED,4, ToolModifierTypes::isWeapon, 1),
     GEOLOGY(0.5f,"地质学",EnumChatFormat.valueOf("GOLD"),2,itemStack -> itemStack.getItem() instanceof ItemPickaxe,1);
-//    BEHEADING_MODIFIER(0.02f,"斩首",EnumChatFormats.DEAR_GREEN,1, ToolModifierTypes::isWeapon, 5);
+//    BEHEADING_MODIFIER(0.02f, "斩首" , EnumChatFormats.DEAR_GREEN,1, ToolModifierTypes::isWeapon, 5);
     public final String nbtName;
     public final float levelAddition;
     public final String displayName;

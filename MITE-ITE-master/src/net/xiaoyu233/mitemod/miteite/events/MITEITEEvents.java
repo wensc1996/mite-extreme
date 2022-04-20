@@ -9,6 +9,7 @@ import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.item.ArmorModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
 import net.xiaoyu233.mitemod.miteite.network.*;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 
 import java.util.Iterator;
@@ -210,53 +211,56 @@ public class MITEITEEvents {
                 event.setExecuteSuccess(true);
             }
         }
-
-        if (par2Str.startsWith("money")) {
-            player.addChatMessage("现有余额：" + String.format("%.2f", player.money));
-            event.setExecuteSuccess(true);
-        }
-
-        if (par2Str.startsWith("buy")) {
-            System.out.println(par2Str);
-            String sid = par2Str.substring(4);
-            String[] pos = sid.split(" ");
-            int[] poses = new int[3];
-            int Rx = 0;
-
-            for(int Rz = pos.length; Rx < Rz; ++Rx) {
-                String po = pos[Rx];
-                poses[Rx] = Integer.parseInt(po);
+        if(!Configs.wenscConfig.isCloseShop.ConfigValue) {
+            if (par2Str.startsWith("money")) {
+                player.addChatMessage("现有余额：" + String.format("%.2f", player.money));
+                event.setExecuteSuccess(true);
             }
 
-            ItemStack buyGoods = null;
-            if(pos.length == 3) {
-                buyGoods = new ItemStack(poses[0], poses[1], poses[2]);
-            } else if(pos.length == 2) {
-                buyGoods = new ItemStack(poses[0], poses[1], 0);
-            }
-            if(buyGoods == null) {
-                player.addChatMessage("商品ID输入错误");
-            } else {
-                if(buyGoods.getPrice() == -1D) {
-                    player.addChatMessage("商店暂不可兑换该商品");
+            if (par2Str.startsWith("buy")) {
+                System.out.println(par2Str);
+                String sid = par2Str.substring(4);
+                String[] pos = sid.split(" ");
+                int[] poses = new int[3];
+                int Rx = 0;
+
+                for(int Rz = pos.length; Rx < Rz; ++Rx) {
+                    String po = pos[Rx];
+                    poses[Rx] = Integer.parseInt(po);
+                }
+
+                ItemStack buyGoods = null;
+                if(pos.length == 3) {
+                    buyGoods = new ItemStack(poses[0], poses[1], poses[2]);
+                } else if(pos.length == 2) {
+                    buyGoods = new ItemStack(poses[0], poses[1], 0);
+                }
+                if(buyGoods == null) {
+                    player.addChatMessage("商品ID输入错误");
                 } else {
-                    if(buyGoods.getItem().getCanBuy()) {
-                        if(player.money <= 0) {
-                            player.addChatMessage("钱包空空");
-                        } else if(player.money - buyGoods.getPrice() * poses[1] < 0){
-                            player.addChatMessage("余额不足，无法购买");
-                        } else {
-                            player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney(buyGoods.getPrice() * poses[1])));
-                            player.addContainedItem(poses[0]);
-                            player.dropItemStack(buyGoods, 1.0F);
-                        }
-                    } else {
+                    if(buyGoods.getPrice() == -1D) {
                         player.addChatMessage("商店暂不可兑换该商品");
+                    } else {
+                        if(buyGoods.getItem().getCanBuy()) {
+                            if(player.money <= 0) {
+                                player.addChatMessage("钱包空空");
+                            } else if(player.money - buyGoods.getPrice() * poses[1] < 0){
+                                player.addChatMessage("余额不足，无法购买");
+                            } else {
+                                player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney(buyGoods.getPrice() * poses[1])));
+                                player.addContainedItem(poses[0]);
+                                player.dropItemStack(buyGoods, 1.0F);
+                            }
+                        } else {
+                            player.addChatMessage("商店暂不可兑换该商品");
+                        }
                     }
                 }
+                event.setExecuteSuccess(true);
             }
-            event.setExecuteSuccess(true);
         }
+
+
 
         if (par2Str.startsWith("sleep")) {
             StringBuilder notSleepingPlayers = new StringBuilder();

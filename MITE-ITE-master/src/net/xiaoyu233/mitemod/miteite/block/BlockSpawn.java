@@ -1,13 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
-
-import java.util.Iterator;
-
 public class BlockSpawn extends Block {
-    String belongto = "";
-    ChunkCoordinates spawnPoint = null;
-
     BlockSpawn(int par1, Material material) {
         super(par1, material, (new BlockConstants()).setNeverHidesAdjacentFaces().setNotAlwaysLegal());
         this.setMaxStackSize(1);
@@ -16,6 +10,29 @@ public class BlockSpawn extends Block {
         this.setResistance(60000F);
         this.setCreativeTab(CreativeModeTab.tabBlock);
         this.setStepSound(Block.soundStoneFootstep);
+    }
+
+
+    public int dropBlockAsItself(BlockBreakInfo info) {
+        if (info.block != this) {
+            Minecraft.setErrorMessage("dropBlockAsItself: info.block!=this");
+        }
+
+        if (!info.block.canBeCarried()) {
+            Minecraft.setErrorMessage("dropBlockAsItself: " + this + " cannot be carried");
+        }
+
+        EntityPlayer entityPlayer = info.getResponsiblePlayer();
+        if (entityPlayer != null && entityPlayer.spawnStoneWorldId != -999) {
+            if (info.x == entityPlayer.spawnStoneX && info.y == (entityPlayer.spawnStoneY - 1) && info.z == entityPlayer.spawnStoneZ) {
+                entityPlayer.spawnStoneWorldId = -999;
+                return this.dropBlockAsEntityItem(info, this.createStackedBlock(info.getMetadata()));
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
     }
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
@@ -64,14 +81,11 @@ public class BlockSpawn extends Block {
         if(!world.isRemote) {
             EntityPlayer entityPlayer = (EntityPlayer) placer;
             if(entityPlayer != null) {
-                entityPlayer.plusMoney(1D);
                 if(entityPlayer.spawnStoneWorldId == -999) {
-                    this.spawnPoint = new ChunkCoordinates(x, y, z);
                     entityPlayer.spawnStoneX = x;
                     entityPlayer.spawnStoneY = y + 1;
                     entityPlayer.spawnStoneZ = z;
                     entityPlayer.setSpawnStoneWorldId(world.provider.dimensionId);
-                    this.belongto = entityPlayer.getEntityName();
                 } else {
                     entityPlayer.addChatMessage("已经放置复活传送阵，请勿重复放置");
                     return false;
