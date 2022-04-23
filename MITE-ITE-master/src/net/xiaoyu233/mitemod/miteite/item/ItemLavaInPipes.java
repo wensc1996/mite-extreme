@@ -23,9 +23,7 @@ public class ItemLavaInPipes extends Item {
     public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {
         if (extended_info) {
             info.add(" ");
-            info.add(EnumChatFormat.BROWN + Translator.getFormatted("请勿随身携带", new Object[0]));
-            info.add(EnumChatFormat.BLUE + Translator.getFormatted("烫烫烫烫烫烫", new Object[0]));
-            info.add(EnumChatFormat.DARK_PURPLE + Translator.getFormatted("10S着火效果", new Object[0]));
+            info.add(EnumChatFormat.BROWN + Translator.getFormatted("无限燃料", new Object[0]));
         }
     }
 }

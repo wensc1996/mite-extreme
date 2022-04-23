@@ -17,7 +17,7 @@ public class PlayerInventoryTrans {
    @Shadow
    public ItemStack[] mainInventory = new ItemStack[36];
 
-   public ItemStack[] jewelryInventory = new ItemStack[6];
+   public ItemStack[] jewelryInventory = new ItemStack[8];
 
    @Shadow
    public ItemStack[] armorInventory = new ItemStack[4];
@@ -97,7 +97,7 @@ public class PlayerInventoryTrans {
    @Overwrite
    public void readFromNBT(NBTTagList par1NBTTagList) {
       this.mainInventory = new ItemStack[36];
-      this.jewelryInventory = new ItemStack[6];
+      this.jewelryInventory = new ItemStack[8];
       this.armorInventory = new ItemStack[4];
 
       for(int var2 = 0; var2 < par1NBTTagList.tagCount(); ++var2) {
@@ -319,7 +319,7 @@ public class PlayerInventoryTrans {
          par1 -= var3.length;
          var3 = this.jewelryInventory;
       }
-      if(var3 == this.jewelryInventory && par1 == 5 && par2ItemStack != null) {
+      if(var3 == this.jewelryInventory && par1 == 7 && par2ItemStack != null) {
          if(!Configs.wenscConfig.isCloseShop.ConfigValue) {
             if(par2ItemStack.getItem().getSoldPrice() != -1D) {
                if(!this.player.worldObj.isRemote) {

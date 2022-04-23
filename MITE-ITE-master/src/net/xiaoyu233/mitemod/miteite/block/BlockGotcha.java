@@ -17,8 +17,8 @@ public class BlockGotcha extends BlockHalfTransparant implements IBlockWithSubty
 
     public BlockGotcha(int par1, Material par2Material, boolean par3) {
         super(par1, "glass", par2Material, par3, (new BlockConstants()).setNeverHidesAdjacentFaces());
-        this.setBlockPrice(0.5D);
-        this.setBlockSoldPrice(0.5D);
+        this.setBlockPrice(2D);
+        this.setBlockSoldPrice(2D);
         this.setBlockCanBuy(true);
         this.setMaxStackSize(64);
         this.setBlockHardness(0.0F);

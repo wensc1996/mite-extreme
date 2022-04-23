@@ -6,12 +6,12 @@ public class BlockSpawn extends Block {
         super(par1, material, (new BlockConstants()).setNeverHidesAdjacentFaces().setNotAlwaysLegal());
         this.setMaxStackSize(1);
         this.setHardness(2F);
+        this.setLightOpacity(0);
         this.setMinHarvestLevel(2);
         this.setResistance(60000F);
         this.setCreativeTab(CreativeModeTab.tabBlock);
         this.setStepSound(Block.soundStoneFootstep);
     }
-
 
     public int dropBlockAsItself(BlockBreakInfo info) {
         if (info.block != this) {

@@ -14,6 +14,6 @@ public abstract class BlockGrowingPlantTrans extends BlockPlant {
 
     @Overwrite
     public float getGlobalGrowthRateModifierFromMITE() {
-        return 0.75F;
+        return 0.50F;
     }
 }

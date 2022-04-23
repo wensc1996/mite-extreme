@@ -32,11 +32,27 @@ public class EntityEnderDragonTrans extends EntityInsentient implements IComplex
    private double targetZ;
    private int weaknessCountdown;
 
+   public boolean canSpawnInShallowWater() {
+      return false;
+   }
+
+   public String an(){
+      return this.getEntityName();
+   };
+
+   public float aT(){
+      return this.getMaxHealth();
+   };
+
+   public float aN(){
+      return this.getHealth();
+   };
+
    public EntityEnderDragonTrans(World par1World) {
       super(par1World);
    }
 
-
+   @Override
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
       this.getEntityAttribute(GenericAttributes.maxHealth).setAttribute(1250D);

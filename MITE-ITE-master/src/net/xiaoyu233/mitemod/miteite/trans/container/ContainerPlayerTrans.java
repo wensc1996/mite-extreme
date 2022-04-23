@@ -18,10 +18,13 @@ public abstract class ContainerPlayerTrans extends MITEContainerCrafting {
     public void createSlotsInject(CallbackInfo callbackInfo) {
         int hotbar_index;
         int x;
-        for(hotbar_index = 0; hotbar_index < 5; ++hotbar_index) {
-            this.addSlotToContainer(new Slot(this.player.inventory, 36 + hotbar_index, 80 + hotbar_index * 18, 64));
+        for(hotbar_index = 0; hotbar_index < 4; ++hotbar_index) {
+            this.addSlotToContainer(new Slot(this.player.inventory, 36 + hotbar_index, 184, 8 + hotbar_index * 18));
         }
-        this.addSlotToContainer(new Slot(this.player.inventory, 41, 125 , 8));
+        for(hotbar_index = 0; hotbar_index < 3; ++hotbar_index) {
+            this.addSlotToContainer(new Slot(this.player.inventory, 40 + hotbar_index, 184, 84 + hotbar_index * 18));
+        }
+        this.addSlotToContainer(new Slot(this.player.inventory, 43, 184 , 142));
     }
 
     @Overwrite

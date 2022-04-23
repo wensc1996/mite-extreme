@@ -105,7 +105,7 @@ public class Configs {
         public static ConfigItem <Float> enderDragonImmuneToArrowHealthPercent = new ConfigItem("enderDragonImmuneToArrowHealthPercent", 0.3f, "末影龙免疫弓箭血量百分比");
         public static ConfigItem <Boolean> enderDragonAttackSlowness = new ConfigItem("enderDragonAttackSlowness", true, "末影龙攻击玩家给予玩家缓慢效果");
         public static ConfigItem <Float> netherModAttackFireChance = new ConfigItem("netherModAttackFireChance", 0.5f, "地狱生物攻击火焰附加概率");
-        public static ConfigItem <Integer> slimeAttackDamageMultiplier = new ConfigItem("slimeAttackDamageMultiplier", 1, "绿色史莱姆伤害倍数");
+        public static ConfigItem <Integer> slimeAttackDamageMultiplier = new ConfigItem("slimeAttackDamageMultiplier", 1, "绿色史莱姆伤害倍数(整数)");
         public static ConfigItem <Float> slimeAttackDamageBonus = new ConfigItem("slimeAttackDamageBonus", 4f, "绿色史莱姆伤害加成");
         public static ConfigItem <Integer> giantZombieSpawnZombieCooldown = new ConfigItem("giantZombieSpawnZombieCooldown", 1200, "巨型僵尸生成僵尸间隔(tick)");
         public static ConfigItem <Integer> animalIllToDeathTime = new ConfigItem("animalIllToDeathTime", 144000, "生物生病死亡时间(tick)");
@@ -118,7 +118,7 @@ public class Configs {
         public static ConfigItem <Integer> copperFrequencyOverworld = new ConfigItem("copperFrequencyOverworld_v0.0.5", 40, "主世界铜矿生成频率");
         public static ConfigItem <Integer> silverFrequencyOverworld = new ConfigItem("silverFrequencyOverworld_v0.0.5", 20, "主世界银矿生成频率");
         public static ConfigItem <Integer> ironFrequencyOverworld = new ConfigItem("ironFrequencyOverworld_v0.0.5", 30, "主世界铁矿生成频率");
-        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld_v0.0.5", 20, "主世界金矿生成频率");
+        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld_v0.0.5.3", 25, "主世界金矿生成频率");
         public static ConfigItem <Integer> mithrilFrequencyOverworld = new ConfigItem("mithrilFrequencyOverworld_v0.0.5", 0, "主世界秘银矿生成频率");
         public static ConfigItem <Integer> lapisFrequencyOverworld = new ConfigItem("lapisFrequencyOverworld", 4, "主世界青金石矿生成频率");
         public static ConfigItem <Integer> diamondFrequencyOverworld = new ConfigItem("diamondFrequencyOverworld_v0.0.5", 0, "主世界钻石矿生成频率");
@@ -127,10 +127,10 @@ public class Configs {
         public static ConfigItem <Integer> silverFrequencyUnderworld = new ConfigItem("silverFrequencyUnderworld_v0.0.5", 0, "地底世界银矿生成频率");
         public static ConfigItem <Integer> ironFrequencyUnderworld = new ConfigItem("ironFrequencyUnderworld_v0.0.5", 0, "地底世界铁矿生成频率");
         public static ConfigItem <Integer> goldFrequencyUnderworld = new ConfigItem("goldFrequencyUnderworld_v0.0.5", 0, "地底世界金矿生成频率");
-        public static ConfigItem <Integer> mithrilFrequencyUnderworld = new ConfigItem("mithrilFrequencyUnderworld", 5, "地底世界秘银矿生成频率");
+        public static ConfigItem <Integer> mithrilFrequencyUnderworld = new ConfigItem("mithrilFrequencyUnderworld_v0.0.5", 6, "地底世界秘银矿生成频率");
         public static ConfigItem <Integer> lapisFrequencyUnderworld = new ConfigItem("lapisFrequencyUnderworld_v0.0.5", 0, "地底世界青金石矿生成频率");
-        public static ConfigItem <Integer> diamondFrequencyUnderworld = new ConfigItem("diamondFrequencyUnderworld", 5, "地底世界钻石矿生成频率");
-        public static ConfigItem <Integer> adamantiumFrequencyUnderworld = new ConfigItem("adamantiumFrequencyUnderworld", 2, "地底世界艾德曼矿生成频率");
+        public static ConfigItem <Integer> diamondFrequencyUnderworld = new ConfigItem("diamondFrequencyUnderworld_v0.0.5", 6, "地底世界钻石矿生成频率");
+        public static ConfigItem <Integer> adamantiumFrequencyUnderworld = new ConfigItem("adamantiumFrequencyUnderworld_v0.0.5", 2, "地底世界艾德曼矿生成频率");
         public static ConfigItem <Integer> underworldMantleBlockOffset = new ConfigItem("underworldMantleBlockOffset_v0.0.2", 75, "地底世界地幔位置向上偏移");
         public static ConfigItem <Integer> netherAdamantiumMaxCountPerChunk = new ConfigItem("netherAdamantiumMaxCountPerChunk", 2, "地狱艾德曼每个区块最大生成数量");
         public static ConfigItem <Integer> netherAdamantiumMaxCountPerVein = new ConfigItem("netherAdamantiumMaxCountPerVein", 1, "地狱艾德曼每个矿脉最大矿物生成数量");
@@ -245,12 +245,12 @@ public class Configs {
         wenscMap.put("lapisFrequencyOverworld", wenscConfig.lapisFrequencyOverworld);
         wenscMap.put("diamondFrequencyOverworld_v0.0.5", wenscConfig.diamondFrequencyOverworld);
         wenscMap.put("adamantiumFrequencyOverworld", wenscConfig.adamantiumFrequencyOverworld);
-        wenscMap.put("copperFrequencyUnderworld_v0.0.5", wenscConfig.copperFrequencyUnderworld);
-        wenscMap.put("silverFrequencyUnderworld_v0.0.5", wenscConfig.silverFrequencyUnderworld);
-        wenscMap.put("ironFrequencyUnderworld_v0.0.5", wenscConfig.ironFrequencyUnderworld);
-        wenscMap.put("goldFrequencyUnderworld_v0.0.5", wenscConfig.goldFrequencyUnderworld);
+//        wenscMap.put("copperFrequencyUnderworld_v0.0.5", wenscConfig.copperFrequencyUnderworld);
+//        wenscMap.put("silverFrequencyUnderworld_v0.0.5", wenscConfig.silverFrequencyUnderworld);
+//        wenscMap.put("ironFrequencyUnderworld_v0.0.5", wenscConfig.ironFrequencyUnderworld);
+//        wenscMap.put("goldFrequencyUnderworld_v0.0.5", wenscConfig.goldFrequencyUnderworld);
         wenscMap.put("mithrilFrequencyUnderworld", wenscConfig.mithrilFrequencyUnderworld);
-        wenscMap.put("lapisFrequencyUnderworld_v0.0.5", wenscConfig.lapisFrequencyUnderworld);
+//        wenscMap.put("lapisFrequencyUnderworld_v0.0.5", wenscConfig.lapisFrequencyUnderworld);
         wenscMap.put("diamondFrequencyUnderworld", wenscConfig.diamondFrequencyUnderworld);
         wenscMap.put("adamantiumFrequencyUnderworld", wenscConfig.adamantiumFrequencyUnderworld);
         wenscMap.put("underworldMantleBlockOffset_v0.0.2", wenscConfig.underworldMantleBlockOffset);
@@ -263,10 +263,6 @@ public class Configs {
         wenscMap.put("netherGateOpenDay", wenscConfig.netherGateOpenDay);
         wenscMap.put("isAfterDeathKeep", wenscConfig.isAfterDeathKeep);
         wenscMap.put("isCloseShop", wenscConfig.isCloseShop);
-
-
-
-
 
 
         String filePth = "wensc-extreme.cfg";

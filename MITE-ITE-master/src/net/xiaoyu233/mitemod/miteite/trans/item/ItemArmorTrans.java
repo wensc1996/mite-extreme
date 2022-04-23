@@ -173,7 +173,7 @@ public abstract class ItemArmorTrans extends Item implements IDamageableItem, IU
    }
 
    private float getEnhancedProtection(ItemStack itemStack) {
-      return (float)(itemStack.getEnhanceFactor() * (double)this.getRawProtection() * 0.68f + (double)((float)itemStack.getForgingGrade() / 3.0F)) * (0.75f);
+      return (float)(itemStack.getEnhanceFactor() * (double)this.getRawProtection() * 0.68f + (double)((float)itemStack.getForgingGrade() / 3.0F)) * (0.2f);
    }
 
    public int getExpReqForLevel(int i, boolean weapon) {

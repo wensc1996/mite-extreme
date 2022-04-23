@@ -144,7 +144,7 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
 
    public EnumItemInUseAction getItemInUseAction(ItemStack par1ItemStack, EntityPlayer player) {
 //      return EnchantmentManager.hasEnchantment(par1ItemStack, Enchantments.DEFENCED) ? EnumItemInUseAction.BLOCK : null;
-      return EnumItemInUseAction.BLOCK;
+      return player.canDefense() ? EnumItemInUseAction.BLOCK : null;
    }
 
    @Overwrite
@@ -317,10 +317,8 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
    //Client+Server
    public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
       if (this.getItemInUseAction(player.getHeldItemStack(), player) == EnumItemInUseAction.BLOCK) {
-         if (player.canDefense()){
-            player.setHeldItemInUse();
-            return true;
-         }
+         player.setHeldItemInUse();
+         return true;
       }
       return false;
    }
