@@ -240,20 +240,20 @@ public class MITEITEEvents {
                 } else {
                     if(buyGoods.getPrice() == -1D) {
                         player.addChatMessage("商店暂不可兑换该商品");
-                    } else {
-                        if(buyGoods.getItem().getCanBuy()) {
-                            if(player.money <= 0) {
-                                player.addChatMessage("钱包空空");
-                            } else if(player.money - buyGoods.getPrice() * poses[1] < 0){
-                                player.addChatMessage("余额不足，无法购买");
-                            } else {
-                                player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney(buyGoods.getPrice() * poses[1])));
-                                player.addContainedItem(poses[0]);
-                                player.dropItemStack(buyGoods, 1.0F);
-                            }
+                    } else if(poses[1] <= 0) {
+                        player.addChatMessage("请输入正确的商品数量");
+                    } else if(buyGoods.getItem().getCanBuy()) {
+                        if(player.money <= 0) {
+                            player.addChatMessage("钱包空空");
+                        } else if(player.money - buyGoods.getPrice() * poses[1] < 0){
+                            player.addChatMessage("余额不足，无法购买");
                         } else {
-                            player.addChatMessage("商店暂不可兑换该商品");
+                            player.addChatMessage("现有余额：" + String.format("%.2f", player.subMoney(buyGoods.getPrice() * poses[1])));
+                            player.addContainedItem(poses[0]);
+                            player.dropItemStack(buyGoods, 1.0F);
                         }
+                    } else {
+                        player.addChatMessage("商店暂不可兑换该商品");
                     }
                 }
                 event.setExecuteSuccess(true);
