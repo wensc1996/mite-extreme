@@ -80,7 +80,8 @@ public abstract class EntityLivestockTrans extends EntityAnimalTrans {
       if (!this.isWell()) {
          ++this.illnessToDeathCounter;
          if (this.illnessToDeathCounter == Configs.wenscConfig.animalIllToDeathTime.ConfigValue) {
-            this.setHealth(0.0F);
+            this.setDead();
+//            this.setHealth(0.0F);
             this.getWorld().playSoundAtEntity(this, this.getDeathSound(), 1.0F, 1.0F);
          }
       } else if (this.illnessToDeathCounter > 0) {

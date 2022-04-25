@@ -50,6 +50,20 @@ public class EntityExchanger extends EntitySkeleton {
         }
     }
 
+    public void exchangeSkill() {
+        EntityPlayer target = (EntityPlayer)this.getEntityToAttack();
+        if(target != null) {
+            double entiX = target.posX;
+            double entiY = target.posY;
+            double entiZ = target.posZ;
+            double currentX = this.posX;
+            double currentY = this.posY;
+            double currentZ = this.posZ;
+            this.teleportToTarget(entiX, entiY, entiZ);
+            target.setPositionAndUpdate(currentX, currentY, currentZ);
+        }
+    }
+
     @Override
     protected EntityPlayer findPlayerToAttack(float max_distance) {
         EntityPlayer player = this.getClosestVulnerablePlayer((double)max_distance);
@@ -93,7 +107,7 @@ public class EntityExchanger extends EntitySkeleton {
                         }
                     }
                     if (this.teleportDelay < 70 && ++this.teleportDelay > 60) {
-                        (new ExchangerSkillThread(this)).start();
+                        exchangeSkill();
                         this.teleportDelay = 70;
                     }
                 }
@@ -101,52 +115,24 @@ public class EntityExchanger extends EntitySkeleton {
         }
     }
 
-    public boolean teleportToTarget(double par1, double par3, double par5) {
+    public void teleportToTarget(double par1, double par3, double par5) {
         double var7 = this.posX;
         double var9 = this.posY;
         double var11 = this.posZ;
         this.posX = par1;
         this.posY = par3;
         this.posZ = par5;
-        boolean var13 = false;
-        int var14 = MathHelper.floor_double(this.posX);
-        int var15 = MathHelper.floor_double(this.posY);
-        int var16 = MathHelper.floor_double(this.posZ);
 
-        if (this.worldObj.blockExists(var14, var15, var16)) {
-            boolean var17 = false;
+        this.setPositionAndUpdate(this.posX, this.posY, this.posZ);
 
-            while(!var17 && var15 > 0) {
-                if (this.worldObj.isBlockSolid(var14, var15 - 1, var16)) {
-                    var17 = true;
-                } else {
-                    --this.posY;
-                    --var15;
-                }
-            }
+        int x = MathHelper.floor_double(this.posX);
+        int y = MathHelper.floor_double(this.posY);
+        int z = MathHelper.floor_double(this.posZ);
 
-            if (var17) {
-                this.setPosition(this.posX, this.posY, this.posZ);
-                if (this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox)) {
-                    var13 = true;
-                }
-            }
-        }
-
-        if (!var13) {
-            this.setPosition(var7, var9, var11);
-            return false;
-        } else {
-            int x = MathHelper.floor_double(this.posX);
-            int y = MathHelper.floor_double(this.posY);
-            int z = MathHelper.floor_double(this.posZ);
-            World var10000 = this.worldObj;
-            double distance = (double)World.getDistanceFromDeltas(this.posX - var7, this.posY - var9, this.posZ - var11);
-            this.worldObj.blockFX(EnumBlockFX.particle_trail, x, y, z, (new SignalData()).setByte(EnumParticle.portal_underworld.ordinal()).setShort((int)(8.0D * distance)).setApproxPosition((double)MathHelper.floor_double(var7), (double)MathHelper.floor_double(var9), (double)MathHelper.floor_double(var11)));
-            this.worldObj.blockFX(EnumBlockFX.particle_trail, x, y + 1, z, (new SignalData()).setByte(EnumParticle.portal_underworld.ordinal()).setShort((int)(8.0D * distance)).setApproxPosition((double)MathHelper.floor_double(var7), (double)MathHelper.floor_double(var9 + 1.0D), (double)MathHelper.floor_double(var11)));
-            this.worldObj.playSoundEffect(var7, var9, var11, "mob.endermen.portal", 1.0F, 1.0F);
-            return true;
-        }
+        double distance = (double)World.getDistanceFromDeltas(this.posX - var7, this.posY - var9, this.posZ - var11);
+        this.worldObj.blockFX(EnumBlockFX.particle_trail, x, y, z, (new SignalData()).setByte(EnumParticle.portal_underworld.ordinal()).setShort((int)(8.0D * distance)).setApproxPosition((double)MathHelper.floor_double(var7), (double)MathHelper.floor_double(var9), (double)MathHelper.floor_double(var11)));
+        this.worldObj.blockFX(EnumBlockFX.particle_trail, x, y + 1, z, (new SignalData()).setByte(EnumParticle.portal_underworld.ordinal()).setShort((int)(8.0D * distance)).setApproxPosition((double)MathHelper.floor_double(var7), (double)MathHelper.floor_double(var9 + 1.0D), (double)MathHelper.floor_double(var11)));
+        this.worldObj.playSoundEffect(var7, var9, var11, "mob.endermen.portal", 1.0F, 1.0F);
     }
 
 }
