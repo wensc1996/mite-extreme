@@ -16,7 +16,6 @@ public class Configs {
             this.ConfigValue = value;
             this.ConfigComment = comment;
         }
-
         public void setConfigValue(T configValue) {
             ConfigValue = configValue;
         }
@@ -236,23 +235,26 @@ public class Configs {
         wenscMap.put("breedXpPig", wenscConfig.breedXpPig);
         wenscMap.put("breedXpCow", wenscConfig.breedXpCow);
         wenscMap.put("emeraldFrequencyBigHills", wenscConfig.emeraldFrequencyBigHills);
-        wenscMap.put("overworldAdamantiteOre", wenscConfig.overworldAdamantiteOre);
+
         wenscMap.put("copperFrequencyOverworld_v0.0.5", wenscConfig.copperFrequencyOverworld);
         wenscMap.put("silverFrequencyOverworld_v0.0.5", wenscConfig.silverFrequencyOverworld);
         wenscMap.put("ironFrequencyOverworld_v0.0.5", wenscConfig.ironFrequencyOverworld);
-        wenscMap.put("goldFrequencyOverworld_v0.0.5", wenscConfig.goldFrequencyOverworld);
-        wenscMap.put("mithrilFrequencyOverworld_v0.0.5", wenscConfig.mithrilFrequencyOverworld);
+        wenscMap.put("goldFrequencyOverworld_v0.0.5.3", wenscConfig.goldFrequencyOverworld);
         wenscMap.put("lapisFrequencyOverworld", wenscConfig.lapisFrequencyOverworld);
-        wenscMap.put("diamondFrequencyOverworld_v0.0.5", wenscConfig.diamondFrequencyOverworld);
-        wenscMap.put("adamantiumFrequencyOverworld", wenscConfig.adamantiumFrequencyOverworld);
+
+//        wenscMap.put("adamantiumFrequencyOverworld", wenscConfig.adamantiumFrequencyOverworld);
+//        wenscMap.put("overworldAdamantiteOre", wenscConfig.overworldAdamantiteOre);
+//        wenscMap.put("mithrilFrequencyOverworld_v0.0.5", wenscConfig.mithrilFrequencyOverworld);
+//        wenscMap.put("diamondFrequencyOverworld_v0.0.5", wenscConfig.diamondFrequencyOverworld);
 //        wenscMap.put("copperFrequencyUnderworld_v0.0.5", wenscConfig.copperFrequencyUnderworld);
 //        wenscMap.put("silverFrequencyUnderworld_v0.0.5", wenscConfig.silverFrequencyUnderworld);
 //        wenscMap.put("ironFrequencyUnderworld_v0.0.5", wenscConfig.ironFrequencyUnderworld);
 //        wenscMap.put("goldFrequencyUnderworld_v0.0.5", wenscConfig.goldFrequencyUnderworld);
-        wenscMap.put("mithrilFrequencyUnderworld", wenscConfig.mithrilFrequencyUnderworld);
 //        wenscMap.put("lapisFrequencyUnderworld_v0.0.5", wenscConfig.lapisFrequencyUnderworld);
-        wenscMap.put("diamondFrequencyUnderworld", wenscConfig.diamondFrequencyUnderworld);
-        wenscMap.put("adamantiumFrequencyUnderworld", wenscConfig.adamantiumFrequencyUnderworld);
+
+        wenscMap.put("mithrilFrequencyUnderworld_v0.0.5", wenscConfig.mithrilFrequencyUnderworld);
+        wenscMap.put("diamondFrequencyUnderworld_v0.0.5", wenscConfig.diamondFrequencyUnderworld);
+        wenscMap.put("adamantiumFrequencyUnderworld_v0.0.5", wenscConfig.adamantiumFrequencyUnderworld);
         wenscMap.put("underworldMantleBlockOffset_v0.0.2", wenscConfig.underworldMantleBlockOffset);
         wenscMap.put("netherAdamantiumMaxCountPerChunk", wenscConfig.netherAdamantiumMaxCountPerChunk);
         wenscMap.put("netherAdamantiumMaxCountPerVein", wenscConfig.netherAdamantiumMaxCountPerVein);
@@ -263,7 +265,6 @@ public class Configs {
         wenscMap.put("netherGateOpenDay", wenscConfig.netherGateOpenDay);
         wenscMap.put("isAfterDeathKeep", wenscConfig.isAfterDeathKeep);
         wenscMap.put("isCloseShop", wenscConfig.isCloseShop);
-
 
         String filePth = "wensc-extreme.cfg";
         File file_mite = new File(filePth);

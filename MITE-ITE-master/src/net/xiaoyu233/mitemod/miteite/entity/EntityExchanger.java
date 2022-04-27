@@ -3,10 +3,6 @@ package net.xiaoyu233.mitemod.miteite.entity;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
-import net.xiaoyu233.mitemod.miteite.thread.ExchangerSkillThread;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EntityExchanger extends EntitySkeleton {
     private int teleportDelay;
@@ -87,7 +83,6 @@ public class EntityExchanger extends EntitySkeleton {
             if(this.entityToAttack == null) {
                 entityToAttack = this.findPlayerToAttack(32F);
                 if (entityToAttack instanceof EntityPlayer) {
-
                     ((EntityPlayer) entityToAttack).sendChatToPlayer(ChatMessage.createFromTranslationKey("[转移骷髅] ").setColor(EnumChatFormat.BLUE).appendComponent(ChatMessage.createFromTranslationKey("你已被注视，3S后转移").setColor(EnumChatFormat.RED)));
                 }
                 this.teleportDelay = 0;
