@@ -238,11 +238,13 @@ public class MITEITEEvents {
                 if(buyGoods == null) {
                     player.addChatMessage("商品ID输入错误");
                 } else {
-                    if(buyGoods.getPrice() == -1D) {
+                    if(buyGoods.getPrice() <= 0) {
                         player.addChatMessage("商店暂不可兑换该商品");
                     } else if(poses[1] <= 0) {
                         player.addChatMessage("请输入正确的商品数量");
-                    } else if(buyGoods.getItem().getCanBuy()) {
+                    } else if(poses[1] > buyGoods.getMaxStackSize()) {
+                        player.addChatMessage("超出该商品单次购买上限，最大为：" + buyGoods.getMaxStackSize());
+                    } else {
                         if(player.money <= 0) {
                             player.addChatMessage("钱包空空");
                         } else if(player.money - buyGoods.getPrice() * poses[1] < 0){
@@ -252,8 +254,6 @@ public class MITEITEEvents {
                             player.addContainedItem(poses[0]);
                             player.dropItemStack(buyGoods, 1.0F);
                         }
-                    } else {
-                        player.addChatMessage("商店暂不可兑换该商品");
                     }
                 }
                 event.setExecuteSuccess(true);

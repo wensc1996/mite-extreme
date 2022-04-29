@@ -21,22 +21,14 @@ public class GuiPlayerInventory extends axp {
       par1EntityPlayer.sendPacket(new CPacketSyncItems());
    }
 
-   @Inject(method = "a(FII)V", at = @At("HEAD"))
-   protected void InjectA(float par1, int par2, int par3, CallbackInfo callbackInfo) {
-      this.c = 208;
-   }
+    @Inject(method = "a(FII)V", at = @At("HEAD"))
+    protected void InjectA(float par1, int par2, int par3, CallbackInfo callbackInfo) {
+        this.c = 208;
+    }
 
-   public void  b(int par1,
-                  int par2,
-                  int par3,
-                  int par4,
-                  int par5,
-                  int par6){
-      if(par3 == 176) {
-         super.b(par1, par2, 145, 200, par5, par6);
-      } else {
-         super.b(par1, par2, par3, par4, par5, par6);
-      }
+   @Redirect(method = "a(FII)V",at = @At(ordinal = 1, value = "INVOKE", target = "Lnet/minecraft/axv;b(IIIIII)V"))
+   public void injectRecipeArrow(axv axvLocal,int var1, int val2, int val3, int val4, int val5, int val6) {
+      axvLocal.b(var1, val2, 145, 200, val5, val6);
    }
 
    @Shadow

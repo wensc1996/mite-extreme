@@ -321,7 +321,7 @@ public class PlayerInventoryTrans {
       }
       if(var3 == this.jewelryInventory && par1 == 7 && par2ItemStack != null) {
          if(!Configs.wenscConfig.isCloseShop.ConfigValue) {
-            if(par2ItemStack.getItem().getSoldPrice() != -1D) {
+            if(par2ItemStack.getItem().getSoldPrice() > 0D) {
                if(!this.player.worldObj.isRemote) {
                   player.addChatMessage("现有余额：" + String.format("%.2f", player.plusMoney(par2ItemStack.stackSize * par2ItemStack.getItem().getSoldPrice())));
                }

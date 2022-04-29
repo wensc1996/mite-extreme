@@ -81,7 +81,7 @@ public class EntityExchanger extends EntitySkeleton {
             }
 
             if(this.entityToAttack == null) {
-                entityToAttack = this.findPlayerToAttack(32F);
+                entityToAttack = this.getClosestVulnerablePlayer(32F);
                 if (entityToAttack instanceof EntityPlayer) {
                     ((EntityPlayer) entityToAttack).sendChatToPlayer(ChatMessage.createFromTranslationKey("[转移骷髅] ").setColor(EnumChatFormat.BLUE).appendComponent(ChatMessage.createFromTranslationKey("你已被注视，3S后转移").setColor(EnumChatFormat.RED)));
                 }

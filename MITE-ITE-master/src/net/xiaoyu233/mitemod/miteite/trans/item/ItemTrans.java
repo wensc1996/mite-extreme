@@ -12,6 +12,9 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
@@ -37,20 +40,6 @@ public abstract class ItemTrans {
    private double soldPrice = -1D;
    private double price = -1D;
 
-   private boolean isCanBuy = false;
-
-   public Item setItemCanBuy(boolean isCanBuy){
-      return this.setCanBuy(isCanBuy);
-   }
-
-   public Item setCanBuy(boolean isCanBuy) {
-      this.isCanBuy = isCanBuy;
-      return (Item) ReflectHelper.dyCast(this);
-   }
-
-   public boolean getCanBuy() {
-      return this.isCanBuy;
-   }
 
    // 在本mod进行引用 否则会造成无法找到方法的异常
    public Item setItemPrice(double price) {

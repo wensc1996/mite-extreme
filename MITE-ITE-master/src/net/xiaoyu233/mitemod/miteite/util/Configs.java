@@ -1,11 +1,18 @@
 package net.xiaoyu233.mitemod.miteite.util;
 
+import net.minecraft.Block;
+import net.minecraft.Item;
+import net.minecraft.ItemBlock;
+import net.minecraft.LocaleI18n;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
+import net.xiaoyu233.mitemod.miteite.item.Items;
+
 import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
 public class Configs {
-    public static Map <String, ConfigItem> wenscMap= new HashMap<>();
+    public static Map <String, ConfigItem> wenscMap = new HashMap<>();
 
     public static class ConfigItem<T>{
         public String ConfigKey;
@@ -23,6 +30,7 @@ public class Configs {
             return this.ConfigValue;
         }
     }
+
     public static class wenscConfig {
         public static ConfigItem <Boolean> BlnGravel = new ConfigItem("BlnGravel", true, "是否增加燧石概率");
         public static ConfigItem <Boolean> isOpenStrongBoxBreakRecord = new ConfigItem("isOpenStrongBoxBreakRecord", true, "是否开启私人箱子破坏记录");
@@ -242,15 +250,15 @@ public class Configs {
         wenscMap.put("goldFrequencyOverworld_v0.0.5.3", wenscConfig.goldFrequencyOverworld);
         wenscMap.put("lapisFrequencyOverworld", wenscConfig.lapisFrequencyOverworld);
 
-//        wenscMap.put("adamantiumFrequencyOverworld", wenscConfig.adamantiumFrequencyOverworld);
-//        wenscMap.put("overworldAdamantiteOre", wenscConfig.overworldAdamantiteOre);
-//        wenscMap.put("mithrilFrequencyOverworld_v0.0.5", wenscConfig.mithrilFrequencyOverworld);
-//        wenscMap.put("diamondFrequencyOverworld_v0.0.5", wenscConfig.diamondFrequencyOverworld);
-//        wenscMap.put("copperFrequencyUnderworld_v0.0.5", wenscConfig.copperFrequencyUnderworld);
-//        wenscMap.put("silverFrequencyUnderworld_v0.0.5", wenscConfig.silverFrequencyUnderworld);
-//        wenscMap.put("ironFrequencyUnderworld_v0.0.5", wenscConfig.ironFrequencyUnderworld);
-//        wenscMap.put("goldFrequencyUnderworld_v0.0.5", wenscConfig.goldFrequencyUnderworld);
-//        wenscMap.put("lapisFrequencyUnderworld_v0.0.5", wenscConfig.lapisFrequencyUnderworld);
+        wenscMap.put("adamantiumFrequencyOverworld", wenscConfig.adamantiumFrequencyOverworld);
+        wenscMap.put("overworldAdamantiteOre", wenscConfig.overworldAdamantiteOre);
+        wenscMap.put("mithrilFrequencyOverworld_v0.0.5", wenscConfig.mithrilFrequencyOverworld);
+        wenscMap.put("diamondFrequencyOverworld_v0.0.5", wenscConfig.diamondFrequencyOverworld);
+        wenscMap.put("copperFrequencyUnderworld_v0.0.5", wenscConfig.copperFrequencyUnderworld);
+        wenscMap.put("silverFrequencyUnderworld_v0.0.5", wenscConfig.silverFrequencyUnderworld);
+        wenscMap.put("ironFrequencyUnderworld_v0.0.5", wenscConfig.ironFrequencyUnderworld);
+        wenscMap.put("goldFrequencyUnderworld_v0.0.5", wenscConfig.goldFrequencyUnderworld);
+        wenscMap.put("lapisFrequencyUnderworld_v0.0.5", wenscConfig.lapisFrequencyUnderworld);
 
         wenscMap.put("mithrilFrequencyUnderworld_v0.0.5", wenscConfig.mithrilFrequencyUnderworld);
         wenscMap.put("diamondFrequencyUnderworld_v0.0.5", wenscConfig.diamondFrequencyUnderworld);
@@ -294,11 +302,79 @@ public class Configs {
                 e.printStackTrace();
                 JFrame jFrame = new JFrame();
                 jFrame.setAlwaysOnTop(true);
-                JOptionPane.showMessageDialog(jFrame, "创建wensc.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
+                JOptionPane.showMessageDialog(jFrame, "创建wensc-extreme.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
                 System.exit(0);
             }
         }
     }
+    public static void beginToLoadShopConfig() {
+        String shopConfigFilePath = "wensc-extreme-shop.cfg";
+        File shopConfigFile = new File(shopConfigFilePath);
+        if (shopConfigFile.exists()) {
+            Properties properties = new Properties();
+            FileReader fr = null;
+            try {
+                fr = new FileReader(shopConfigFile.getName());
+                properties.load(fr);
+                fr.close();
+                readShopConfigFromFile(shopConfigFile, properties);
+            } catch (FileNotFoundException var6) {
+                var6.printStackTrace();
+            } catch (IOException var7) {
+                var7.printStackTrace();
+            }
+        } else {
+            try {
+                if (shopConfigFile.createNewFile()){
+                    shopConfigFile.setExecutable(true);//设置可执行权限
+                    shopConfigFile.setReadable(true);//设置可读权限
+                    shopConfigFile.setWritable(true);//设置可写权限
+                    generateShopConfigFile(shopConfigFile);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JFrame jFrame = new JFrame();
+                jFrame.setAlwaysOnTop(true);
+                JOptionPane.showMessageDialog(jFrame, "创建wensc-extreme-shop.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
+                System.exit(0);
+            }
+        }
+    }
+
+    public static void  readShopConfigFromFile(File file_mite, Properties properties) {
+        try{
+            FileWriter fileWritter = new FileWriter(file_mite.getName(), true);
+
+            for (Item item : Item.itemsList) {
+                if(item != null) {
+                    String itemPrice =  (String) properties.get(item.getUnlocalizedName());
+                    if(itemPrice != null) {
+                        String [] soldPriceAndBuyPrice = itemPrice.split(",");
+                        if(soldPriceAndBuyPrice.length == 2) {
+                            double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                            double price = Double.parseDouble(soldPriceAndBuyPrice[1]);
+                            item.setSoldPrice(soldPrice).setPrice(price);
+                        } else if(soldPriceAndBuyPrice.length == 1) {
+                            double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                            item.setSoldPrice(soldPrice);
+                        }
+                    } else {
+                        if(item instanceof ItemBlock) {
+                            fileWritter.write("// " + ((ItemBlock) item).getBlock().getLocalizedName() + " ID: " + ((ItemBlock) item).getBlockID() + "\n");
+                            fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                        } else {
+                            fileWritter.write("// " + item.getItemDisplayName() + " ID: " + item.itemID + "\n");
+                            fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                        }
+                    }
+                }
+            }
+            fileWritter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void  readConfigFromFile(File file_mite, Properties properties) {
         for (String key : properties.stringPropertyNames()) {
             ConfigItem configItem = wenscMap.get(key);
@@ -338,11 +414,32 @@ public class Configs {
     public static void generateConfigFile(File file) {
         try{
             FileWriter fileWritter = new FileWriter(file.getName());
-            fileWritter.write("// MITE-GA-P14配置文件，说明：【布尔类型：true为开启，false关闭】，在【名称=值】之间/之后不要存在空格或者其他无关字符，【tick：20tick=1秒】\n");
+            fileWritter.write("// MITE-Extreme配置文件，说明：【布尔类型：true为开启，false关闭】，在【名称=值】之间/之后不要存在空格或者其他无关字符，【tick：20tick=1秒】\n");
             for (Map.Entry<String, ConfigItem> entry: wenscMap.entrySet()) {
                 ConfigItem value = entry.getValue();
                 fileWritter.write("// " + value.ConfigComment + "\n");
                 fileWritter.write(value.ConfigKey + "=" + value.ConfigValue + "\n\n");
+            }
+            fileWritter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void generateShopConfigFile(File file) {
+        try{
+            FileWriter fileWritter = new FileWriter(file.getName());
+            fileWritter.write("// MITE-Extreme商店配置文件，说明：参数之间使用英文逗号分隔，请严格遵循格式（商品英文名=售出价格,购买价格），价格-1代表不可出售或者不可购买，乱改造成无法启动概不负责\n");
+            for (Item item : Item.itemsList) {
+                if(item != null) {
+                    if(item instanceof ItemBlock) {
+                        fileWritter.write("// " + ((ItemBlock) item).getBlock().getLocalizedName() + " ID: " + ((ItemBlock) item).getBlockID() + "\n");
+                        fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                    } else {
+                        fileWritter.write("// " + item.getItemDisplayName() + " ID: " + item.itemID + "\n");
+                        fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                    }
+                }
             }
             fileWritter.close();
         } catch (IOException e) {
