@@ -1,9 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.util;
 
-import net.minecraft.Block;
-import net.minecraft.Item;
-import net.minecraft.ItemBlock;
-import net.minecraft.LocaleI18n;
+import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 
@@ -326,9 +323,9 @@ public class Configs {
         } else {
             try {
                 if (shopConfigFile.createNewFile()){
-                    shopConfigFile.setExecutable(true);//设置可执行权限
-                    shopConfigFile.setReadable(true);//设置可读权限
-                    shopConfigFile.setWritable(true);//设置可写权限
+                    shopConfigFile.setExecutable(true); // 设置可执行权限
+                    shopConfigFile.setReadable(true); // 设置可读权限
+                    shopConfigFile.setWritable(true); // 设置可写权限
                     generateShopConfigFile(shopConfigFile);
                 }
             } catch (IOException e) {
@@ -347,24 +344,37 @@ public class Configs {
 
             for (Item item : Item.itemsList) {
                 if(item != null) {
-                    String itemPrice =  (String) properties.get(item.getUnlocalizedName());
-                    if(itemPrice != null) {
-                        String [] soldPriceAndBuyPrice = itemPrice.split(",");
-                        if(soldPriceAndBuyPrice.length == 2) {
-                            double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
-                            double price = Double.parseDouble(soldPriceAndBuyPrice[1]);
-                            item.setSoldPrice(soldPrice).setPrice(price);
-                        } else if(soldPriceAndBuyPrice.length == 1) {
-                            double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
-                            item.setSoldPrice(soldPrice);
+                    if(item instanceof ItemBlock) {
+                        if(!((ItemBlock) item).getBlock().canBeCarried()) {
+                            continue;
                         }
-                    } else {
-                        if(item instanceof ItemBlock) {
-                            fileWritter.write("// " + ((ItemBlock) item).getBlock().getLocalizedName() + " ID: " + ((ItemBlock) item).getBlockID() + "\n");
-                            fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                    }
+                    try {
+                        String itemPrice =  (String) properties.get(item.getUnlocalizedName());
+                        if(itemPrice != null) {
+                            String [] soldPriceAndBuyPrice = itemPrice.split(",");
+                            if(soldPriceAndBuyPrice.length == 2) {
+                                double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                                double price = Double.parseDouble(soldPriceAndBuyPrice[1]);
+                                item.setSoldPrice(soldPrice).setPrice(price);
+                            } else if(soldPriceAndBuyPrice.length == 1) {
+                                double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                                item.setSoldPrice(soldPrice);
+                            }
                         } else {
-                            fileWritter.write("// " + item.getItemDisplayName() + " ID: " + item.itemID + "\n");
-                            fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                            if(item instanceof ItemBlock) {
+                                fileWritter.write("// " + ((ItemBlock) item).getBlock().getLocalizedName() + " ID: " + ((ItemBlock) item).getBlockID() + "\n");
+                                fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                            } else {
+                                fileWritter.write("// " + item.getItemDisplayName() + " ID: " + item.itemID + "\n");
+                                fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
+                            }
+                        }
+                    } catch (Exception e) {
+                        if(item instanceof ItemBlock) {
+                            Minecraft.setErrorMessage("配置项：" + ((ItemBlock) item).getBlock().getLocalizedName() + " ID: " + ((ItemBlock) item).getBlockID() + " 错误！！！");
+                        } else {
+                            Minecraft.setErrorMessage("配置项：" + item.getItemDisplayName() + " ID: " + item.itemID + " 错误！！！");
                         }
                     }
                 }
@@ -433,6 +443,9 @@ public class Configs {
             for (Item item : Item.itemsList) {
                 if(item != null) {
                     if(item instanceof ItemBlock) {
+                        if(!((ItemBlock) item).getBlock().canBeCarried()) {
+                            continue;
+                        }
                         fileWritter.write("// " + ((ItemBlock) item).getBlock().getLocalizedName() + " ID: " + ((ItemBlock) item).getBlockID() + "\n");
                         fileWritter.write(item.getUnlocalizedName() + "=" + item.getSoldPrice() +","+ item.getPrice()+ "\n\n");
                     } else {

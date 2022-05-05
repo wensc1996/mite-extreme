@@ -260,7 +260,19 @@ public class MITEITEEvents {
             }
         }
 
-
+        if (par2Str.startsWith("reconfig")) {
+            try {
+                Configs.beginToLoadShopConfig();
+                Configs.loadConfigs();
+                for (Object o : player.getWorldServer().p().getConfigurationManager().playerEntityList) {
+                    EntityPlayer currentPlayer = (EntityPlayer) o;
+                    currentPlayer.addChatMessage("配置文件已重新加载");
+                }
+            } catch (Exception e) {
+                player.addChatMessage("配置文件更新失败，请检查配置项是否正确");
+            }
+            event.setExecuteSuccess(true);
+        }
 
         if (par2Str.startsWith("sleep")) {
             StringBuilder notSleepingPlayers = new StringBuilder();

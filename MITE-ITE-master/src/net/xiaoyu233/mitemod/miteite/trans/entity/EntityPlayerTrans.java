@@ -343,6 +343,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             if (wornItem != null && wornItem.hasEnchantment(Enchantments.EMERGENCY, false)) {
                if (wornItem.getEmergencyCooldown() <= 0){
                   readyEmergencyItemList.add(wornItem);
+               } else {
+                  this.addChatMessage("紧急守备冷却中：" + wornItem.getEmergencyCooldown());
                }
             }
          }
@@ -350,6 +352,11 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             result.setEntity_was_destroyed(false);
             this.activeEmergency(readyEmergencyItemList);
          } else if(this.spawnStoneWorldId != -999) {
+            if(damage.getSource().getImmediateEntity() != null) {
+               this.addChatMessage("复活石效果生效：" + " 攻击来源1:" + damage.getSource().getImmediateEntity().getEntityName() + " 造成实际伤害：" + result.getAmountOfHealthLost() + " 玩家之前生命：" + this.prevHealth);
+            } else {
+               this.addChatMessage("复活石效果生效：" + " 攻击来源1:" + damage.getSource().damageType + " 造成实际伤害："+ result.getAmountOfHealthLost() + " 玩家之前生命：" + this.prevHealth);
+            }
             result.setEntity_was_destroyed(false);
             this.setHealth(20, true, this.getHealFX());
             this.addPotionEffect(new MobEffect(MobEffectList.regeneration.id, 1200, 1));
@@ -360,7 +367,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
                this.removePotionEffect(MobEffectList.field_76444_x.id);
                this.addPotionEffect(new MobEffect(MobEffectList.field_76444_x.id, 20 * 20, 2));
             }
-
             if (this.getWorld().getDimensionId() != this.spawnStoneWorldId) {
                this.travelToDimension(this.spawnStoneWorldId);
             }
@@ -742,8 +748,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       if (damage.getResponsibleEntityP() != null && this.getHeldItem() != null && this.rand.nextInt(10) > 8) {
             this.tryDisarmTarget(damage.getResponsibleEntityP());
       }
+
       EntityDamageResult entityDamageResult = super.attackEntityFrom(damage);
-      if (entityDamageResult != null && (double)this.getHealthFraction() <= 0.3D && !entityDamageResult.entityWasDestroyed()) {
+
+      if (entityDamageResult != null && (double)this.getHealthFraction() <= 0.1D && !entityDamageResult.entityWasDestroyed()) {
          ItemStack[] var5 = this.getWornItems();
 
          List<ItemStack> readyEmergencyItems = new ArrayList<>();
@@ -751,12 +759,19 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             if (wornItem != null && wornItem.hasEnchantment(Enchantments.EMERGENCY, false)) {
                if (wornItem.getEmergencyCooldown() <= 0){
                   readyEmergencyItems.add(wornItem);
+               } else {
+                  this.addChatMessage("紧急守备冷却中：" + wornItem.getEmergencyCooldown());
                }
             }
          }
          if (readyEmergencyItems.size() > 0){
             this.activeEmergency(readyEmergencyItems);
          } else if(this.spawnStoneWorldId != -999) {
+              if(damage.getSource().getImmediateEntity() != null) {
+                 this.addChatMessage("复活石效果生效：" + " 攻击来源2:" + damage.getSource().getImmediateEntity().getEntityName() + " 造成实际伤害："+ entityDamageResult.getAmountOfHealthLost() + " 玩家之前生命：" + this.prevHealth);
+              } else {
+                 this.addChatMessage("复活石效果生效：" + " 攻击来源2:" + damage.getSource().damageType + " 造成实际伤害："+ entityDamageResult.getAmountOfHealthLost() + " 玩家之前生命：" + this.prevHealth);
+              }
             entityDamageResult.setEntity_was_destroyed(false);
             this.setHealth(20, true, this.getHealFX());
             this.addPotionEffect(new MobEffect(MobEffectList.regeneration.id, 1200, 1));
