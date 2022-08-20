@@ -127,7 +127,7 @@ public abstract class EntityInsentientTrans extends EntityLiving {
          ItemStack stack = attacker.getHeldItemStack();
          if (stack != null) {
             Item item = stack.getItem();
-            if (attacker instanceof EntityPlayer && (item instanceof ItemSword || item instanceof ItemWarHammer || item instanceof ItemAxe)) {
+            if (attacker instanceof EntityPlayer && (item instanceof ItemSword || item instanceof ItemWarHammer || item instanceof ItemAxe || item instanceof ItemCudgel)) {
                int amp = 1;
                if (item instanceof ItemAxe && dyCast(this) instanceof EntityEarthElemental){
                   amp = 10;

@@ -56,7 +56,7 @@ public enum ToolModifierTypes implements ItemModifierTypes{
 
     public static boolean isWeapon(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof ItemSword || item instanceof ItemBattleAxe || item instanceof ItemWarHammer;
+        return item instanceof ItemSword || item instanceof ItemBattleAxe || item instanceof ItemWarHammer || item instanceof ItemCudgel;
     }
 
     @Override

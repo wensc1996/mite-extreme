@@ -131,15 +131,18 @@ public class ChunkProviderHellTrans {
          }
       }
 
-      var12 = (new WorldGenMinable(Blocks.netherAdamantiumOre.blockID, Configs.wenscConfig.netherAdamantiumMaxCountPerVein.ConfigValue, Block.netherrack.blockID)).setMinableBlockMetadata(0);
+      if(Configs.wenscConfig.netherAdamantiumMaxCountPerChunk.ConfigValue > 0 && Configs.wenscConfig.netherAdamantiumMaxCountPerVein.ConfigValue > 0) {
+         var12 = (new WorldGenMinable(Blocks.netherAdamantiumOre.blockID, Configs.wenscConfig.netherAdamantiumMaxCountPerVein.ConfigValue, Block.netherrack.blockID)).setMinableBlockMetadata(0);
 
-      int count = this.hellRNG.nextInt(Configs.wenscConfig.netherAdamantiumMaxCountPerChunk.ConfigValue) + 1;
-      for(var8 = 0; var8 < count; ++var8) {
-         var9 = var4 + this.hellRNG.nextInt(16);
-         var10 = this.hellRNG.nextInt(80) + 35;
-         var11 = var5 + this.hellRNG.nextInt(16);
-         var12.generate(this.worldObj, this.hellRNG, var9, var10, var11);
+         int count = this.hellRNG.nextInt(Configs.wenscConfig.netherAdamantiumMaxCountPerChunk.ConfigValue) + 1;
+         for(var8 = 0; var8 < count; ++var8) {
+            var9 = var4 + this.hellRNG.nextInt(16);
+            var10 = this.hellRNG.nextInt(80) + 35;
+            var11 = var5 + this.hellRNG.nextInt(16);
+            var12.generate(this.worldObj, this.hellRNG, var9, var10, var11);
+         }
       }
+
 
       if (this.worldObj.getWorldInfo().getEarliestMITEReleaseRunIn() >= 0) {
          var12 = (new WorldGenMinable(Block.silverfish.blockID, 8, Block.netherrack.blockID)).setMinableBlockMetadata(3);

@@ -29,14 +29,9 @@ public class EntityZombieDoor extends EntityZombie {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         int day = this.getWorld().getDayOfOverworld();
-        double rate;
-        if(day > 32 ){
-            rate = (double)day / 16.0D;
-        } else {
-            rate = day / 16;
-        }
-        this.setEntityAttribute(GenericAttributes.attackDamage, 4.0D + rate * 4D);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 10.0D + rate * 20D);
+        double rate = Math.pow(day, 0.5);
+        this.setEntityAttribute(GenericAttributes.attackDamage, 4 * rate);
+        this.setEntityAttribute(GenericAttributes.maxHealth, 3 * rate);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
     }
 
@@ -49,7 +44,7 @@ public class EntityZombieDoor extends EntityZombie {
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
             int day = this.getWorld().getDayOfOverworld();
-            int diamond_count = (day / 16) > 3 ? 3 : (day / 16);
+            int diamond_count = (day / 32) > 3 ? 3 : (day / 32);
             for (int i1 = 0; i1 < diamond_count; i1++) {
                 this.dropItem(Item.emerald);
             }

@@ -12,7 +12,7 @@ public enum ArmorModifierTypes implements ItemModifierTypes{
     PROJECTILE_PROTECTION_MODIFIER(0.5F,"弹射物保护", EnumChatFormats.DARK_GREY,7,5,(stack -> hasNotOtherProtectionModifier(stack,3))),
     EXPLOSION_PROTECTION_MODIFIER(0.5F,"爆炸保护", EnumChatFormats.DARK_RED,7,5,(stack -> hasNotOtherProtectionModifier(stack,2))),
     FIRE_PROTECTION_MODIFIER(0.5F,"火焰保护", EnumChatFormats.LIGHT_ORANGE,7,5,(stack -> hasNotOtherProtectionModifier(stack,0))),
-    PROTECTION_MODIFIER(0.15F,"保护",EnumChatFormat.WHITE,5,5,(stack -> hasNotOtherProtectionModifier(stack,1))),
+    PROTECTION_MODIFIER(0.2F,"保护",EnumChatFormat.WHITE,5,5,(stack -> hasNotOtherProtectionModifier(stack,1))),
     STEADY_MODIFIER(0.15F,"稳定",EnumChatFormat.DARK_GRAY,8,5,(stack -> true)),
     BLESSED_MODIFIER(1F,"神圣",EnumChatFormats.SILVER,8,5,(stack -> true)),
     INDOMITABLE(0.25f,"坚毅不倒",EnumChatFormats.LIGHT_YELLOW_GREEN,5,4,itemStack -> itemStack.getItem() instanceof ItemCuirass),

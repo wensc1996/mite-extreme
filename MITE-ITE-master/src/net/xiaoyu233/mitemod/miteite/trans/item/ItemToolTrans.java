@@ -258,7 +258,7 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
    }
 
    public boolean isWeapon(Item item) {
-      return item instanceof ItemSword || item instanceof ItemBattleAxe || item instanceof ItemWarHammer;
+      return item instanceof ItemSword || item instanceof ItemBattleAxe || item instanceof ItemWarHammer || item instanceof ItemCudgel;
    }
 
    @Overwrite

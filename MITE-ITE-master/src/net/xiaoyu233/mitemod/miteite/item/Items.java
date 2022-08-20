@@ -40,6 +40,8 @@ public class Items extends Item{
 
     public static final Item lavaInPipes = new ItemLavaInPipes(Constant.getNextItemID(), Materials.lava);
 
+    public static final Item clubIron = new ItemClubMetal(770, Material.iron);
+
     public static final Item ringKillerCopper = new ItemRingKiller(Constant.getNextItemID(), Materials.copper).setUnlocalizedName("ringKillerCopper");
     public static final Item ringKillerIron = new ItemRingKiller(Constant.getNextItemID(), Materials.iron).setUnlocalizedName("ringKillerIron");
     public static final Item ringKillerAncient = new ItemRingKiller(Constant.getNextItemID(), Materials.ancient_metal).setUnlocalizedName("ringKillerAncient");
@@ -146,6 +148,7 @@ public class Items extends Item{
 
         register("stack_torch", Stack_Torch).setUnlocalizedName("stack_torch").setMaxStackSize(64).setCraftingDifficultyAsComponent(1.0E-9F);
 
+        register("iron_club", clubIron).setUnlocalizedName("iron_club").setLowestCraftingDifficultyToProduce(1.0F);
 
         register("lava_in_pipes", lavaInPipes).setUnlocalizedName("lava_in_pipes").setLowestCraftingDifficultyToProduce(1.0F);
         register("ring_killer/ring_killer_copper", ringKillerCopper).setUnlocalizedName("ring_killer_copper").setLowestCraftingDifficultyToProduce(1.0F);
@@ -160,7 +163,7 @@ public class Items extends Item{
 
     public static void registerRecipes(RecipeRegister register) {
         register.registerShapelessRecipe(new ItemStack(Blocks.blockLantern, 1), true,Blocks.torchWood, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget);
-
+        register.registerShapedRecipe(new ItemStack(clubIron, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.ironNugget , '*', Items.ingotIron});
 
         if(Configs.wenscConfig.isRecipeGATorch.ConfigValue) {
             register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{Block.wood, Item.silk, Item.coal, Item.coal});
