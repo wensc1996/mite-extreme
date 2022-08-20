@@ -6,6 +6,7 @@ import net.minecraft.Material;
 public class ItemClubMetal extends ItemCudgel {
     protected ItemClubMetal(int par1, Material material) {
         super(par1, material);
+        this.addMaterialsEffectiveAgainst(new Material[]{Material.web, Material.plants});
         this.setReachBonus(0.75F);
     }
 

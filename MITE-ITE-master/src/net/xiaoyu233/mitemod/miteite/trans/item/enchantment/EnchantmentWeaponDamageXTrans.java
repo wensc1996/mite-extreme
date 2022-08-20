@@ -13,15 +13,17 @@ public abstract class EnchantmentWeaponDamageXTrans extends Enchantment {
 
    public boolean canEnchantItem(Item item) {
       if (this != Enchantment.sharpness) {
+         // 截肢杀手
          if (this == Enchantment.baneOfArthropods) {
             return item instanceof ItemSword;
          } else if (this != Enchantment.smite) {
             return false;
+         // 亡灵杀手
          } else {
-            return item.getClass() == ItemWarHammer.class || item.getHardestMetalMaterial() == Materials.vibranium && item.getClass() == ItemSword.class;
+            return item.getClass() == ItemWarHammer.class || (item.getHardestMetalMaterial() == Materials.vibranium && item.getClass() == ItemSword.class) || item.getClass() == ItemCudgel.class;
          }
       } else {
-         return item instanceof ItemSword || item.getClass() == ItemBattleAxe.class || item instanceof ItemScythe;
+         return item instanceof ItemSword || item.getClass() == ItemBattleAxe.class || item instanceof ItemScythe || item instanceof ItemCudgel;
       }
    }
 

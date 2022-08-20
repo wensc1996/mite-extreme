@@ -212,7 +212,7 @@ public abstract class WorldServerTrans extends World {
                } else{
                     return entity_class;
                }
-            } else if (!check_depth || y <= 32) {
+            } else if (!check_depth || y <= 32 || is_blood_moon_up) {
                 return entity_class;
             }
          }
