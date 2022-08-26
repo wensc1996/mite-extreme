@@ -7,6 +7,7 @@ import net.xiaoyu233.mitemod.miteite.entity.EntityExchanger;
 import net.xiaoyu233.mitemod.miteite.entity.EntityZombieDoor;
 import net.xiaoyu233.mitemod.miteite.entity.EntityZombieLord;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
+import net.xiaoyu233.mitemod.miteite.util.WorldUtil;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -79,17 +80,18 @@ public abstract class WorldServerTrans extends World {
    @Overwrite
    public Class getSuitableCreature(EnumCreatureType creature_type, int x, int y, int z) {
       boolean check_depth = this.isOverworld();
+      boolean is_blood_moon_day = WorldUtil.isBloodMoonDay(this.getTotalWorldTime()) && !this.isBlueMoon(true);
       boolean is_blood_moon_up = this.isBloodMoon(true);
       boolean is_freezing_biome = this.getBiomeGenForCoords(x, z).isFreezing();
       boolean is_desert_biome = this.getBiomeGenForCoords(x, z).isDesertBiome();
       boolean can_spawn_ghouls_on_surface = is_blood_moon_up;
       boolean can_spawn_wights_on_surface = is_blood_moon_up && is_freezing_biome;
       boolean can_spawn_shadows_on_surface = is_blood_moon_up && is_desert_biome;
-      boolean can_spawn_revenants_on_surface = is_blood_moon_up;
-      boolean can_spawn_bone_lords_on_surface = is_blood_moon_up;
+      boolean can_spawn_revenants_on_surface = is_blood_moon_day;
+      boolean can_spawn_bone_lords_on_surface = is_blood_moon_day;
       boolean can_spawn_giant_on_surface = is_blood_moon_up;
       boolean can_spawn_ghast_on_surface = false;
-      boolean can_spawn_ancient_bone_lord_on_surface = is_blood_moon_up;
+      boolean can_spawn_ancient_bone_lord_on_surface = is_blood_moon_day;
 
       for(int attempt = 0; attempt < 16; ++attempt) {
          List possible_creatures = this.getChunkProvider().getPossibleCreatures(creature_type, x, y, z);
@@ -101,10 +103,9 @@ public abstract class WorldServerTrans extends World {
          Class entity_class = entry.entityClass;
          if (entity_class == EntityCreeper.class) {
             if (!this.hasSkylight() || this.isDaytime() || this.rand.nextInt(4) == 0 || !this.isOutdoors(x, y, z)) {
-               if (this.rand.nextInt(40) >= y && this.rand.nextFloat() < 0.5F) {
+               if ((this.rand.nextInt(40) >= y && this.rand.nextFloat() < 0.5F) || (is_blood_moon_day && this.rand.nextInt(5) == 0)) {
                   return EntityInfernalCreeper.class;
                }
-
                return entity_class;
             }
          } else if (entity_class == EntitySlime.class) {
@@ -132,7 +133,7 @@ public abstract class WorldServerTrans extends World {
                return entity_class;
             }
          } else if (entity_class == EntityRevenant.class) {
-            if (!check_depth || y <= 44 || can_spawn_revenants_on_surface) {
+            if (can_spawn_revenants_on_surface || !check_depth || y <= 44) {
                return entity_class;
             }
          } else {
@@ -167,7 +168,7 @@ public abstract class WorldServerTrans extends World {
                   return entity_class;
                }
             } else if (entity_class == EntityBoneLord.class) {
-               if (!check_depth || y <= 32 || can_spawn_bone_lords_on_surface) {
+               if (can_spawn_bone_lords_on_surface || !check_depth || y <= 32) {
                   return entity_class;
                }
             } else if (entity_class == EntityPudding.class) {
