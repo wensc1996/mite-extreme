@@ -36,8 +36,13 @@ public abstract class ContainerAnvilTrans extends Container {
         this.repair_fail_condition = 0;
     }
 
-    @Redirect(method = "updateRepairOutput",at = @At(value = "INVOKE",target = "Lnet/minecraft/ItemStack;isItemEnchanted()Z"))
-    public boolean updateRepairOutput(ItemStack item_stack_in_first_slot) {
+    @Redirect(method = "updateRepairOutput",at = @At(ordinal = 0, value = "INVOKE",target = "Lnet/minecraft/ItemStack;isItemEnchanted()Z"))
+    public boolean updateRepairOutputEnhanted(ItemStack item_stack_in_first_slot) {
         return false;
+    }
+
+    @Redirect(method = "updateRepairOutput",at = @At(ordinal = 0, value = "INVOKE",target = "Lnet/minecraft/ItemStack;isEnchantable()Z"))
+    public boolean updateRepairOutputEnableEnhanted(ItemStack item_stack_in_first_slot) {
+        return true;
     }
 }

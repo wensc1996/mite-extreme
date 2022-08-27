@@ -46,7 +46,8 @@ public class SpawnerCreatureTrans {
       boolean is_blood_moon = world.isBloodMoon(false);
       boolean is_blue_moon = world.isBlueMoon(false);
       boolean is_daytime = world.isDaytime();
-      int creature_limit = (int)((double)((int)((double)(creature_type.getMaxNumberOfCreature() * this.eligibleChunksForSpawning.size()) / (is_blood_moon ? Configs.wenscConfig.bloodMoonMaxHostileFraction.ConfigValue : 256.0D))) + (double)Configs.wenscConfig.mobMaxSpawnCountIncreasePerDay.ConfigValue * (double)world.getDayOfOverworld());
+      int creature_limit = (int)((double)((int)((double)(creature_type.getMaxNumberOfCreature() * this.eligibleChunksForSpawning.size()) /
+              Configs.wenscConfig.bloodMoonMaxHostileFraction.ConfigValue)) + (double)Configs.wenscConfig.mobMaxSpawnCountIncreasePerDay.ConfigValue * (double)(world.getDayOfOverworld() < 100 ? 100 : world.getDayOfOverworld()));
       if (deep_only) {
          creature_limit *= 2;
       }

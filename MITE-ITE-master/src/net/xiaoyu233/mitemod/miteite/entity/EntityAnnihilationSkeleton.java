@@ -180,7 +180,13 @@ public class EntityAnnihilationSkeleton extends EntitySkeleton {
 
     @Override
     public boolean getCanSpawnHere(boolean perform_light_check) {
-        return !this.worldObj.isOverworld() || (this.worldObj.getDayOfOverworld() > 32 && this.rand.nextInt(4) < 1 && this.worldObj.getClosestPlayerToEntity(this,24,true) == null && (Configs.wenscConfig.annihilationSkeletonSpawnInLight.ConfigValue || this.isValidLightLevel()));
+        return !this.worldObj.isOverworld()
+                || (this.worldObj.getDayOfOverworld() > 32 && this.rand.nextInt(4) < 1 && this.worldObj.getClosestPlayerToEntity(this,24,true) == null && (Configs.wenscConfig.annihilationSkeletonSpawnInLight.ConfigValue || this.isValidLightLevel()));
+    }
+
+    @Override
+    public boolean canSpawnInShallowWater() {
+        return false;
     }
 
     @Override

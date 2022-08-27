@@ -56,17 +56,22 @@ public class ItemStackTrans {
       return this.getItem().getItemStackLimit(this.subtype, this.damage);
    }
 
+   @Shadow
+   public boolean isItemEnchanted() {
+      return this.stackTagCompound != null && this.stackTagCompound.hasKey("ench");
+   }
+
    @Overwrite
    public boolean isEnchantable() {
       if (this.getItem() == Item.book) {
-         return true;
+         return false;
       } else if (!ItemPotion.isBottleOfWater(ReflectHelper.dyCast(this)) && !ItemGoldenApple.isUnenchantedGoldenApple(ReflectHelper.dyCast(this))) {
          if (this.getMaxStackSize() != 1) {
             return false;
          } else if (!this.isItemStackDamageable()) {
             return false;
          } else {
-            return this.getItem().getItemEnchantability() > 0;
+            return this.getItem().getItemEnchantability() > 0 && !this.isItemEnchanted();
          }
       } else {
          return true;
