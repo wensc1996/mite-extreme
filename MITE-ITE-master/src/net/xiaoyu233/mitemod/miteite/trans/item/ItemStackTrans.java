@@ -51,6 +51,27 @@ public class ItemStackTrans {
       //Do nothing to remove
       list.remove(list.size() - 1);
    }
+   @Shadow
+   public int getMaxStackSize() {
+      return this.getItem().getItemStackLimit(this.subtype, this.damage);
+   }
+
+   @Overwrite
+   public boolean isEnchantable() {
+      if (this.getItem() == Item.book) {
+         return true;
+      } else if (!ItemPotion.isBottleOfWater(ReflectHelper.dyCast(this)) && !ItemGoldenApple.isUnenchantedGoldenApple(ReflectHelper.dyCast(this))) {
+         if (this.getMaxStackSize() != 1) {
+            return false;
+         } else if (!this.isItemStackDamageable()) {
+            return false;
+         } else {
+            return this.getItem().getItemEnchantability() > 0;
+         }
+      } else {
+         return true;
+      }
+   }
 
    @Overwrite
    public ItemStack copy() {
