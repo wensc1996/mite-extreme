@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.MonsterUtil;
@@ -79,7 +80,7 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
 
       } else {
          this.setCombatTask();
-         super.setCurrentItemOrArmor(0, (new ItemStack(this.getSkeletonType() == 2 ? Item.clubWood : Item.bow)).randomizeForMob(this, true));
+         super.setCurrentItemOrArmor(0, (new ItemStack(this.getSkeletonType() == 2 ? (this.getRNG().nextInt(2) == 0 ? Item.clubWood : Items.clubIron) : Item.bow)).randomizeForMob(this, true));
       }
    }
 
