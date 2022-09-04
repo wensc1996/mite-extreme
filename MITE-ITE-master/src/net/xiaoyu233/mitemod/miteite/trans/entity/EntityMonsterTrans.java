@@ -214,6 +214,14 @@ public abstract class EntityMonsterTrans extends EntityInsentient implements IMo
       }
    }
 
+//   @Inject(method = "isValidLightLevel()Z",at = @At("HEAD"), cancellable = true)
+//   public void isValidLightLevel(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+//      if(this.worldObj.isBloodMoon24HourPeriod()) {
+//         callbackInfoReturnable.setReturnValue(true);
+//         callbackInfoReturnable.cancel();
+//      }
+//   }
+
    @Override
    public boolean isTargetWithinStrikingDistance(EntityLiving target) {
       if (!this.isAIEnabled()) {

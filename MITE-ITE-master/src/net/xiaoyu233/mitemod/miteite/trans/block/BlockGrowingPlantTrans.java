@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.block;
 
 import net.minecraft.BlockGrowingPlant;
 import net.minecraft.BlockPlant;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -14,6 +15,6 @@ public abstract class BlockGrowingPlantTrans extends BlockPlant {
 
     @Overwrite
     public float getGlobalGrowthRateModifierFromMITE() {
-        return 0.50F;
+        return Configs.wenscConfig.plantGrowthRate.ConfigValue;
     }
 }

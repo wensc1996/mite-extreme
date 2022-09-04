@@ -175,6 +175,7 @@ public abstract class ItemTrans {
       return 0.0F;
    }
 
+   @Overwrite
    public Item getRepairItem() {
       Material material_for_repairs = this.getMaterialForRepairs();
       if (material_for_repairs == Material.copper) {
@@ -183,18 +184,20 @@ public abstract class ItemTrans {
          return Item.silverNugget;
       } else if (material_for_repairs == Material.gold) {
          return Item.goldNugget;
-      } else if (material_for_repairs != Material.iron && material_for_repairs != Material.rusted_iron) {
-         if (material_for_repairs == Material.mithril) {
-            return Item.mithrilNugget;
-         } else if (material_for_repairs == Material.adamantium) {
-            return Item.adamantiumNugget;
-         } else if (material_for_repairs == Material.ancient_metal) {
-            return Item.ancientMetalNugget;
-         } else {
-            return material_for_repairs == Materials.vibranium ? Items.VIBRANIUM_NUGGET : null;
-         }
-      } else {
+      } else if (material_for_repairs == Material.iron || material_for_repairs == Material.rusted_iron) {
          return Item.ironNugget;
+      } else if (material_for_repairs == Material.mithril) {
+         return Item.mithrilNugget;
+      } else if (material_for_repairs == Material.adamantium) {
+         return Item.adamantiumNugget;
+      } else if (material_for_repairs == Material.ancient_metal) {
+         return Item.ancientMetalNugget;
+      } else if (material_for_repairs == Materials.vibranium) {
+         return Items.VIBRANIUM_NUGGET;
+      } else if (material_for_repairs == Materials.redstone) {
+         return Items.redstone;
+      } else {
+         return null;
       }
    }
 

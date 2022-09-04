@@ -103,7 +103,9 @@ public abstract class WorldServerTrans extends World {
          Class entity_class = entry.entityClass;
          if (entity_class == EntityCreeper.class) {
             if (!this.hasSkylight() || this.isDaytime() || this.rand.nextInt(4) == 0 || !this.isOutdoors(x, y, z)) {
-               if ((this.rand.nextInt(40) >= y && this.rand.nextFloat() < 0.5F) || (is_blood_moon_day && this.rand.nextInt(5) == 0)) {
+               if(this.isUnderworld() && this.rand.nextInt(20) == 0) {
+                  return EntityInfernalCreeper.class;
+               } else if (check_depth && ((this.rand.nextInt(40) >= y && this.rand.nextFloat() < 0.5F) || (is_blood_moon_day && this.rand.nextInt(5) == 0))) {
                   return EntityInfernalCreeper.class;
                }
                return entity_class;

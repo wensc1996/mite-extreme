@@ -108,3 +108,14 @@ tile.block_spawn.name=复活传送阵
 item.stack_torch.name=一捆火把
 item.gem_blue.name=蓝宝石
 item.lava_in_pipes.name=管道岩浆
+
+tile.dynamic_light.name=动态光源
+item.dynamic_core.name=动态光源
+
+item.voucher_core.name=振金核心
+item.voucher_witch.name=流浪女巫凭证
+item.voucher_pigman.name=猪人凭证
+item.voucher_annihilation_skeleton.name=湮灭骷髅凭证
+item.voucher_zombie_lord.name=僵尸领主凭证
+item.voucher_door.name=僵尸盗贼凭证
+item.voucher_exchanger.name=转移骷髅凭证

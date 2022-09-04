@@ -1,6 +1,8 @@
 package net.xiaoyu233.mitemod.miteite.trans.container;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.block.BlockDynamicLight;
+import net.xiaoyu233.mitemod.miteite.item.ItemDynamicCore;
 import net.xiaoyu233.mitemod.miteite.item.ItemRingKiller;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.network.CPacketSyncItems;
@@ -59,6 +61,15 @@ public class PlayerInventoryTrans {
          }
       }
       return itemStack;
+   }
+
+   public ItemStack getDynamicCore() {
+      for(int i = 0; i < this.jewelryInventory.length; ++i) {
+         if (this.jewelryInventory[i] != null && (this.jewelryInventory[i].getItem() instanceof ItemDynamicCore)) {
+            return this.jewelryInventory[i];
+         }
+      }
+      return null;
    }
    
    @Overwrite

@@ -47,12 +47,34 @@ public abstract class EntityZombiePigmanTrans extends EntityZombie implements IR
         super.applyEntityAttributes();
         int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld(), 0) : 0;
         double rate = Math.pow(day, 0.5);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 5 * rate);
+        double healthRate = Math.pow(day, 0.8);
+        this.setEntityAttribute(GenericAttributes.maxHealth, 1.5 * healthRate);
         this.setEntityAttribute(GenericAttributes.followRange, 64.0D);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.5D);
         this.setEntityAttribute(GenericAttributes.attackDamage, 4 * rate);
         this.setEntityAttribute(EntityZombie.field_110186_bp, this.rand.nextDouble() * 0.10000000149011612D);
    }
+
+    @Overwrite
+    protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
+        if(rand.nextInt(5) == 0) {
+            this.dropItem(Items.voucherPigman);
+        }
+        if (this.rand.nextFloat() < (recently_hit_by_player ? 0.5F : 0.25F)) {
+            this.dropItem(Item.rottenFlesh);
+        }
+
+        int num_drops = this.rand.nextInt(2 + damage_source.getLootingModifier());
+
+        for(int i = 0; i < num_drops; ++i) {
+            this.dropItem(Item.goldNugget);
+        }
+
+        if (recently_hit_by_player && !this.has_taken_massive_fall_damage && this.rand.nextInt(this.getBaseChanceOfRareDrop()) < 5 + damage_source.getLootingModifier() * 2) {
+            this.dropItem(Item.ingotGold);
+        }
+
+    }
 //
 //   @Override
 //   public EntityDamageResult attackEntityAsMob(Entity target) {

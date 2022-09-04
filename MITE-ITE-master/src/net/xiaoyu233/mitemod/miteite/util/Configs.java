@@ -31,7 +31,6 @@ public class Configs {
     public static class wenscConfig {
         public static ConfigItem <Boolean> BlnGravel = new ConfigItem("BlnGravel", true, "是否增加燧石概率");
         public static ConfigItem <Boolean> isOpenStrongBoxBreakRecord = new ConfigItem("isOpenStrongBoxBreakRecord", true, "是否开启私人箱子破坏记录");
-        public static ConfigItem <Boolean> isRecipeGATorch = new ConfigItem("isRecipeGATorch", true, "是否有一捆火把配方");
         public static ConfigItem <Boolean> isRecipeRingKiller = new ConfigItem("isRecipeRingKiller", true, "是否有魔灵刃配方");
         public static ConfigItem <Float> inWallDamageForPlayer = new ConfigItem("inWallDamageForPlayer", 10.0F, "玩家墙内窒息伤害(小数)");
         public static ConfigItem <Double> steppedMobDamageFactor = new ConfigItem("steppedMobDamageFactor", 1d, "渐进伤害每次增幅点数基础值(小数)");
@@ -134,7 +133,7 @@ public class Configs {
         public static ConfigItem <Integer> mithrilFrequencyUnderworld = new ConfigItem("mithrilFrequencyUnderworld_v0.0.5", 6, "地底世界秘银矿生成频率");
         public static ConfigItem <Integer> lapisFrequencyUnderworld = new ConfigItem("lapisFrequencyUnderworld_v0.0.5", 0, "地底世界青金石矿生成频率");
         public static ConfigItem <Integer> diamondFrequencyUnderworld = new ConfigItem("diamondFrequencyUnderworld_v0.0.5", 6, "地底世界钻石矿生成频率");
-        public static ConfigItem <Integer> adamantiumFrequencyUnderworld = new ConfigItem("adamantiumFrequencyUnderworld_v0.0.5", 2, "地底世界艾德曼矿生成频率");
+        public static ConfigItem <Integer> adamantiumFrequencyUnderworld = new ConfigItem("adamantiumFrequencyUnderworld_v0.0.9", 1, "地底世界艾德曼矿生成频率");
         public static ConfigItem <Integer> underworldMantleBlockOffset = new ConfigItem("underworldMantleBlockOffset_v0.0.2", 75, "地底世界地幔位置向上偏移");
         public static ConfigItem <Integer> netherAdamantiumMaxCountPerChunk = new ConfigItem("netherAdamantiumMaxCountPerChunk", 2, "地狱艾德曼每个区块最大生成数量");
         public static ConfigItem <Integer> netherAdamantiumMaxCountPerVein = new ConfigItem("netherAdamantiumMaxCountPerVein", 1, "地狱艾德曼每个矿脉最大矿物生成数量");
@@ -145,14 +144,13 @@ public class Configs {
         public static ConfigItem <Integer> netherGateOpenDay = new ConfigItem("netherGateOpenDay", 1, "地狱传送门多少天可以打开(主世界天数)");
         public static ConfigItem <Boolean> isAfterDeathKeep = new ConfigItem("isAfterDeathKeep", false, "是否死亡不掉落");
         public static ConfigItem <Boolean> isCloseShop = new ConfigItem("isCloseShop", false, "关闭商店系统");
-
+        public static ConfigItem <Float> plantGrowthRate = new ConfigItem("plantGrowthRate", 0.25F, "作物生长速度倍率");
     }
 
     public static void loadConfigs(){
 
         wenscMap.put("BlnGravel", wenscConfig.BlnGravel);
         wenscMap.put("isOpenStrongBoxBreakRecord", wenscConfig.isOpenStrongBoxBreakRecord);
-        wenscMap.put("isRecipeGATorch", wenscConfig.isRecipeGATorch);
         wenscMap.put("isRecipeRingKiller", wenscConfig.isRecipeRingKiller);
 
         wenscMap.put("inWallDamageForPlayer", wenscConfig.inWallDamageForPlayer);
@@ -270,6 +268,7 @@ public class Configs {
         wenscMap.put("netherGateOpenDay", wenscConfig.netherGateOpenDay);
         wenscMap.put("isAfterDeathKeep", wenscConfig.isAfterDeathKeep);
         wenscMap.put("isCloseShop", wenscConfig.isCloseShop);
+        wenscMap.put("plantGrowthRate", wenscConfig.plantGrowthRate);
 
         String filePth = "wensc-extreme.cfg";
         File file_mite = new File(filePth);

@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.ArmorModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.ItemRingKiller;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
@@ -59,6 +60,11 @@ public class ItemStackTrans {
    @Shadow
    public boolean isItemEnchanted() {
       return this.stackTagCompound != null && this.stackTagCompound.hasKey("ench");
+   }
+
+   @Overwrite
+   public boolean isRepairItem() {
+      return this.getItem() instanceof ItemNugget || this.getItem() instanceof ItemRedstone;
    }
 
    @Overwrite

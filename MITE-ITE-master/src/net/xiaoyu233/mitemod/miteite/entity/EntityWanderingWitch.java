@@ -1,14 +1,13 @@
 package net.xiaoyu233.mitemod.miteite.entity;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 
 import java.util.Random;
 import java.util.UUID;
 
 public class EntityWanderingWitch extends EntityWitch {
-    private static final AttributeModifier field_110185_bq = (new AttributeModifier(UUID.fromString("5CD17E52-A79A-43D3-A529-90FDE04B181E"), "Drinking speed penalty", -0.25D, 0)).setSaved(false);
-
     private int aliveBatsCount;
     private final int maxBatsCount = 8;
     private boolean cursedPlayer;
@@ -205,6 +204,9 @@ public class EntityWanderingWitch extends EntityWitch {
     @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         super.dropFewItems(recently_hit_by_player, damage_source);
+        if(rand.nextInt(5) == 0) {
+            this.dropItem(Items.voucherWitch);
+        }
         this.dropItemStack(new ItemStack(Item.adamantiumNugget,rand.nextInt(3) + 1));
         this.dropItemStack(new ItemStack(Item.netherStalkSeeds,4));
     }

@@ -2,7 +2,9 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
+import net.xiaoyu233.mitemod.miteite.block.BlockDynamicLight;
 import net.xiaoyu233.mitemod.miteite.block.BlockSpawn;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
 import net.xiaoyu233.mitemod.miteite.item.*;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
@@ -81,6 +83,11 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public int spawnStoneY;
    public int spawnStoneZ;
    public int spawnStoneWorldId = -999;
+
+   public int storeTorchTick = 0;
+   public int beforeTorchX = 0;
+   public int beforeTorchY = 0;
+   public int beforeTorchZ = 0;
 
    public double money = 0D;
 
@@ -825,7 +832,67 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
                    shift = At.Shift.AFTER))
    private void injectTick(CallbackInfo c){
       this.inventory.decrementAnimations();
+      // 客户端
+      if(this.storeTorchTick <= 0) {
+         ItemStack currentItemStack = this.inventory.getDynamicCore();
+         if(currentItemStack != null) {
+            if(currentItemStack.getItemDamage() < currentItemStack.getMaxDamage() - 1) {
+
+               int newX = (int)this.posX - 1, newY = (int)this.posY, newZ = (int)this.posZ;
+
+               if(newX != beforeTorchX || newY != beforeTorchY || newZ != beforeTorchZ) {
+                  if (this.worldObj.isRemote){
+                     Block nowTorch = this.worldObj.getBlock(newX, newY, newZ);
+                     Block beforeTorch = this.worldObj.getBlock(beforeTorchX, beforeTorchY, beforeTorchZ);
+                     if(beforeTorch != null && (beforeTorch instanceof BlockDynamicLight)) {
+                        this.worldObj.setBlockToAir(beforeTorchX, beforeTorchY, beforeTorchZ);
+                     }
+                     if(nowTorch == null || (nowTorch != null && !(nowTorch instanceof BlockDynamicLight))) {
+                        if(!(nowTorch instanceof BlockFluids)) {
+                           this.worldObj.setBlockWithDefaultMetadata(newX, newY, newZ, Blocks.blockDynamicLight,0 ,false);
+                           this.beforeTorchX = newX;
+                           this.beforeTorchY = newY;
+                           this.beforeTorchZ = newZ;
+                        }
+                     }
+                  }
+
+               } else {
+                  if (this.worldObj.isRemote){
+                     Block nowTorch = this.worldObj.getBlock(newX, newY, newZ);
+                     Block beforeTorch = this.worldObj.getBlock(beforeTorchX, beforeTorchY, beforeTorchZ);
+                     if(beforeTorch == null || nowTorch == null || (nowTorch != null && !(nowTorch instanceof BlockDynamicLight))) {
+                        if(!(nowTorch instanceof BlockFluids)) {
+                           this.worldObj.setBlockWithDefaultMetadata(newX, newY, newZ, Blocks.blockDynamicLight,0 ,false);
+                           this.beforeTorchX = newX;
+                           this.beforeTorchY = newY;
+                           this.beforeTorchZ = newZ;
+                        }
+                     }
+                  }
+
+               }
+               if (!this.worldObj.isRemote){
+                  currentItemStack.tryDamageItem(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)), 1, ReflectHelper.dyCast(this));
+               }
+            }
+         } else {
+            if (this.worldObj.isRemote){
+               Block beforeTorch = this.worldObj.getBlock(beforeTorchX, beforeTorchY, beforeTorchZ);
+               if(beforeTorch != null && (beforeTorch instanceof BlockDynamicLight)) {
+                  this.worldObj.setBlockToAir(beforeTorchX, beforeTorchY, beforeTorchZ);
+               }
+            }
+            this.storeTorchTick = 0;
+         }
+         this.storeTorchTick = 10;
+      } else {
+         this.storeTorchTick --;
+      }
+
+      // 服务端
       if (!this.worldObj.isRemote) {
+
          this.itemRingKiller = this.inventory.getRingKiller();
          if(this.itemRingKiller != null) {
             float range = ((ItemRingKiller)this.itemRingKiller.getItem()).getRingKillerSkillRange();
