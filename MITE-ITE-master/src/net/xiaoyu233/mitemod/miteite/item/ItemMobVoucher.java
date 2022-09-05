@@ -21,7 +21,7 @@ public class ItemMobVoucher extends Item {
                 info.add(EnumChatFormat.BLUE + Translator.getFormatted("由怪物击杀凭证合成", new Object[0]));
             } else {
                 info.add(EnumChatFormat.BROWN + Translator.getFormatted("振金核心材料之一", new Object[0]));
-                info.add(EnumChatFormat.BLUE + Translator.getFormatted("击杀特定怪物1/5概率掉落", new Object[0]));
+                info.add(EnumChatFormat.BLUE + Translator.getFormatted("击杀特定怪物掉落", new Object[0]));
             }
         }
     }

@@ -20,10 +20,10 @@ public class EntityExchanger extends EntitySkeleton {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         int day = this.getWorld().getDayOfOverworld();
-        double rate = Math.pow(day, 0.5);
-        double healthRate = Math.pow(day, 0.8);
-        this.setEntityAttribute(GenericAttributes.attackDamage, 3 * rate);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 0.8 * healthRate);
+        int x = day / 10 - 10;
+        double rate = (0.5+ x / (20 + Math.abs(x)));
+        this.setEntityAttribute(GenericAttributes.attackDamage, rate * 40);
+        this.setEntityAttribute(GenericAttributes.maxHealth, rate * 50);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.2572D);
     }
 
@@ -35,10 +35,7 @@ public class EntityExchanger extends EntitySkeleton {
     @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
-            if(rand.nextInt(5) == 0) {
-                this.dropItem(Items.voucherExchanger);
-            }
-
+            this.dropItem(Items.voucherExchanger);
             int count = 3;
             for (int i1 = 0; i1 < count; i1++) {
                 this.dropItem(Item.arrowIron);

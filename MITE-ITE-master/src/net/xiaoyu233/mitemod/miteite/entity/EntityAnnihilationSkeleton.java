@@ -173,9 +173,7 @@ public class EntityAnnihilationSkeleton extends EntitySkeleton {
     @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
-            if(rand.nextInt(5) == 0) {
-                this.dropItem(Items.voucherAnnihilationSkeleton);
-            }
+            this.dropItem(Items.voucherAnnihilationSkeleton);
             this.dropItemStack(new ItemStack(Items.VIBRANIUM_NUGGET,2));
             this.dropItemStack(new ItemStack(Item.diamond,2));
         }

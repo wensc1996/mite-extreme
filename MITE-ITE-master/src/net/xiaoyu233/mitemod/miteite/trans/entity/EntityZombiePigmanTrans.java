@@ -46,20 +46,18 @@ public abstract class EntityZombiePigmanTrans extends EntityZombie implements IR
    protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld(), 0) : 0;
-        double rate = Math.pow(day, 0.5);
-        double healthRate = Math.pow(day, 0.8);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 1.5 * healthRate);
+        int x = day / 10 - 10;
+        double rate = (0.5+ x / (20 + Math.abs(x)));
+        this.setEntityAttribute(GenericAttributes.attackDamage, rate * 60);
+        this.setEntityAttribute(GenericAttributes.maxHealth, rate * 60);
         this.setEntityAttribute(GenericAttributes.followRange, 64.0D);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.5D);
-        this.setEntityAttribute(GenericAttributes.attackDamage, 4 * rate);
         this.setEntityAttribute(EntityZombie.field_110186_bp, this.rand.nextDouble() * 0.10000000149011612D);
    }
 
     @Overwrite
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
-        if(rand.nextInt(5) == 0) {
-            this.dropItem(Items.voucherPigman);
-        }
+        this.dropItem(Items.voucherPigman);
         if (this.rand.nextFloat() < (recently_hit_by_player ? 0.5F : 0.25F)) {
             this.dropItem(Item.rottenFlesh);
         }
