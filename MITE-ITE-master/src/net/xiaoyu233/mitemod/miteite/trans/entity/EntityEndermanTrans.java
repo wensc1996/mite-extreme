@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +20,21 @@ public class EntityEndermanTrans extends EntityMonster {
       this.getEntityAttribute(GenericAttributes.maxHealth).setAttribute(100.0D + day / 20D);
       this.getEntityAttribute(GenericAttributes.movementSpeed).setAttribute(0.3D);
       this.getEntityAttribute(GenericAttributes.attackDamage).setAttribute(30.0D + day / 20D);
+   }
+
+   @Overwrite
+   protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
+      if (recently_hit_by_player){
+         this.dropItem(Items.voucherWitch);
+      }
+      int item_id = this.getDropItemId();
+      if (item_id > 0) {
+         int num_drops = this.rand.nextInt(2 + damage_source.getLootingModifier());
+
+         for(int i = 0; i < num_drops; ++i) {
+            this.dropItem(item_id, 1);
+         }
+      }
    }
 
    public EntityDamageResult attackEntityAsMob(Entity target) {

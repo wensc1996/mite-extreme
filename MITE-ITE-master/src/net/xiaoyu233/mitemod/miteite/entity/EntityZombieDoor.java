@@ -29,10 +29,11 @@ public class EntityZombieDoor extends EntityZombie {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         int day = this.getWorld().getDayOfOverworld();
-        int x = day / 10 - 10;
+        double x = day / 10 - 10;
         double rate = (0.5+ x / (20 + Math.abs(x)));
+        int healthRate = day / 32;
         this.setEntityAttribute(GenericAttributes.attackDamage, rate * 50);
-        this.setEntityAttribute(GenericAttributes.maxHealth, rate * 60);
+        this.setEntityAttribute(GenericAttributes.maxHealth, rate * 60 + (healthRate > 4 ? 40 : healthRate * 10));
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
     }
 
@@ -76,6 +77,7 @@ public class EntityZombieDoor extends EntityZombie {
                         zombie.refreshDespawnCounter(-9600);
                         this.worldObj.spawnEntityInWorld(zombie);
                         zombie.onSpawnWithEgg(null);
+                        zombie.addRandomWeapon();
                         zombie.setAttackTarget(this.getTarget());
                         zombie.entityFX(EnumEntityFX.summoned);
                         this.spawnCounter = 0;

@@ -46,10 +46,11 @@ public abstract class EntityZombiePigmanTrans extends EntityZombie implements IR
    protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld(), 0) : 0;
-        int x = day / 10 - 10;
+        double x = day / 10 - 10;
         double rate = (0.5+ x / (20 + Math.abs(x)));
+        int healthRate = day / 32;
         this.setEntityAttribute(GenericAttributes.attackDamage, rate * 60);
-        this.setEntityAttribute(GenericAttributes.maxHealth, rate * 60);
+        this.setEntityAttribute(GenericAttributes.maxHealth, rate * 60 + (healthRate > 4 ? 60 : healthRate * 15));
         this.setEntityAttribute(GenericAttributes.followRange, 64.0D);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.5D);
         this.setEntityAttribute(EntityZombie.field_110186_bp, this.rand.nextDouble() * 0.10000000149011612D);

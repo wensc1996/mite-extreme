@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.MonsterUtil;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,6 +26,14 @@ public class EntityAncientBoneLordTrans extends EntityBoneLordTrans {
          MonsterUtil.addDefaultArmor(day, this, true);
       }
       this.initStockedWeapon();
+   }
+
+   @Override
+   protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
+      super.dropFewItems(recently_hit_by_player, damage_source);
+      if (recently_hit_by_player){
+         this.dropItem(Items.voucherAnnihilationSkeleton);
+      }
    }
 
    @Overwrite

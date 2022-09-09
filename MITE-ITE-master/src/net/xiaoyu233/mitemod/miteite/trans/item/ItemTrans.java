@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -40,6 +41,15 @@ public abstract class ItemTrans {
    private double soldPrice = -1D;
    private double price = -1D;
 
+   @Inject(method = "<init>()V",at = @At("RETURN"))
+   private void injectCtor(CallbackInfo callbackInfo){
+      ReflectHelper.dyCast(Item.class,this).recipes = new aah[500];
+   }
+
+   @Inject(method = "<init>(ILjava/lang/String;I)V" ,at = @At("RETURN"))
+   private void ItemInject(int par1, String texture, int num_subtypes, CallbackInfo callbackInfo) {
+      ReflectHelper.dyCast(Item.class,this).recipes = new aah[500];
+   }
 
    // 在本mod进行引用 否则会造成无法找到方法的异常
    public Item setItemPrice(double price) {
