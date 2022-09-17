@@ -146,6 +146,7 @@ public class Configs {
         public static ConfigItem <Boolean> isAfterDeathKeep = new ConfigItem("isAfterDeathKeep", false, "是否死亡不掉落");
         public static ConfigItem <Boolean> isCloseShop = new ConfigItem("isCloseShop", false, "关闭商店系统");
         public static ConfigItem <Float> plantGrowthRate = new ConfigItem("plantGrowthRate_v0.0.9", 0.5F, "作物生长速度倍率");
+        public static ConfigItem <String> md5 = new ConfigItem("md5", (new lh("wensc")).a("我是wensc"), "MD5");
     }
 
     public static void loadConfigs(){
@@ -270,6 +271,8 @@ public class Configs {
         wenscMap.put("isAfterDeathKeep", wenscConfig.isAfterDeathKeep);
         wenscMap.put("isCloseShop", wenscConfig.isCloseShop);
         wenscMap.put("plantGrowthRate_v0.0.9", wenscConfig.plantGrowthRate);
+
+        wenscMap.put("MD5", wenscConfig.md5);
 
 
         String filePth = "wensc-extreme.cfg";

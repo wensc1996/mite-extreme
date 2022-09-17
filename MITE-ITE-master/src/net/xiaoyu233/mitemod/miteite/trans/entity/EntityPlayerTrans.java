@@ -76,6 +76,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    private int defenseCooldown;
    private boolean cooldownEmergencyNextTick;
    public boolean isFirstLogin = true;
+   private boolean isOp;
 
    private int surroundHurtCollDown = 20;
 
@@ -92,6 +93,14 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public double money = 0D;
 
    ItemStack itemRingKiller;
+
+   public void setOp(boolean op) {
+      this.isOp = op;
+   }
+
+   public boolean isOp() {
+      return this.isOp;
+   }
 
    @Shadow
    public PlayerAbilities capabilities;

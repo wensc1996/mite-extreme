@@ -5,6 +5,8 @@ import net.minecraft.ItemArmor;
 import net.minecraft.bjo;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.Random;
 
 public class Constant {

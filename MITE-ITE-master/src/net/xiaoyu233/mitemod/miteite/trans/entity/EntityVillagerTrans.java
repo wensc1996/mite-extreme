@@ -32,7 +32,6 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
       if (par2Random.nextFloat() < par3) {
          par0MerchantRecipeList.add(new MerchantRecipe(new ItemStack(par1, Configs.wenscConfig.villagerWoolToEmeraldShardCount.ConfigValue), new ItemStack(Item.shardEmerald, Configs.wenscConfig.villagerWoolToEmeraldShardShardCount.ConfigValue)));
       }
-
    }
 
    @Shadow
@@ -75,20 +74,26 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
          }
          break;
       case 1:
-         addMerchantItem(var2, Item.paper.itemID, this.rand, this.adjustProbability(0.8F));
-         addMerchantItem(var2, Item.book.itemID, this.rand, this.adjustProbability(0.8F));
-         addMerchantItem(var2, Item.writtenBook.itemID, this.rand, this.adjustProbability(0.3F));
-         addBlacksmithItem(var2, Block.bookShelf.blockID, this.rand, this.adjustProbability(0.8F));
-         addBlacksmithItem(var2, Block.glass.blockID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.compass.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.pocketSundial.itemID, this.rand, this.adjustProbability(0.2F));
-         if (this.rand.nextFloat() < this.adjustProbability(0.07F)) {
+//         addMerchantItem(var2, Item.paper.itemID, this.rand, this.adjustProbability(0.8F));
+//         addMerchantItem(var2, Item.book.itemID, this.rand, this.adjustProbability(0.8F));
+//         addMerchantItem(var2, Item.writtenBook.itemID, this.rand, this.adjustProbability(0.3F));
+//         addBlacksmithItem(var2, Block.bookShelf.blockID, this.rand, this.adjustProbability(0.8F));
+//         addBlacksmithItem(var2, Block.glass.blockID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.compass.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.pocketSundial.itemID, this.rand, this.adjustProbability(0.2F));
+//         if (this.rand.nextFloat() < this.adjustProbability(0.5F)) {
+//            var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 4), new ItemStack(Item.diamond, 3)));
+//         }
+//         if (this.rand.nextFloat() < this.adjustProbability(0.5F)) {
+//            var2.add(new MerchantRecipe(new ItemStack(Item.diamond, 3), new ItemStack(Item.emerald, 4)));
+//         }
+//         if (this.rand.nextFloat() < this.adjustProbability(0.07F)) {
             Enchantment var8 = Enchantment.enchantmentsBookList[this.rand.nextInt(Enchantment.enchantmentsBookList.length)];
             int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, var8.getNumLevels());
             ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var8, var10));
             var6 = 2 + this.rand.nextInt(5 + var10 * 10) + 3 * var10;
             var2.add(new MerchantRecipe(new ItemStack(Item.book), new ItemStack(Item.emerald, var6), var11));
-         }
+//         }
          break;
       case 2:
          addBlacksmithItem(var2, Item.eyeOfEnder.itemID, this.rand, this.adjustProbability(0.3F));
@@ -169,9 +174,37 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
       }
 
       for(int var9 = 0; var9 < par1 && var9 < var2.size(); ++var9) {
-         this.buyingList.addToListWithCheck((MerchantRecipe)var2.get(var9));
+         ItemStack enchantedBook = ((MerchantRecipe)var2.get(var9)).getItemToBuy();
+         if(enchantedBook != null && enchantedBook.getItem() instanceof ItemEnchantedBook) {
+            this.buyingList.add((MerchantRecipe)var2.get(var9));
+//            this.addDifferentEnhanceBook(((MerchantRecipe)var2.get(var9)), enchantedBook);
+         } else {
+            this.buyingList.addToListWithCheck((MerchantRecipe)var2.get(var9));
+         }
       }
+   }
 
+   public void addDifferentEnhanceBook(MerchantRecipe recipe, ItemStack enchantedBook) {
+      for(int var2 = 0; var2 < this.buyingList.size(); ++var2) {
+         MerchantRecipe var3 = (MerchantRecipe)this.buyingList.get(var2);
+         NBTTagList nbtTagList = var3.getItemToBuy().getStoredEnchantmentTagList();
+         NBTTagList nbtTagList2 = enchantedBook.getStoredEnchantmentTagList();
+         if(nbtTagList != null && nbtTagList2 != null) {
+            for(int var5 = 0; var5 < nbtTagList.tagCount(); ++var5) {
+               NBTTagCompound var6 = (NBTTagCompound)nbtTagList.tagAt(var5);
+               for(int var7 = 0; var7 < nbtTagList2.tagCount(); ++var7) {
+                  NBTTagCompound var8 = (NBTTagCompound) nbtTagList2.tagAt(var7);
+                  if (var6.getShort("id") == var8.getShort("id")) {
+                     if (var6.getShort("lvl") != var8.getShort("lvl")) {
+                        this.buyingList.add(recipe);
+                     }
+                  } else {
+                     this.buyingList.add(recipe);
+                  }
+               }
+            }
+         }
+      }
    }
 
    @Shadow
