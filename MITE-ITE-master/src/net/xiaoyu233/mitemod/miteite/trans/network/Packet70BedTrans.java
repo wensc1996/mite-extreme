@@ -1,34 +1,35 @@
-package net.xiaoyu233.mitemod.miteite.util;
+package net.xiaoyu233.mitemod.miteite.trans.network;
 
-import net.minecraft.EnumGamemode;
+
+import net.minecraft.Packet70Bed;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin({EnumGamemode.class})
-public class EnumGamemodeTrans {
-    public EnumGamemodeTrans() {
+@Mixin(Packet70Bed.class)
+public class Packet70BedTrans {
+    public Packet70BedTrans(int par1, int par2) {
     }
 
     @Redirect(
-            method = {"getByID", "a"},
+            method = {"<clinit>"},
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/Minecraft;inDevMode()Z"
             )
     )
-    private static boolean redirectInDevMode() {
+    private static boolean redirectDevModeS() {
         return true;
     }
 
     @Redirect(
-            method = {"e", "isCreative"},
+            method = {"<init>(II)V"},
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/Minecraft;inDevMode()Z"
             )
     )
-    private boolean redirectInDevModeNS() {
+    private boolean redirectDevMode() {
         return true;
     }
 }

