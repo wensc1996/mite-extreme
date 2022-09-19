@@ -31,9 +31,9 @@ public class EntityZombieDoor extends EntityZombie {
         int day = this.getWorld().getDayOfOverworld();
         double x = day / 10 - 10;
         double rate = (0.5+ x / (20 + Math.abs(x)));
-        int healthRate = day / 32;
+        int healthRate = Math.min(day / 32, 6);
         this.setEntityAttribute(GenericAttributes.attackDamage, rate * 50);
-        this.setEntityAttribute(GenericAttributes.maxHealth, rate * 60 + (healthRate > 4 ? 40 : healthRate * 10));
+        this.setEntityAttribute(GenericAttributes.maxHealth, rate * 60 + healthRate * 10);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
     }
 

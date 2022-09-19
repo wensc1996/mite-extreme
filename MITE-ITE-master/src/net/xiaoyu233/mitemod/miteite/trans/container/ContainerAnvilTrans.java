@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.container;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.Materials;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 //import org.apache.commons.lang3.StringUtils;
 import org.objectweb.asm.Opcodes;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @Mixin(ContainerAnvil.class)
 public abstract class ContainerAnvilTrans extends Container {
+    private ItemStack item_stack_in_first_slot_mine;
 
     public ContainerAnvilTrans(EntityPlayer player) {
         super(player);
@@ -38,6 +40,7 @@ public abstract class ContainerAnvilTrans extends Container {
 
     @Redirect(method = "updateRepairOutput",at = @At(ordinal = 0, value = "INVOKE",target = "Lnet/minecraft/ItemStack;isItemEnchanted()Z"))
     public boolean updateRepairOutputEnhanted(ItemStack item_stack_in_first_slot) {
+        this.item_stack_in_first_slot_mine = item_stack_in_first_slot;
         return false;
     }
 
@@ -45,4 +48,10 @@ public abstract class ContainerAnvilTrans extends Container {
     public boolean updateRepairOutputEnableEnhanted(ItemStack item_stack_in_first_slot) {
         return true;
     }
+
+    @Redirect(method = "updateRepairOutput",at = @At(value = "INVOKE",target = "Lnet/minecraft/Enchantment;getNumLevels()I"))
+    public int getNumLevelsForVibraniumTrans(Enchantment enchantment) {
+        return item_stack_in_first_slot_mine.getItem().getHardestMetalMaterial() == Materials.vibranium ? enchantment.getNumLevelsForVibranium() : enchantment.getNumLevels();
+    }
+
 }

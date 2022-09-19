@@ -92,7 +92,7 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
          }
 //         if (this.rand.nextFloat() < this.adjustProbability(0.8F)) {
             Enchantment var8 = (Enchantment)villagerEnhanceBookList[this.rand.nextInt(villagerEnhanceBookList.length)];
-            int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, var8.getNumLevels());
+            int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, var8.getNumLevelsForVibranium());
             ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var8, var10));
             var6 = var10 * 5 + this.rand.nextInt(10);
             if(var6 > 32) {
@@ -194,30 +194,26 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
       if(this.buyingList.size() == 0) {
          this.buyingList.add(recipe);
       } else {
-         boolean canAddToRecipe = false;
-         boolean existEnhanceBook = false;
+         boolean isExist = false;
          for(int var2 = 0; var2 < this.buyingList.size(); ++var2) {
             MerchantRecipe var3 = (MerchantRecipe)this.buyingList.get(var2);
             NBTTagList nbtTagList = var3.getItemToSell().getStoredEnchantmentTagList();
             NBTTagList nbtTagList2 = enchantedBook.getStoredEnchantmentTagList();
             if(nbtTagList != null && nbtTagList2 != null) {
-               existEnhanceBook = true;
                for(int var5 = 0; var5 < nbtTagList.tagCount(); ++var5) {
                   NBTTagCompound var6 = (NBTTagCompound)nbtTagList.tagAt(var5);
                   for(int var7 = 0; var7 < nbtTagList2.tagCount(); ++var7) {
                      NBTTagCompound var8 = (NBTTagCompound) nbtTagList2.tagAt(var7);
                      if (var6.getShort("id") == var8.getShort("id")) {
-                        if (var6.getShort("lvl") != var8.getShort("lvl")) {
-                           canAddToRecipe = true;
+                        if (var6.getShort("lvl") == var8.getShort("lvl")) {
+                           isExist = true;
                         }
-                     } else {
-                        canAddToRecipe = true;
                      }
                   }
                }
             }
          }
-         if(canAddToRecipe || !existEnhanceBook) {
+         if(!isExist) {
             this.buyingList.add(recipe);
          }
       }
