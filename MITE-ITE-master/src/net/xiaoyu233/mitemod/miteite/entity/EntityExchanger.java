@@ -22,7 +22,7 @@ public class EntityExchanger extends EntitySkeleton {
         int day = this.getWorld().getDayOfOverworld();
         double x = day / 10 - 10;
         double rate = (0.5+ x / (20 + Math.abs(x)));
-        int healthRate = Math.min(day / 32, 6);
+        int healthRate = Math.min(day / 16, 10);
         this.setEntityAttribute(GenericAttributes.attackDamage, rate * 40);
         this.setEntityAttribute(GenericAttributes.maxHealth, rate * 50 + healthRate * 5);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.2572D);

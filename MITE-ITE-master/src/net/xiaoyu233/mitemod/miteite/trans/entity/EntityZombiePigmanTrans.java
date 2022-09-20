@@ -48,7 +48,7 @@ public abstract class EntityZombiePigmanTrans extends EntityZombie implements IR
         int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld(), 0) : 0;
         double x = day / 10 - 10;
         double rate = (0.5+ x / (20 + Math.abs(x)));
-        int healthRate = Math.min(day / 32, 6);
+        int healthRate = Math.min(day / 16, 10);
         this.setEntityAttribute(GenericAttributes.attackDamage, rate * 60);
         this.setEntityAttribute(GenericAttributes.maxHealth, rate * 60 + healthRate * 15);
         this.setEntityAttribute(GenericAttributes.followRange, 64.0D);

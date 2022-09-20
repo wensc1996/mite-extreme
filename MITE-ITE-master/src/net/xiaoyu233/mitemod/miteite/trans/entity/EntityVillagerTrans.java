@@ -1,10 +1,15 @@
 package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.*;
 
@@ -124,37 +129,78 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
             ++var6;
          }
       case 3:
-         addMerchantItem(var2, Item.coal.itemID, this.rand, this.adjustProbability(0.7F));
-         addMerchantItem(var2, Item.ingotIron.itemID, this.rand, this.adjustProbability(0.5F));
-         addMerchantItem(var2, Item.ingotGold.itemID, this.rand, this.adjustProbability(0.5F));
-         addBlacksmithItem(var2, Item.swordIron.itemID, this.rand, this.adjustProbability(0.5F));
-         addBlacksmithItem(var2, Item.axeIron.itemID, this.rand, this.adjustProbability(0.3F));
-         addBlacksmithItem(var2, Item.pickaxeIron.itemID, this.rand, this.adjustProbability(0.5F));
-         addBlacksmithItem(var2, Item.shovelIron.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.hoeIron.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.helmetIron.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.plateIron.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.legsIron.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.bootsIron.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.pickaxeCopper.itemID, this.rand, this.adjustProbability(0.5F));
-         addBlacksmithItem(var2, Item.shovelCopper.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.axeCopper.itemID, this.rand, this.adjustProbability(0.3F));
-         addBlacksmithItem(var2, Item.hoeCopper.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.daggerCopper.itemID, this.rand, this.adjustProbability(0.5F));
-         addBlacksmithItem(var2, Item.swordCopper.itemID, this.rand, this.adjustProbability(0.5F));
-         addBlacksmithItem(var2, Item.daggerIron.itemID, this.rand, this.adjustProbability(0.5F));
-         addBlacksmithItem(var2, Item.helmetCopper.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.plateCopper.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.legsCopper.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.bootsCopper.itemID, this.rand, this.adjustProbability(0.2F));
-         addBlacksmithItem(var2, Item.helmetChainCopper.itemID, this.rand, this.adjustProbability(0.1F));
-         addBlacksmithItem(var2, Item.plateChainCopper.itemID, this.rand, this.adjustProbability(0.1F));
-         addBlacksmithItem(var2, Item.legsChainCopper.itemID, this.rand, this.adjustProbability(0.1F));
-         addBlacksmithItem(var2, Item.bootsChainCopper.itemID, this.rand, this.adjustProbability(0.1F));
-         addBlacksmithItem(var2, Item.helmetChainIron.itemID, this.rand, this.adjustProbability(0.1F));
-         addBlacksmithItem(var2, Item.plateChainIron.itemID, this.rand, this.adjustProbability(0.1F));
-         addBlacksmithItem(var2, Item.legsChainIron.itemID, this.rand, this.adjustProbability(0.1F));
-         addBlacksmithItem(var2, Item.bootsChainIron.itemID, this.rand, this.adjustProbability(0.1F));
+//         addMerchantItem(var2, Item.coal.itemID, this.rand, this.adjustProbability(0.8F));
+//         addMerchantItem(var2, Item.ingotGold.itemID, this.rand, this.adjustProbability(0.7F));
+//         addMerchantItem(var2, Item.ingotSilver.itemID, this.rand, this.adjustProbability(0.7F));
+//         addMerchantItem(var2, Item.ingotCopper.itemID, this.rand, this.adjustProbability(0.7F));
+//         addMerchantItem(var2, Item.ingotIron.itemID, this.rand, this.adjustProbability(0.6F));
+         if (this.rand.nextFloat() < this.adjustProbability(0.8F)) {
+            var2.add(new MerchantRecipe(new ItemStack(Item.coal, 10 + this.rand.nextInt(7)), new ItemStack(Item.emerald, 1)));
+         }
+         if (this.rand.nextFloat() < this.adjustProbability(0.7F)) {
+            int nums = 7 + this.rand.nextInt(5);
+            if(nums > 8) {
+               var2.add(new MerchantRecipe(new ItemStack(Item.ingotCopper, 8), new ItemStack(Item.ingotCopper, nums - 8), new ItemStack(Item.emerald, 1)));
+            } else {
+               var2.add(new MerchantRecipe(new ItemStack(Item.ingotCopper, nums), new ItemStack(Item.emerald, 1)));
+            }
+         }
+         if (this.rand.nextFloat() < this.adjustProbability(0.7F)) {
+            int nums = 7 + this.rand.nextInt(5);
+            if(nums > 8) {
+               var2.add(new MerchantRecipe(new ItemStack(Item.ingotSilver, 8), new ItemStack(Item.ingotSilver, nums - 8), new ItemStack(Item.emerald, 1)));
+            } else {
+               var2.add(new MerchantRecipe(new ItemStack(Item.ingotSilver, nums), new ItemStack(Item.emerald, 1)));
+            }
+         }
+         if (this.rand.nextFloat() < this.adjustProbability(0.7F)) {
+            int nums = 8 + this.rand.nextInt(5);
+            if(nums > 8) {
+               var2.add(new MerchantRecipe(new ItemStack(Item.ingotGold, 8), new ItemStack(Item.ingotGold, nums - 8), new ItemStack(Item.emerald, 1)));
+            } else {
+               var2.add(new MerchantRecipe(new ItemStack(Item.ingotGold, nums), new ItemStack(Item.emerald, 1)));
+            }
+         }
+         if (this.rand.nextFloat() < this.adjustProbability(0.6F)) {
+            var2.add(new MerchantRecipe(new ItemStack(Item.ingotIron, 5 + this.rand.nextInt(4)), new ItemStack(Item.emerald, 1)));
+         }
+         if (this.rand.nextFloat() < this.adjustProbability(0.5F)) {
+            var2.add(new MerchantRecipe(new ItemStack(Item.ingotMithril, 1 + this.rand.nextInt(2)), new ItemStack(Item.diamond, 1)));
+         }
+         if (this.rand.nextFloat() < this.adjustProbability(0.4F)) {
+            var2.add(new MerchantRecipe(new ItemStack(Item.ingotAdamantium, 1), new ItemStack(Item.diamond, 2 + this.rand.nextInt(3))));
+         }
+         if (this.rand.nextFloat() < this.adjustProbability(0.3F)) {
+            var2.add(new MerchantRecipe(new ItemStack(Items.VIBRANIUM_INGOT, 1), new ItemStack(Item.diamond, 10 + this.rand.nextInt(6))));
+         }
+//         addBlacksmithItem(var2, Item.swordIron.itemID, this.rand, this.adjustProbability(0.5F));
+//         addBlacksmithItem(var2, Item.axeIron.itemID, this.rand, this.adjustProbability(0.3F));
+//         addBlacksmithItem(var2, Item.pickaxeIron.itemID, this.rand, this.adjustProbability(0.5F));
+//         addBlacksmithItem(var2, Item.shovelIron.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.hoeIron.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.helmetIron.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.plateIron.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.legsIron.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.bootsIron.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.pickaxeCopper.itemID, this.rand, this.adjustProbability(0.5F));
+//         addBlacksmithItem(var2, Item.shovelCopper.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.axeCopper.itemID, this.rand, this.adjustProbability(0.3F));
+//         addBlacksmithItem(var2, Item.hoeCopper.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.daggerCopper.itemID, this.rand, this.adjustProbability(0.5F));
+//         addBlacksmithItem(var2, Item.swordCopper.itemID, this.rand, this.adjustProbability(0.5F));
+//         addBlacksmithItem(var2, Item.daggerIron.itemID, this.rand, this.adjustProbability(0.5F));
+//         addBlacksmithItem(var2, Item.helmetCopper.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.plateCopper.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.legsCopper.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.bootsCopper.itemID, this.rand, this.adjustProbability(0.2F));
+//         addBlacksmithItem(var2, Item.helmetChainCopper.itemID, this.rand, this.adjustProbability(0.1F));
+//         addBlacksmithItem(var2, Item.plateChainCopper.itemID, this.rand, this.adjustProbability(0.1F));
+//         addBlacksmithItem(var2, Item.legsChainCopper.itemID, this.rand, this.adjustProbability(0.1F));
+//         addBlacksmithItem(var2, Item.bootsChainCopper.itemID, this.rand, this.adjustProbability(0.1F));
+//         addBlacksmithItem(var2, Item.helmetChainIron.itemID, this.rand, this.adjustProbability(0.1F));
+//         addBlacksmithItem(var2, Item.plateChainIron.itemID, this.rand, this.adjustProbability(0.1F));
+//         addBlacksmithItem(var2, Item.legsChainIron.itemID, this.rand, this.adjustProbability(0.1F));
+//         addBlacksmithItem(var2, Item.bootsChainIron.itemID, this.rand, this.adjustProbability(0.1F));
          break;
       case 4:
          addMerchantItem(var2, Item.coal.itemID, this.rand, this.adjustProbability(0.7F));
@@ -197,19 +243,9 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
          boolean isExist = false;
          for(int var2 = 0; var2 < this.buyingList.size(); ++var2) {
             MerchantRecipe var3 = (MerchantRecipe)this.buyingList.get(var2);
-            NBTTagList nbtTagList = var3.getItemToSell().getStoredEnchantmentTagList();
-            NBTTagList nbtTagList2 = enchantedBook.getStoredEnchantmentTagList();
-            if(nbtTagList != null && nbtTagList2 != null) {
-               for(int var5 = 0; var5 < nbtTagList.tagCount(); ++var5) {
-                  NBTTagCompound var6 = (NBTTagCompound)nbtTagList.tagAt(var5);
-                  for(int var7 = 0; var7 < nbtTagList2.tagCount(); ++var7) {
-                     NBTTagCompound var8 = (NBTTagCompound) nbtTagList2.tagAt(var7);
-                     if (var6.getShort("id") == var8.getShort("id")) {
-                        if (var6.getShort("lvl") == var8.getShort("lvl")) {
-                           isExist = true;
-                        }
-                     }
-                  }
+            if(var3.getItemToSell().getItem() instanceof ItemEnchantedBook) {
+               if(var3.hasSameIDsAs(recipe)) {
+                  isExist = true;
                }
             }
          }
