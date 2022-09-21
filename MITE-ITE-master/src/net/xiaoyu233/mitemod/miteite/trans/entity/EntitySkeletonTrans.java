@@ -408,21 +408,16 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
       int rawDay = this.getWorld() != null ? this.getWorld().getDayOfOverworld() : 0;
       int day = Math.max(rawDay - 64, 0);
       int var4 = EnchantmentManager.getEnchantmentLevel(Enchantment.power.effectId, this.getHeldItemStack()) + 1;
-      int var5 = (int)((double)EnchantmentManager.getEnchantmentLevel(Enchantment.punch.effectId, this.getHeldItemStack()) + Math.min(1.0D + Math.floor((float)day / 48.0F), 5.0D));
+//      int var5 = (int)((double)EnchantmentManager.getEnchantmentLevel(Enchantment.punch.effectId, this.getHeldItemStack()) + Math.min(1.0D + Math.floor((float)day / 48.0F), 5.0D));
       double damage = (double)(par2 * 2.0F) + this.getRNG().nextGaussian() * 0.0D + (double)((float)this.getWorld().difficultySetting * 0.11F);
-      var3.setDamage(damage);
-      if (var4 > 0) {
-         var3.setDamage(var3.getDamage() + (double)var4 * 2.0D + 1.0D);
-      }
-
-      if (var5 > 0) {
-         var3.setKnockbackStrength(var5);
-      }
-
+      // 力量1 提高40%伤害
+      var3.setDamage((damage+ day * 0.2 )  * (1 + var4 * 0.4));
+//      if (var5 > 0) {
+//         var3.setKnockbackStrength(var5);
+//      }
       if (EnchantmentManager.getEnchantmentLevel(Enchantment.flame.effectId, this.getHeldItemStack()) > 0 || this.getSkeletonType() == 1 || this.isInFire() && this.getRNG().nextInt(3) == 0 || this.dataWatcher.getWatchableObjectByte(this.DATA_OBJ_ID_CAN_USE_FIRE_ARROW) > 0 && rawDay > 196) {
          var3.setFire(100);
       }
-
    }
 
    @Shadow

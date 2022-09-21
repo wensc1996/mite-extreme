@@ -842,25 +842,26 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    private void injectTick(CallbackInfo c){
       this.inventory.decrementAnimations();
       // 客户端
-//      if(this.storeTorchTick <= 0) {
-//         ItemStack currentItemStack = this.inventory.getDynamicCore();
-//         if(currentItemStack != null) {
-//            if(currentItemStack.getItemDamage() < currentItemStack.getMaxDamage() - 1) {
-//
-//               int newX = (int)this.posX, newY = (int)this.posY - 2, newZ = (int)this.posZ;
+      if(this.storeTorchTick <= 0) {
+         ItemStack currentItemStack = this.inventory.getDynamicCore();
+         if(currentItemStack != null) {
+            if(currentItemStack.getItemDamage() < currentItemStack.getMaxDamage() - 1) {
+//               Minecraft.night_vision_override = true;
+//               int newX = this.getBlockPosX(), newY = this.getFootBlockPosY(), newZ = this.getBlockPosZ();
 //               Chunk var7 = this.worldObj.getChunkFromChunkCoords(this.getChunkPosX(), this.getChunkPosZ());
-//               this.worldObj.propagateBlocklight(newX, newY, newZ, true, var7);
-//               if (!this.worldObj.isRemote){
-//                  currentItemStack.tryDamageItem(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)), 1, ReflectHelper.dyCast(this));
-//               }
-//            }
-//         } else {
-//            this.storeTorchTick = 0;
-//         }
-//         this.storeTorchTick = 10;
-//      } else {
-//         this.storeTorchTick --;
-//      }
+//               this.worldObj.propagateBlocklight(this.getChunkPosX(), this.getFootBlockPosY(), this.getChunkPosZ(), true, var7);
+               if (!this.worldObj.isRemote){
+                  currentItemStack.tryDamageItem(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)), 1, ReflectHelper.dyCast(this));
+               }
+            }
+         } else {
+            Minecraft.night_vision_override = false;
+            this.storeTorchTick = 0;
+         }
+         this.storeTorchTick = 10;
+      } else {
+         this.storeTorchTick --;
+      }
 
       // 服务端
       if (!this.worldObj.isRemote) {

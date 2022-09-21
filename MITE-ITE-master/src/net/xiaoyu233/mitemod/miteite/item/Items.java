@@ -44,8 +44,8 @@ public class Items extends Item{
     public static final Item ringKillerMithril = new ItemRingKiller(Constant.getNextItemID(), Materials.mithril).setUnlocalizedName("ringKillerMithril");
     public static final Item ringKillerAdamantium = new ItemRingKiller(Constant.getNextItemID(), Materials.adamantium).setUnlocalizedName("ringKillerAdamantium");
     public static final Item ringKillerVibranium = new ItemRingKiller(Constant.getNextItemID(), Materials.vibranium).setUnlocalizedName("ringKillerVibranium");
-//    public static final Item itemDynamicCore = new ItemDynamicCore(Constant.getNextItemID(), Materials.redstone).setUnlocalizedName("dynamic_core");
-public static final Item Stack_Torch = createInstance(Item.class, new Class[]{int.class, Material.class, String.class}, Constant.getNextItemID(), Material.circuits, "stack_torch");
+    public static final Item itemDynamicCore = new ItemDynamicCore(Constant.getNextItemID(), Materials.redstone).setUnlocalizedName("dynamic_core");
+    public static final Item Stack_Torch = createInstance(Item.class, new Class[]{int.class, Material.class, String.class}, Constant.getNextItemID(), Material.circuits, "stack_torch");
 
     public static final Item voucherExchanger = new ItemMobVoucher(Constant.getNextItemID(), "exchanger");
     public static final Item voucherDoor = new ItemMobVoucher(Constant.getNextItemID(), "door");
@@ -161,7 +161,7 @@ public static final Item Stack_Torch = createInstance(Item.class, new Class[]{in
         register("ring_killer/ring_killer_mithril", ringKillerMithril).setUnlocalizedName("ring_killer_mithril").setLowestCraftingDifficultyToProduce(1.0F);
         register("ring_killer/ring_killer_adamantium", ringKillerAdamantium).setUnlocalizedName("ring_killer_adamantium").setLowestCraftingDifficultyToProduce(1.0F);
         register("ring_killer/ring_killer_vibranium", ringKillerVibranium).setUnlocalizedName("ring_killer_vibranium").setLowestCraftingDifficultyToProduce(1.0F);
-//        register("dynamic_core", itemDynamicCore).setUnlocalizedName("dynamic_core").setLowestCraftingDifficultyToProduce(1.0F);
+        register("dynamic_core", itemDynamicCore).setUnlocalizedName("dynamic_core").setLowestCraftingDifficultyToProduce(1.0F);
 
         register("voucher/voucher_exchanger", voucherExchanger).setUnlocalizedName("voucher_exchanger").setLowestCraftingDifficultyToProduce(1.0F);
         register("voucher/voucher_door", voucherDoor).setUnlocalizedName("voucher_door").setLowestCraftingDifficultyToProduce(1.0F);
@@ -178,7 +178,7 @@ public static final Item Stack_Torch = createInstance(Item.class, new Class[]{in
         register.registerShapelessRecipe(new ItemStack(Blocks.blockLantern, 1), true,Blocks.torchWood, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget);
         register.registerShapelessRecipe(new ItemStack(Items.voucherCore, 1), true, Items.voucherAnnihilationSkeleton, Items.voucherDoor, Items.voucherExchanger, Items.voucherPigman, Items.voucherZombieLord, Items.voucherWitch);
         register.registerShapedRecipe(new ItemStack(clubIron, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.ironNugget , '*', Items.ingotIron});
-//        register.registerShapedRecipe(new ItemStack(itemDynamicCore, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.ingotIron , 'B', Blocks.glass, 'C', Blocks.blockRedstone});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCore, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.ingotIron , 'B', Blocks.glass, 'C', Blocks.blockRedstone});
 
         if(Configs.wenscConfig.isRecipeGATorch.ConfigValue) {
             register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{Block.wood, Item.silk, Item.coal, Item.coal});
