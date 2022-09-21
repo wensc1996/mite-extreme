@@ -86,9 +86,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public int spawnStoneWorldId = -999;
 
    public int storeTorchTick = 0;
-   public int beforeTorchX = 0;
-   public int beforeTorchY = 0;
-   public int beforeTorchZ = 0;
+
+   public boolean hasDynamicCore = false;
 
    public double money = 0D;
 
@@ -846,16 +845,13 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
          ItemStack currentItemStack = this.inventory.getDynamicCore();
          if(currentItemStack != null) {
             if(currentItemStack.getItemDamage() < currentItemStack.getMaxDamage() - 1) {
-//               Minecraft.night_vision_override = true;
-//               int newX = this.getBlockPosX(), newY = this.getFootBlockPosY(), newZ = this.getBlockPosZ();
-//               Chunk var7 = this.worldObj.getChunkFromChunkCoords(this.getChunkPosX(), this.getChunkPosZ());
-//               this.worldObj.propagateBlocklight(this.getChunkPosX(), this.getFootBlockPosY(), this.getChunkPosZ(), true, var7);
+               this.hasDynamicCore = true;
                if (!this.worldObj.isRemote){
                   currentItemStack.tryDamageItem(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)), 1, ReflectHelper.dyCast(this));
                }
             }
          } else {
-            Minecraft.night_vision_override = false;
+            this.hasDynamicCore = false;
             this.storeTorchTick = 0;
          }
          this.storeTorchTick = 10;
