@@ -18,7 +18,6 @@ public abstract class EntityTrans {
    @Shadow
    protected void entityInit() {
    }
-
    @Overwrite
    public boolean isInFire() {
       if (this.worldObj.isTheNether() &&

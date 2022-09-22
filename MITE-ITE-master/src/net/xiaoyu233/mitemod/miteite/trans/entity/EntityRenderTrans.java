@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.objectweb.asm.Opcodes;
 
-@Mixin(EntityRenderer.class)
+@Mixin(value = EntityRenderer.class, priority = 1200)
 public class EntityRenderTrans {
     @Shadow
     private Minecraft q;
@@ -24,7 +24,7 @@ public class EntityRenderTrans {
             int var4 = var3.getDuration();
             return var4 > 200 ? 1.0F :0.7F + MathHelper.sin(((float)var4 - par2) * 3.1415927F * 0.2F) * 0.3F;
         } else {
-            return par1EntityPlayer.hasDynamicCore ? 0.1F : 0;
+            return par1EntityPlayer.hasDynamicCore ? 0.2F : 0;
         }
     }
 

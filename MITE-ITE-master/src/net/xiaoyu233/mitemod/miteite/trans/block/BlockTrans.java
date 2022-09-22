@@ -20,7 +20,11 @@ public abstract class BlockTrans {
    };
 
    public String getItemDisplayName(ItemStack itemStack){
-      return ("" + LocaleI18n.translateToLocal(itemStack.getItem().getUnlocalizedNameInefficiently(itemStack) + ".name")).trim();
+      if(itemStack != null) {
+         return ("" + LocaleI18n.translateToLocal(itemStack.getItem().getUnlocalizedNameInefficiently(itemStack) + ".name")).trim();
+      } else {
+         return "nothing";
+      }
    }
 
    public double getPrice(){

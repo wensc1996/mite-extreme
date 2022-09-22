@@ -381,7 +381,7 @@ public class MITEITEEvents {
         player.sendChatToPlayer(ChatMessage.createFromTranslationKey("[MITE-Extreme]:").setColor(EnumChatFormat.WHITE)
                 .appendComponent(ChatMessage.createFromTranslationKey("MITE-Extreme由 ")
                 .appendComponent(ChatMessage.createFromTranslationKey("wensc").setColor(EnumChatFormat.WHITE)))
-                .addText(" 重写,开放下载地址:").setColor(EnumChatFormat.DARK_RED)
+                .addText(" 重写,开放下载地址:").setColor(EnumChatFormat.DARK_AQUA)
                 .appendComponent(ChatMessage.createFromTranslationKey("https://www.wensc.cn").setColor(EnumChatFormat.DARK_GREEN)));
         if (player.isFirstLogin == true) {
 

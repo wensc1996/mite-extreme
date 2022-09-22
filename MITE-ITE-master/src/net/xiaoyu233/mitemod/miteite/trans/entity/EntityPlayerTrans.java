@@ -844,11 +844,13 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       if(this.storeTorchTick <= 0) {
          ItemStack currentItemStack = this.inventory.getDynamicCore();
          if(currentItemStack != null) {
-            if(currentItemStack.getItemDamage() < currentItemStack.getMaxDamage() - 1) {
+            if(currentItemStack.getItemDamage() < currentItemStack.getMaxDamage() - 2) {
                this.hasDynamicCore = true;
                if (!this.worldObj.isRemote){
-                  currentItemStack.tryDamageItem(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)), 1, ReflectHelper.dyCast(this));
+                  currentItemStack.tryDamageItem(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)), 2, ReflectHelper.dyCast(this));
                }
+            } else {
+               this.hasDynamicCore = false;
             }
          } else {
             this.hasDynamicCore = false;

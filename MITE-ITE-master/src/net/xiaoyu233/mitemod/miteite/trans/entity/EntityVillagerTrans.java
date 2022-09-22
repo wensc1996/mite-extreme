@@ -229,14 +229,14 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
       for(int var9 = 0; var9 < par1 && var9 < var2.size(); ++var9) {
          ItemStack enchantedBook = ((MerchantRecipe)var2.get(var9)).getItemToSell();
          if(enchantedBook != null && enchantedBook.getItem() instanceof ItemEnchantedBook) {
-            this.addDifferentEnhanceBook(((MerchantRecipe)var2.get(var9)), enchantedBook);
+            this.addDifferentEnhanceBook(((MerchantRecipe)var2.get(var9)));
          } else {
             this.buyingList.addToListWithCheck((MerchantRecipe)var2.get(var9));
          }
       }
    }
 
-   public void addDifferentEnhanceBook(MerchantRecipe recipe, ItemStack enchantedBook) {
+   public void addDifferentEnhanceBook(MerchantRecipe recipe) {
       if(this.buyingList.size() == 0) {
          this.buyingList.add(recipe);
       } else {

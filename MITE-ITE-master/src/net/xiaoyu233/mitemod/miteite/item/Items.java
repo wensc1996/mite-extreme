@@ -44,7 +44,6 @@ public class Items extends Item{
     public static final Item ringKillerMithril = new ItemRingKiller(Constant.getNextItemID(), Materials.mithril).setUnlocalizedName("ringKillerMithril");
     public static final Item ringKillerAdamantium = new ItemRingKiller(Constant.getNextItemID(), Materials.adamantium).setUnlocalizedName("ringKillerAdamantium");
     public static final Item ringKillerVibranium = new ItemRingKiller(Constant.getNextItemID(), Materials.vibranium).setUnlocalizedName("ringKillerVibranium");
-    public static final Item itemDynamicCore = new ItemDynamicCore(Constant.getNextItemID(), Materials.redstone).setUnlocalizedName("dynamic_core");
     public static final Item Stack_Torch = createInstance(Item.class, new Class[]{int.class, Material.class, String.class}, Constant.getNextItemID(), Material.circuits, "stack_torch");
 
     public static final Item voucherExchanger = new ItemMobVoucher(Constant.getNextItemID(), "exchanger");
@@ -54,6 +53,8 @@ public class Items extends Item{
     public static final Item voucherPigman = new ItemMobVoucher(Constant.getNextItemID(), "pigman");
     public static final Item voucherWitch = new ItemMobVoucher(Constant.getNextItemID(), "witch");
     public static final Item voucherCore = new ItemMobVoucher(Constant.getNextItemID(), "core");
+
+    public static final Item itemDynamicCore = new ItemDynamicCore(Constant.getNextItemID(), Materials.redstone).setUnlocalizedName("dynamic_core");
 
 
     private static Item register(String resourceLocation, Item item, CreativeModeTab tab) {
@@ -161,7 +162,7 @@ public class Items extends Item{
         register("ring_killer/ring_killer_mithril", ringKillerMithril).setUnlocalizedName("ring_killer_mithril").setLowestCraftingDifficultyToProduce(1.0F);
         register("ring_killer/ring_killer_adamantium", ringKillerAdamantium).setUnlocalizedName("ring_killer_adamantium").setLowestCraftingDifficultyToProduce(1.0F);
         register("ring_killer/ring_killer_vibranium", ringKillerVibranium).setUnlocalizedName("ring_killer_vibranium").setLowestCraftingDifficultyToProduce(1.0F);
-        register("dynamic_core", itemDynamicCore).setUnlocalizedName("dynamic_core").setLowestCraftingDifficultyToProduce(1.0F);
+
 
         register("voucher/voucher_exchanger", voucherExchanger).setUnlocalizedName("voucher_exchanger").setLowestCraftingDifficultyToProduce(1.0F);
         register("voucher/voucher_door", voucherDoor).setUnlocalizedName("voucher_door").setLowestCraftingDifficultyToProduce(1.0F);
@@ -170,6 +171,8 @@ public class Items extends Item{
         register("voucher/voucher_pigman", voucherPigman).setUnlocalizedName("voucher_pigman").setLowestCraftingDifficultyToProduce(1.0F);
         register("voucher/voucher_witch", voucherWitch).setUnlocalizedName("voucher_witch").setLowestCraftingDifficultyToProduce(1.0F);
         register("voucher/voucher_core", voucherCore).setUnlocalizedName("voucher_core").setLowestCraftingDifficultyToProduce(1.0F);
+
+        register("dynamic_core", itemDynamicCore).setUnlocalizedName("dynamic_core").setLowestCraftingDifficultyToProduce(1.0F);
 
         Constant.initItemArray();
     }
@@ -384,7 +387,6 @@ public class Items extends Item{
                 'T', Item.ghastTear,
                 'B', Item.book,
                 'E', Item.enderPearl);
-
         // 开始注入商品价格配置文件
         Configs.beginToLoadShopConfig();
     }

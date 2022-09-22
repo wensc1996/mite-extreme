@@ -5,6 +5,8 @@ import net.xiaoyu233.mitemod.miteite.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(EntityArrow.class)
 public class EntityArrowTrans extends Entity {
@@ -68,6 +70,12 @@ public class EntityArrowTrans extends Entity {
 
    @Shadow
    protected void writeEntityToNBT(NBTTagCompound nbtTagCompound) {
+   }
+
+   @Redirect(method = "onUpdate",at = @At(ordinal = 0, value = "INVOKE",target = "Lnet/minecraft/ItemArrow;getDamage()F"))
+   public float skeletonAddExtraDamage(ItemArrow itemArrow) {
+      int day = Math.max(this.worldObj.getDayOfOverworld() - 32, 0);
+      return (itemArrow.getDamage() + day * 0.05f );
    }
 
 }

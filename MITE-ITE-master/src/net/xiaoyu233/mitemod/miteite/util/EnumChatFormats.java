@@ -37,7 +37,7 @@ public class EnumChatFormats {
     public static final EnumChatFormat LIGHT_BLUE = newEnumChatFormat("LIGHT_BLUE",'s',151,215,224);
     public static final EnumChatFormat LIGHT_YELLOW_GREEN = newEnumChatFormat("LIGHT_YELLOW_GREEN",'t',126,222,188);
     public static final EnumChatFormat DARK_GREY = newEnumChatFormat("DARK_GREY",'u',16,87,75);
-    public static final EnumChatFormat LIGHT_ORANGE = newEnumChatFormat("DARK_GREY",'v',234,158,50);
+    public static final EnumChatFormat LIGHT_ORANGE = newEnumChatFormat("LIGHT_ORANGE",'v',234,158,50);
     public static final EnumChatFormat DARK_RED = newEnumChatFormat("DARK_RED",'w',134,45,45);
     public static final EnumChatFormat SILVER = newEnumChatFormat("SILVER",'x', 209,236,246);
     public static final EnumChatFormat DARK_GREEN = newEnumChatFormat("DARK_GREEN",'y',16,87,75);

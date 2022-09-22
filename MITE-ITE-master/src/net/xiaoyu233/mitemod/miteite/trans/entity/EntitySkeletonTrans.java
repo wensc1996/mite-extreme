@@ -101,23 +101,6 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
 
    }
 
-   @Overwrite
-   public void attackEntityWithRangedAttack(EntityLiving target, float par2) {
-      EntityArrow center = new EntityArrow(this.getWorld(), this, target, 1.6F, (float)(14 - this.getWorld().difficultySetting * 4), this.isLongdead() ? Item.arrowAncientMetal : Item.arrowRustedIron, false);
-      this.processArrow(center, par2);
-      if ((Configs.wenscConfig.skeletonTripleShot.ConfigValue) && this.dataWatcher.getWatchableObjectByte(this.DATA_OBJ_ID_CAN_USE_TRIPLE_ARROW) > 0) {
-         EntityArrow left = new EntityArrow(this.getWorld(), this, target, 1.6F, (float)(14 - this.getWorld().difficultySetting * 4), this.isLongdead() ? Item.arrowAncientMetal : Item.arrowRustedIron, false);
-         left.motionX *= 1.5D;
-         EntityArrow right = new EntityArrow(this.getWorld(), this, target, 1.6F, (float)(14 - this.getWorld().difficultySetting * 4), this.isLongdead() ? Item.arrowAncientMetal : Item.arrowRustedIron, false);
-         right.motionX /= 1.5D;
-         this.getWorld().spawnEntityInWorld(left);
-         this.getWorld().spawnEntityInWorld(right);
-      }
-
-      this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-      this.getWorld().spawnEntityInWorld(center);
-   }
-
    @Override
    protected float getChanceOfCausingFire() {
       return Math.min(0.05f + this.worldObj.getDayOfOverworld() / 800f,0.25f);
@@ -404,21 +387,58 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
       this.setHeldItemStack(item_stack);
    }
 
-   private void processArrow(EntityArrow var3, float par2) {
+   @Overwrite
+   public void attackEntityWithRangedAttack(EntityLiving target, float par2) {
       int rawDay = this.getWorld() != null ? this.getWorld().getDayOfOverworld() : 0;
-      int day = Math.max(rawDay - 64, 0);
-      int var4 = EnchantmentManager.getEnchantmentLevel(Enchantment.power.effectId, this.getHeldItemStack()) + 1;
-//      int var5 = (int)((double)EnchantmentManager.getEnchantmentLevel(Enchantment.punch.effectId, this.getHeldItemStack()) + Math.min(1.0D + Math.floor((float)day / 48.0F), 5.0D));
-      double damage = (double)(par2 * 2.0F) + this.getRNG().nextGaussian() * 0.0D + (double)((float)this.getWorld().difficultySetting * 0.11F);
-      // 力量1 提高40%伤害
-      var3.setDamage((damage+ day * 0.2 )  * (1 + var4 * 0.4));
-//      if (var5 > 0) {
-//         var3.setKnockbackStrength(var5);
-//      }
+      EntityArrow var3 = new EntityArrow(this.worldObj, this, target, 1.6F, (float)(14 - this.worldObj.difficultySetting * 4), this.isLongdead() ? Item.arrowAncientMetal : Item.arrowRustedIron, false);
+      int var4 = EnchantmentManager.getEnchantmentLevel(Enchantment.power.effectId, this.getHeldItemStack());
+      int var5 = EnchantmentManager.getEnchantmentLevel(Enchantment.punch.effectId, this.getHeldItemStack());
+      double var6 = (double)(par2 * 2.0F) + this.rand.nextGaussian() * 0.25D + (double)((float)this.worldObj.difficultySetting * 0.11F);
+      var3.setDamage(var6);
+
+      EntityArrow left = null;
+      EntityArrow right = null;
+      if ((Configs.wenscConfig.skeletonTripleShot.ConfigValue) && this.dataWatcher.getWatchableObjectByte(this.DATA_OBJ_ID_CAN_USE_TRIPLE_ARROW) > 0) {
+         left = new EntityArrow(this.getWorld(), this, target, 1.6F, (float)(14 - this.getWorld().difficultySetting * 4), this.isLongdead() ? Item.arrowAncientMetal : Item.arrowRustedIron, false);
+         left.motionX *= 1.5D;
+         right = new EntityArrow(this.getWorld(), this, target, 1.6F, (float)(14 - this.getWorld().difficultySetting * 4), this.isLongdead() ? Item.arrowAncientMetal : Item.arrowRustedIron, false);
+         right.motionX /= 1.5D;
+      }
+
+      if (var4 > 0)
+      {
+         var3.setDamage(var3.getDamage() + (double)var4 * 0.5D + 0.5D);
+         if(left != null && right != null) {
+            left.setDamage(var3.getDamage() + (double)var4 * 0.5D + 0.5D);
+            right.setDamage(var3.getDamage() + (double)var4 * 0.5D + 0.5D);
+         }
+      }
+
+      if (var5 > 0)
+      {
+         var3.setKnockbackStrength(var5);
+         if(left != null && right != null) {
+            left.setKnockbackStrength(var5);
+            right.setKnockbackStrength(var5);
+         }
+      }
+
       if (EnchantmentManager.getEnchantmentLevel(Enchantment.flame.effectId, this.getHeldItemStack()) > 0 || this.getSkeletonType() == 1 || this.isInFire() && this.getRNG().nextInt(3) == 0 || this.dataWatcher.getWatchableObjectByte(this.DATA_OBJ_ID_CAN_USE_FIRE_ARROW) > 0 && rawDay > 196) {
          var3.setFire(100);
+         if(left != null && right != null) {
+            left.setFire(100);
+            right.setFire(100);
+         }
+      }
+
+      this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+      this.worldObj.spawnEntityInWorld(var3);
+      if(left != null && right != null) {
+         this.worldObj.spawnEntityInWorld(left);
+         this.worldObj.spawnEntityInWorld(right);
       }
    }
+
 
    @Shadow
    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
