@@ -2,6 +2,8 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.Items;
+import net.xiaoyu233.mitemod.miteite.item.enchantment.EnchantmentExtend;
+import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -21,11 +23,23 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
    @Shadow
    private float field_82191_bN;
 
-   private Object [] villagerEnhanceBookList = Arrays.stream(Enchantment.enchantmentsBookList).filter(enhance -> enhance.getNumLevels() > 1).toArray();
+   private Enchantment [] villagerEnhanceSpecialBookList;
+
+   private Object [] villagerEnhanceSimpleBookList;
 
 
    public EntityVillagerTrans(World par1World) {
       super(par1World);
+   }
+
+   @Inject(method = "<init>(Lnet/minecraft/World;I)V", at = @At("TAIL"))
+   public void injectInitEnhanceBookList(CallbackInfo callbackInfo) {
+      this.initEnhanceBookList();
+   }
+
+   private void initEnhanceBookList() {
+      villagerEnhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric};
+      villagerEnhanceSimpleBookList = Arrays.stream(Enchantment.enchantmentsBookList).filter(enhance -> (enhance.getNumLevels() > 1 && !Arrays.stream(villagerEnhanceSpecialBookList).anyMatch(spcialEnhance ->  spcialEnhance.effectId == enhance.effectId))).toArray();
    }
 
    @Shadow
@@ -95,17 +109,27 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
          if (this.rand.nextFloat() < this.adjustProbability(0.9F)) {
             var2.add(new MerchantRecipe(new ItemStack(Item.diamond, 3), new ItemStack(Item.emerald, 4)));
          }
-//         if (this.rand.nextFloat() < this.adjustProbability(0.8F)) {
-            Enchantment var8 = (Enchantment)villagerEnhanceBookList[this.rand.nextInt(villagerEnhanceBookList.length)];
-            int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, var8.getNumLevelsForVibranium());
-            ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var8, var10));
-            var6 = var10 * 5 + this.rand.nextInt(10);
+         Enchantment var8 = (Enchantment)villagerEnhanceSimpleBookList[this.rand.nextInt(villagerEnhanceSimpleBookList.length)];
+         int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, var8.getNumLevelsForVibranium());
+         ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var8, var10));
+         var6 = var10 * 5 + this.rand.nextInt(10);
+         if(var6 > 32) {
+            var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 32), new ItemStack(Item.emerald, (var6 - 32 > 32 ? 32 : var6 - 32)), var11));
+         } else {
+            var2.add(new MerchantRecipe(new ItemStack(Item.emerald, var6), var11));
+         }
+
+         if (this.rand.nextFloat() < this.adjustProbability(0.05f)) {
+            Enchantment var12 = this.villagerEnhanceSpecialBookList[this.rand.nextInt(villagerEnhanceSpecialBookList.length)];
+            int var13 = MathHelper.getRandomIntegerInRange(this.rand, 1, var12.getNumLevelsForVibranium());
+            ItemStack var14 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var12, var13));
+            var6 = var13 * 5 + this.rand.nextInt(10);
             if(var6 > 32) {
-               var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 32), new ItemStack(Item.emerald, (var6 - 32 > 32 ? 32 : var6 - 32)), var11));
+               var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 32), new ItemStack(Item.emerald, (var6 - 32 > 32 ? 32 : var6 - 32)), var14));
             } else {
-               var2.add(new MerchantRecipe(new ItemStack(Item.emerald, var6), var11));
+               var2.add(new MerchantRecipe(new ItemStack(Item.emerald, var6), var14));
             }
-//         }
+         }
          break;
       case 2:
          addBlacksmithItem(var2, Item.eyeOfEnder.itemID, this.rand, this.adjustProbability(0.3F));

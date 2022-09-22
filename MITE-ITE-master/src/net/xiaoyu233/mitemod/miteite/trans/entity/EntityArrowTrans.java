@@ -75,7 +75,7 @@ public class EntityArrowTrans extends Entity {
    @Redirect(method = "onUpdate",at = @At(ordinal = 0, value = "INVOKE",target = "Lnet/minecraft/ItemArrow;getDamage()F"))
    public float skeletonAddExtraDamage(ItemArrow itemArrow) {
       int day = Math.max(this.worldObj.getDayOfOverworld() - 32, 0);
-      return (itemArrow.getDamage() + day * 0.05f );
+      return (itemArrow.getDamage() + day * 0.1f );
    }
 
 }
