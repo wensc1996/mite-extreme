@@ -391,8 +391,8 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
    public void attackEntityWithRangedAttack(EntityLiving target, float par2) {
       int rawDay = this.getWorld() != null ? this.getWorld().getDayOfOverworld() : 0;
       EntityArrow var3 = new EntityArrow(this.worldObj, this, target, 1.6F, (float)(14 - this.worldObj.difficultySetting * 4), this.isLongdead() ? Item.arrowAncientMetal : Item.arrowRustedIron, false);
-      int var4 = EnchantmentManager.getEnchantmentLevel(Enchantment.power.effectId, this.getHeldItemStack());
-      int var5 = EnchantmentManager.getEnchantmentLevel(Enchantment.punch.effectId, this.getHeldItemStack());
+      int var4 = Math.max(EnchantmentManager.getEnchantmentLevel(Enchantment.power.effectId, this.getHeldItemStack()), 1);
+      int var5 = Math.max(EnchantmentManager.getEnchantmentLevel(Enchantment.punch.effectId, this.getHeldItemStack()), 1);
       double var6 = (double)(par2 * 2.0F) + this.rand.nextGaussian() * 0.25D + (double)((float)this.worldObj.difficultySetting * 0.11F);
       var3.setDamage(var6);
 
