@@ -38,7 +38,7 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
    }
 
    private void initEnhanceBookList() {
-      villagerEnhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric};
+      villagerEnhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering};
       villagerEnhanceSimpleBookList = Arrays.stream(Enchantment.enchantmentsBookList).filter(enhance -> (enhance.getNumLevels() > 1 && !Arrays.stream(villagerEnhanceSpecialBookList).anyMatch(spcialEnhance ->  spcialEnhance.effectId == enhance.effectId))).toArray();
    }
 
@@ -96,11 +96,6 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
          }
          break;
       case 1:
-         if (this.buyingList != null) {
-            this.field_82191_bN = MathHelper.sqrt_float((float)this.buyingList.size()) * 0.01F;
-         } else {
-            this.field_82191_bN = 0.0F;
-         }
 //         addMerchantItem(var2, Item.paper.itemID, this.rand, this.adjustProbability(0.8F));
 //         addMerchantItem(var2, Item.book.itemID, this.rand, this.adjustProbability(0.8F));
 //         addMerchantItem(var2, Item.writtenBook.itemID, this.rand, this.adjustProbability(0.8F));
@@ -124,6 +119,11 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
             var2.add(new MerchantRecipe(new ItemStack(Item.emerald, var6), var11));
          }
 
+         if (this.buyingList != null) {
+            this.field_82191_bN = MathHelper.sqrt_float((float)this.buyingList.size()) * 0.01F;
+         } else {
+            this.field_82191_bN = 0.0F;
+         }
          if (this.rand.nextFloat() < this.adjustProbability(0.05f)) {
             Enchantment var12 = this.villagerEnhanceSpecialBookList[this.rand.nextInt(villagerEnhanceSpecialBookList.length)];
             int var13 = MathHelper.getRandomIntegerInRange(this.rand, 1, var12.getNumLevelsForVibranium());
