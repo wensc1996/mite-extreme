@@ -96,6 +96,11 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
          }
          break;
       case 1:
+         if (this.buyingList != null) {
+            this.field_82191_bN = MathHelper.sqrt_float((float)this.buyingList.size()) * 0.01F;
+         } else {
+            this.field_82191_bN = 0.0F;
+         }
 //         addMerchantItem(var2, Item.paper.itemID, this.rand, this.adjustProbability(0.8F));
 //         addMerchantItem(var2, Item.book.itemID, this.rand, this.adjustProbability(0.8F));
 //         addMerchantItem(var2, Item.writtenBook.itemID, this.rand, this.adjustProbability(0.8F));

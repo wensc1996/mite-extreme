@@ -749,18 +749,19 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
            at = @At(value = "INVOKE",
                    target = "Lnet/minecraft/EntityLiving;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
    private EntityDamageResult redirectEntityAttack(EntityLiving caller,Damage damage){
-      double progress = Math.min(Configs.wenscConfig.steppedMobDamageProgressMax.ConfigValue, Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue + this.getWorld().getDayOfOverworld() / (float)Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue);
+      double progress = Math.min(Configs.wenscConfig.steppedMobDamageProgressMax.ConfigValue, (Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue + this.getWorld().getDayOfOverworld()) / (float)Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue);
       if (progress != 0.0D) {
          Entity responsibleEntity = damage.getSource().getResponsibleEntity();
          if (responsibleEntity != null && !(responsibleEntity instanceof EntityEnderDragon || responsibleEntity instanceof EntityCubic)) {
             if (this.attackCountMap.containsKey(responsibleEntity)) {
-               damage.setAmount(damage.getAmount() + (this.attackCountMap.get(responsibleEntity)));
+               damage.setAmount(damage.getAmount() + (this.attackCountMap.get(responsibleEntity)) * (float)progress);
                this.attackCountMap.put(responsibleEntity, this.attackCountMap.get(responsibleEntity) + 1);
             } else {
                this.attackCountMap.put(responsibleEntity, 1);
             }
          }
       }
+
       if (damage.getResponsibleEntityP() != null && this.getHeldItem() != null && this.rand.nextInt(10) > 8) {
             this.tryDisarmTarget(damage.getResponsibleEntityP());
       }
