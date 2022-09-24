@@ -36,7 +36,7 @@ public class Configs {
         public static ConfigItem <Float> inWallDamageForPlayer = new ConfigItem("inWallDamageForPlayer", 10.0F, "玩家墙内窒息伤害(小数)");
         public static ConfigItem <Double> steppedMobDamageFactor = new ConfigItem("steppedMobDamageFactor", 1d, "渐进伤害每次增幅点数基础值(小数)");
         public static ConfigItem <Double> steppedMobDamageProgressMax = new ConfigItem("steppedMobDamageProgressMax", 4d, "渐进伤害增幅最大值(小数)");
-        public static ConfigItem <Integer> steppedMobDamageProgressIncreaseDay = new ConfigItem("steppedMobDamageProgressIncreaseDay", 24, "渐进伤害每次增幅每增加一点所需天数(整数)");
+        public static ConfigItem <Integer> steppedMobDamageProgressIncreaseDay = new ConfigItem("steppedMobDamageProgressIncreaseDay_v0.1.0", 50, "渐进伤害每次增幅每增加一点所需天数(整数)");
         public static ConfigItem <Double> steppedPlayerDamageProgress = new ConfigItem("steppedPlayerDamageProgress", 2d, "玩家对怪物渐进伤害(不计附魔)最大值");
         public static ConfigItem <Double> steppedPlayerDamageIncreasePerLvl = new ConfigItem("steppedPlayerDamageIncreasePerLvl", 0.1d, "玩家对怪物渐进伤害每级加成");
         public static ConfigItem <Integer> fishingXp = new ConfigItem("fishingXp", 10, "钓鱼经验(整数)");
@@ -158,7 +158,7 @@ public class Configs {
         wenscMap.put("inWallDamageForPlayer", wenscConfig.inWallDamageForPlayer);
         wenscMap.put("steppedMobDamageFactor", wenscConfig.steppedMobDamageFactor);
         wenscMap.put("steppedMobDamageProgressMax", wenscConfig.steppedMobDamageProgressMax);
-        wenscMap.put("steppedMobDamageProgressIncreaseDay", wenscConfig.steppedMobDamageProgressIncreaseDay);
+        wenscMap.put("steppedMobDamageProgressIncreaseDay_v0.1.0", wenscConfig.steppedMobDamageProgressIncreaseDay);
         wenscMap.put("steppedPlayerDamageProgress", wenscConfig.steppedPlayerDamageProgress);
         wenscMap.put("steppedPlayerDamageIncreasePerLvl", wenscConfig.steppedPlayerDamageIncreasePerLvl);
         wenscMap.put("fishingXp", wenscConfig.fishingXp);

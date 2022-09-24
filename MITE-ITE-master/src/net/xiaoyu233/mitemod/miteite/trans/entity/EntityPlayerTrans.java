@@ -114,6 +114,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public long StoneCount = 0L;
 
+   public int resetAttackMapTimer = 100;
+
+   public boolean isRecentHitByEntity = false;
+
    public long getStoneCount() {
       return this.StoneCount;
    }
@@ -749,6 +753,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
            at = @At(value = "INVOKE",
                    target = "Lnet/minecraft/EntityLiving;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
    private EntityDamageResult redirectEntityAttack(EntityLiving caller,Damage damage){
+      this.isRecentHitByEntity = true;
       double progress = Math.min(Configs.wenscConfig.steppedMobDamageProgressMax.ConfigValue, (Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue + this.getWorld().getDayOfOverworld()) / (float)Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue);
       if (progress != 0.0D) {
          Entity responsibleEntity = damage.getSource().getResponsibleEntity();
@@ -864,6 +869,18 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
       // 服务端
       if (!this.worldObj.isRemote) {
+
+         // 一旦收到攻击，开始计时5S，5S之后将标志改为false,如果再次攻击，则标志为true
+         if(isRecentHitByEntity) {
+            if(this.resetAttackMapTimer <= 0) {
+               this.resetAttackMapTimer = 100;
+               this.isRecentHitByEntity = false;
+            } else {
+               this.resetAttackMapTimer --;
+            }
+         } else {
+            this.attackCountMap.clear();
+         }
 
          this.itemRingKiller = this.inventory.getRingKiller();
          if(this.itemRingKiller != null) {
