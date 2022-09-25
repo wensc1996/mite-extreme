@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Mixin(axv.class)
@@ -41,13 +42,13 @@ public class GuiPlayerInventory extends axp {
     @Overwrite
     protected void b(int par1, int par2) {
 
-        String emergencyWords = "";
-        ItemStack cuirass = this.f.h.getCuirass();
-        if(cuirass != null && cuirass.hasEnchantment(Enchantments.EMERGENCY, false)) {
-            if (cuirass.getEmergencyCooldown() <= 0){
+        String emergencyWords;
+        Object[] var3 = Arrays.stream(this.f.h.getWornItems()).filter(armor -> armor != null && armor.hasEnchantment(Enchantments.EMERGENCY, false)).toArray();
+        if(var3.length > 0) {
+            if(((ItemStack)var3[0]).getEmergencyCooldown() <= 0) {
                 emergencyWords = "已就绪";
             } else {
-                emergencyWords = String.valueOf(cuirass.getEmergencyCooldown() / 20) + "S";
+                emergencyWords = ((ItemStack)var3[0]).getEmergencyCooldown() / 20 + "S";
             }
         } else {
             emergencyWords = "无此附魔";

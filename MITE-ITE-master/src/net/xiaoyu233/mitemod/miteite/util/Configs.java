@@ -147,7 +147,7 @@ public class Configs {
         public static ConfigItem <Boolean> isCloseShop = new ConfigItem("isCloseShop", false, "关闭商店系统");
         public static ConfigItem <Float> plantGrowthRate = new ConfigItem("plantGrowthRate_v0.0.9", 0.5F, "作物生长速度倍率");
         public static ConfigItem <Integer> whichDayGenVillage = new ConfigItem("whichDayGenVillage", 60, "多少天生成村庄");
-        public static ConfigItem <Integer> maxHealthLimit = new ConfigItem("maxHealthLimit", 300, "玩家最大限制等级");
+        public static ConfigItem <Integer> maxLevelLimit = new ConfigItem("maxLevelLimit", 300, "玩家最大限制等级");
 
     }
 
@@ -274,7 +274,7 @@ public class Configs {
         wenscMap.put("isCloseShop", wenscConfig.isCloseShop);
         wenscMap.put("plantGrowthRate_v0.0.9", wenscConfig.plantGrowthRate);
         wenscMap.put("whichDayGenVillage", wenscConfig.whichDayGenVillage);
-        wenscMap.put("maxHealthLimit", wenscConfig.maxHealthLimit);
+        wenscMap.put("maxLevelLimit", wenscConfig.maxLevelLimit);
 
         String filePth = "wensc-extreme.cfg";
         File file_mite = new File(filePth);

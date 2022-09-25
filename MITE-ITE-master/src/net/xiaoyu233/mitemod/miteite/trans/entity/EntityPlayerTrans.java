@@ -73,7 +73,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    private int underworldDebuffTime;
    private int underworldRandomTeleportTime;
    private volatile boolean waitForItemSync;
-   private int defenseCooldown;
    private boolean cooldownEmergencyNextTick;
    public boolean isFirstLogin = true;
    private boolean isOp;
@@ -116,6 +115,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public int resetAttackMapTimer = 100;
 
+   private int defenseCooldown;
+
    public long getStoneCount() {
       return this.StoneCount;
    }
@@ -144,18 +145,25 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    @Overwrite
    public static int getHealthLimit(int level) {
-      return Math.max(Math.min(6 + level / 5 * 2, Configs.wenscConfig.maxHealthLimit.ConfigValue / 5), 6);
+      return Math.max(Math.min(6 + level / 5 * 2, Configs.wenscConfig.maxLevelLimit.ConfigValue / 5), 6);
    }
 
    @Overwrite
    public static final int getHighestPossibleLevel() {
-      return Configs.wenscConfig.maxHealthLimit.ConfigValue;
+      return Configs.wenscConfig.maxLevelLimit.ConfigValue;
    }
 
 //   @Overwrite
 //   public static final int getHighestPossibleLevel() {
 //      return 200;
 //   }
+
+   public boolean canDefense(){
+      return this.defenseCooldown <= 0;
+   }
+   public void setDefenseCooldown(int time){
+      this.defenseCooldown = time;
+   }
 
    protected float getDisarmingChance(ItemStack itemStack){
       return EnchantmentManager.getEnchantmentLevelFraction(Enchantment.disarming, itemStack) * 0.4f;
@@ -353,9 +361,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 //      return Math.max(Math.min(6 + level / 5 * 2, 40), 6);
 //   }
 
-   public boolean canDefense(){
-      return this.defenseCooldown <= 0;
-   }
 
    @Shadow
    public void addHungerServerSide(float hunger) {
@@ -372,7 +377,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
                if (wornItem.getEmergencyCooldown() <= 0){
                   readyEmergencyItemList.add(wornItem);
                } else {
-                  this.addChatMessage("紧急守备冷却中：" + wornItem.getEmergencyCooldown());
+                  this.addChatMessage("紧急守备冷却中：" + wornItem.getEmergencyCooldown() / 20 + "S");
                }
             }
          }
@@ -1018,20 +1023,18 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
          }
 
          //To avoid slot locking due to emergency cooldown
-         if (ticksExisted % 2 == 0){
+         if (ticksExisted % 20 == 0){
             for (ItemStack wornItem : this.getWornItems()) {
                if (wornItem != null){
                   int emergencyCooldown = wornItem.getEmergencyCooldown();
                   if (emergencyCooldown > 0){
-                     wornItem.setEmergencyCooldown(emergencyCooldown - 2);
+                     wornItem.setEmergencyCooldown(Math.max(emergencyCooldown - 20, 0));
                   }
                }
             }
          }
-
          if (this.defenseCooldown > 0){
             this.defenseCooldown--;
-
          }
       }
    }
@@ -1182,9 +1185,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 //      }
 //   }
 
-   public void setDefenseCooldown(int time){
-      this.defenseCooldown = time;
-   }
 
    @Shadow
    public void sendPacket(Packet packet) {
