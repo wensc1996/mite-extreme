@@ -116,8 +116,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public int resetAttackMapTimer = 100;
 
-   public boolean isRecentHitByEntity = false;
-
    public long getStoneCount() {
       return this.StoneCount;
    }
@@ -753,8 +751,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
            at = @At(value = "INVOKE",
                    target = "Lnet/minecraft/EntityLiving;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
    private EntityDamageResult redirectEntityAttack(EntityLiving caller,Damage damage){
-      this.isRecentHitByEntity = true;
-      double progress = Math.min(Configs.wenscConfig.steppedMobDamageProgressMax.ConfigValue, (Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue + this.getWorld().getDayOfOverworld()) / (float)Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue);
+      // 如果收到伤害，计时5S，打一次计时5S，持续打持续计时
+      this.resetAttackMapTimer = 100;
+      // 每天在渐进增强 progress = 1/50 2/50 50/50
+      double progress = Math.min(Configs.wenscConfig.steppedMobDamageProgressMax.ConfigValue, (this.getWorld().getDayOfOverworld()) / (float)Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue);
       if (progress != 0.0D) {
          Entity responsibleEntity = damage.getSource().getResponsibleEntity();
          if (responsibleEntity != null && !(responsibleEntity instanceof EntityEnderDragon || responsibleEntity instanceof EntityCubic)) {
@@ -764,11 +764,23 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             } else {
                this.attackCountMap.put(responsibleEntity, 1);
             }
+
+            // 如果伤害低于当前总防御力，如果高于总防御按照正常计算
+            if(damage.getAmount() < this.getTotalProtection(damage.getSource())) {
+               int trueHurtPercent = (int)(this.getTotalProtection(damage.getSource()) / 10); // 护甲值倍率数0,1,2,3,4,5 真伤概率60%,50%,40%,30%,20%,10%
+               if(rand.nextInt(10) < Math.max(6 - trueHurtPercent, 0)) {
+                  damage.setAmount(this.getTotalProtection(damage.getSource()) + damage.getAmount() / 10);
+               }
+            }
          }
       }
 
+
+
+
+
       if (damage.getResponsibleEntityP() != null && this.getHeldItem() != null && this.rand.nextInt(10) > 8) {
-            this.tryDisarmTarget(damage.getResponsibleEntityP());
+         this.tryDisarmTarget(damage.getResponsibleEntityP());
       }
 
       EntityDamageResult entityDamageResult = super.attackEntityFrom(damage);
@@ -869,19 +881,12 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
       // 服务端
       if (!this.worldObj.isRemote) {
-
-         // 一旦收到攻击，开始计时5S，5S之后将标志改为false,如果再次攻击，则标志为true
-         if(isRecentHitByEntity) {
-            if(this.resetAttackMapTimer <= 0) {
-               this.resetAttackMapTimer = 100;
-               this.isRecentHitByEntity = false;
-            } else {
-               this.resetAttackMapTimer --;
-            }
-         } else {
+         // 一旦收到攻击，开始计时5S，如果5S正常结束表示未持续收到伤害，则清空
+         if(resetAttackMapTimer <= 0) {
             this.attackCountMap.clear();
+         } else {
+            resetAttackMapTimer --;
          }
-
          this.itemRingKiller = this.inventory.getRingKiller();
          if(this.itemRingKiller != null) {
             float range = ((ItemRingKiller)this.itemRingKiller.getItem()).getRingKillerSkillRange();
