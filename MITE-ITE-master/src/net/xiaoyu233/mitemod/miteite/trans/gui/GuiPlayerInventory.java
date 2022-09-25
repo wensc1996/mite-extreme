@@ -1,13 +1,18 @@
 package net.xiaoyu233.mitemod.miteite.trans.gui;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.network.CPacketSyncItems;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mixin(axv.class)
 public class GuiPlayerInventory extends axp {
@@ -31,5 +36,24 @@ public class GuiPlayerInventory extends axp {
 
     @Shadow
     protected void a(float v, int i, int i1) {
+    }
+
+    @Overwrite
+    protected void b(int par1, int par2) {
+
+        String emergencyWords = "";
+        ItemStack cuirass = this.f.h.getCuirass();
+        if(cuirass != null && cuirass.hasEnchantment(Enchantments.EMERGENCY, false)) {
+            if (cuirass.getEmergencyCooldown() <= 0){
+                emergencyWords = "已就绪";
+            } else {
+                emergencyWords = String.valueOf(cuirass.getEmergencyCooldown() / 20) + "S";
+            }
+        } else {
+            emergencyWords = "无此附魔";
+        }
+        this.o.b(bkb.a("container.crafting"), 87, 15, 4210752);
+        this.o.b("紧急守备：" + emergencyWords, 87, 63, 4210752);
+        this.o.b("保护：" + this.f.h.getTotalProtection(null), 87, 73, 4210752);
     }
 }

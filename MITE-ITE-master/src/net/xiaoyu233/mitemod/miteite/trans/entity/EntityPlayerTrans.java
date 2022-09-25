@@ -143,9 +143,19 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    }
 
    @Overwrite
-   public static final int getHighestPossibleLevel() {
-      return 200;
+   public static int getHealthLimit(int level) {
+      return Math.max(Math.min(6 + level / 5 * 2, Configs.wenscConfig.maxHealthLimit.ConfigValue / 5), 6);
    }
+
+   @Overwrite
+   public static final int getHighestPossibleLevel() {
+      return Configs.wenscConfig.maxHealthLimit.ConfigValue;
+   }
+
+//   @Overwrite
+//   public static final int getHighestPossibleLevel() {
+//      return 200;
+//   }
 
    protected float getDisarmingChance(ItemStack itemStack){
       return EnchantmentManager.getEnchantmentLevelFraction(Enchantment.disarming, itemStack) * 0.4f;
@@ -338,10 +348,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       super.addPotionEffect(par1PotionEffect);
    }
 
-   @Overwrite
-   public static int getHealthLimit(int level) {
-      return Math.max(Math.min(6 + level / 5 * 2, 40), 6);
-   }
+//   @Overwrite
+//   public static int getHealthLimit(int level) {
+//      return Math.max(Math.min(6 + level / 5 * 2, 40), 6);
+//   }
 
    public boolean canDefense(){
       return this.defenseCooldown <= 0;
@@ -765,9 +775,11 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
                this.attackCountMap.put(responsibleEntity, 1);
             }
 
+            // 去掉附魔金苹果的保护值
+            float protection = this.getProtection(damage.getSource(), true, true, true, false);
             // 如果伤害低于当前总防御力，如果高于总防御按照正常计算
-            if(damage.getAmount() < this.getTotalProtection(damage.getSource())) {
-               int trueHurtPercent = (int)(this.getTotalProtection(damage.getSource()) / 10); // 护甲值倍率数0,1,2,3,4,5 真伤概率60%,50%,40%,30%,20%,10%
+            if(damage.getAmount() < protection) {
+               int trueHurtPercent = (int)(protection / 10); // 护甲值倍率数0,1,2,3,4,5 真伤概率60%,50%,40%,30%,20%,10%
                if(rand.nextInt(10) < Math.max(6 - trueHurtPercent, 0)) {
                   damage.setAmount(this.getTotalProtection(damage.getSource()) + damage.getAmount() / 10);
                }
