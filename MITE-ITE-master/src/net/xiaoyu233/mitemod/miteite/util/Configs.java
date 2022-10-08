@@ -148,6 +148,7 @@ public class Configs {
         public static ConfigItem <Float> plantGrowthRate = new ConfigItem("plantGrowthRate_v0.0.9", 0.5F, "作物生长速度倍率");
         public static ConfigItem <Integer> whichDayGenVillage = new ConfigItem("whichDayGenVillage", 60, "多少天生成村庄");
         public static ConfigItem <Integer> maxLevelLimit = new ConfigItem("maxLevelLimit", 300, "玩家最大限制等级");
+//        public static ConfigItem <String> md5String = new ConfigItem("md5String", new lh("wensc").a("mask"), "MD5");
 
     }
 
@@ -275,6 +276,8 @@ public class Configs {
         wenscMap.put("plantGrowthRate_v0.0.9", wenscConfig.plantGrowthRate);
         wenscMap.put("whichDayGenVillage", wenscConfig.whichDayGenVillage);
         wenscMap.put("maxLevelLimit", wenscConfig.maxLevelLimit);
+
+//        wenscMap.put("md5", wenscConfig.md5String);
 
         String filePth = "wensc-extreme.cfg";
         File file_mite = new File(filePth);

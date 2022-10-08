@@ -67,6 +67,11 @@ public class ItemStackTrans {
       return this.getItem() instanceof ItemNugget || this.getItem() instanceof ItemRedstone;
    }
 
+   @Shadow
+   public NBTTagList getStoredEnchantmentTagList() {
+      return null;
+   }
+
    @Overwrite
    public boolean isEnchantable() {
       if (this.getItem() == Item.book) {
@@ -77,7 +82,7 @@ public class ItemStackTrans {
          } else if (!this.isItemStackDamageable()) {
             return false;
          } else {
-            return this.getItem().getItemEnchantability() > 0 && !this.isItemEnchanted();
+            return this.getItem().getItemEnchantability() > 0;
          }
       } else {
          return true;
@@ -356,6 +361,43 @@ public class ItemStackTrans {
    @Shadow
    public ItemStack setTagCompound(NBTTagCompound par1NBTTagCompound) {
       return null;
+   }
+   @Shadow
+   public NBTTagList getEnchantmentTagList() {
+      return null;
+   }
+
+   public int getEnhanceTotalLevel() {
+      int level = 0;
+      if(this.getItem() instanceof ItemEnchantedBook) {
+         NBTTagList nbtTagList = this.getStoredEnchantmentTagList();
+         if(nbtTagList != null) {
+            for(int var5 = 0; var5 < nbtTagList.tagCount(); ++var5) {
+               NBTTagCompound var6 = (NBTTagCompound)nbtTagList.tagAt(var5);
+               short var7 = var6.getShort("id");
+               if(Enchantment.enchantmentsList[var7].getNumLevels() == 1) {
+                  level += 5;
+               } else {
+                  level += var6.getShort("lvl");
+               }
+            }
+         }
+      } else {
+         NBTTagList enchantments = this.getEnchantmentTagList();
+         if(enchantments != null) {
+            for(int i = 0; i < enchantments.tagCount(); ++i) {
+               NBTTagCompound var6 = (NBTTagCompound)enchantments.tagAt(i);
+               short var7 = var6.getShort("id");
+               if(Enchantment.enchantmentsList[var7].getNumLevels() == 1) {
+                  level += 5;
+               } else {
+                  level += var6.getShort("lvl");
+               }
+            }
+         }
+      }
+
+      return level;
    }
 
    @Overwrite

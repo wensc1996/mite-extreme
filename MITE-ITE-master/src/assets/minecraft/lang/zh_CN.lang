@@ -88,6 +88,8 @@ gui.forgingTable.levelToLow.ancient_metal=强化台等级过低,需要§n§g远�
 gui.forgingTable.levelToLow.mithril=强化台等级过低,需要§n§h秘银§r等级
 gui.forgingTable.levelToLow.adamantium=强化台等级过低,需要§n§d艾德曼§r等级
 gui.forgingTable.levelToLow.vibranium=强化台等级过低,需要§n§9振金§r等级
+gui.containerAnvil.needXp=需要经验
+gui.containerAnvil.subXp=扣除经验
 
 forging.failFeedback.break=损毁
 forging.failFeedback.durability.amount=丢失%s的耐久度

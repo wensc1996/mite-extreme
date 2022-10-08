@@ -88,6 +88,8 @@ gui.forgingTable.levelToLow.ancient_metal=强化台等级过低,需要§n§g远�
 gui.forgingTable.levelToLow.mithril=强化台等级过低,需要§n§h秘银§r等级
 gui.forgingTable.levelToLow.adamantium=强化台等级过低,需要§n§d艾德曼§r等级
 gui.forgingTable.levelToLow.vibranium=强化台等级过低,需要§n§9振金§r等级
+gui.containerAnvil.needXp=需要经验
+gui.containerAnvil.subXp=扣除经验
 
 forging.failFeedback.break=损毁
 forging.failFeedback.durability.amount=丢失%s的耐久度
@@ -108,3 +110,14 @@ tile.block_spawn.name=复活传送阵
 item.stack_torch.name=一捆火把
 item.gem_blue.name=蓝宝石
 item.lava_in_pipes.name=管道岩浆
+
+tile.dynamic_light.name=动态光源
+item.dynamic_core.name=动态光源
+
+item.voucher_core.name=振金核心
+item.voucher_witch.name=流浪女巫,末影人凭证
+item.voucher_pigman.name=猪人凭证
+item.voucher_annihilation_skeleton.name=湮灭骷髅,远古骷髅领主凭证
+item.voucher_zombie_lord.name=僵尸领主凭证
+item.voucher_door.name=僵尸盗贼,地狱苦力怕凭证
+item.voucher_exchanger.name=转移骷髅凭证
