@@ -1,22 +1,20 @@
 package net.xiaoyu233.mitemod.miteite.trans.world;
 
 import net.minecraft.BiomeBase;
-import net.minecraft.BiomeBigHills;
+import net.minecraft.BiomeBeach;
 import net.minecraft.Block;
 import net.minecraft.World;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.Random;
-@Mixin(BiomeBigHills.class)
-public class BiomeBigHillsTrans extends BiomeBase {
 
-    protected BiomeBigHillsTrans(int par1) {
+@Mixin(BiomeBeach.class)
+public class BiomeBeachTrans extends BiomeBase {
+    protected BiomeBeachTrans(int par1) {
         super(par1);
     }
 
-    @Overwrite
     public void decorate(World par1World, Random par2Random, int par3, int par4) {
         super.decorate(par1World, par2Random, par3, par4);
         int var5 = Configs.wenscConfig.emeraldFrequencyBigHills.ConfigValue + par2Random.nextInt(3);

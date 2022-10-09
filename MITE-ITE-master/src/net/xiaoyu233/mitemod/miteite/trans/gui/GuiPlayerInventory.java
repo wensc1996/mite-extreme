@@ -41,7 +41,6 @@ public class GuiPlayerInventory extends axp {
 
     @Overwrite
     protected void b(int par1, int par2) {
-
         String emergencyWords;
         Object[] var3 = Arrays.stream(this.f.h.getWornItems()).filter(armor -> armor != null && armor.hasEnchantment(Enchantments.EMERGENCY, false)).toArray();
         if(var3.length > 0) {
@@ -55,6 +54,6 @@ public class GuiPlayerInventory extends axp {
         }
         this.o.b(bkb.a("container.crafting"), 87, 15, 4210752);
         this.o.b("紧急守备：" + emergencyWords, 87, 63, 4210752);
-        this.o.b("保护：" + this.f.h.getTotalProtection(null), 87, 73, 4210752);
+        this.o.b("保护：" + String.format("%.2f", this.f.h.getTotalProtection(null)), 87, 73, 4210752);
     }
 }

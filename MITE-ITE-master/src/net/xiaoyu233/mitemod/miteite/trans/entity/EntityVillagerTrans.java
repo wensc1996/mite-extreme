@@ -194,12 +194,15 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
             var2.add(new MerchantRecipe(new ItemStack(Item.ingotIron, 5 + this.rand.nextInt(4)), new ItemStack(Item.emerald, 1)));
          }
          if (this.rand.nextFloat() < this.adjustProbability(0.5F)) {
-            var2.add(new MerchantRecipe(new ItemStack(Item.ingotMithril, 1 + this.rand.nextInt(2)), new ItemStack(Item.diamond, 1)));
+            var2.add(new MerchantRecipe(new ItemStack(Item.ingotAncientMetal, 3 + this.rand.nextInt(3)), new ItemStack(Item.diamond, 1)));
          }
          if (this.rand.nextFloat() < this.adjustProbability(0.4F)) {
-            var2.add(new MerchantRecipe(new ItemStack(Item.ingotAdamantium, 1), new ItemStack(Item.diamond, 2 + this.rand.nextInt(3))));
+            var2.add(new MerchantRecipe(new ItemStack(Item.ingotMithril, 1 + this.rand.nextInt(2)), new ItemStack(Item.diamond, 1)));
          }
          if (this.rand.nextFloat() < this.adjustProbability(0.3F)) {
+            var2.add(new MerchantRecipe(new ItemStack(Item.ingotAdamantium, 1), new ItemStack(Item.diamond, 2 + this.rand.nextInt(3))));
+         }
+         if (this.rand.nextFloat() < this.adjustProbability(0.2F)) {
             var2.add(new MerchantRecipe(new ItemStack(Items.VIBRANIUM_INGOT, 1), new ItemStack(Item.diamond, 10 + this.rand.nextInt(6))));
          }
 //         addBlacksmithItem(var2, Item.swordIron.itemID, this.rand, this.adjustProbability(0.5F));

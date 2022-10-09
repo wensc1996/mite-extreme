@@ -76,7 +76,7 @@ public class EntityArrowTrans extends Entity {
    public float skeletonAddExtraDamage(ItemArrow itemArrow) {
       // 32天 -> 最大200天
       int day = Math.max(Math.min(this.worldObj.getDayOfOverworld() - 32, 168), 0);
-      return (itemArrow.getDamage() + day * 0.0125f );
+      return (itemArrow.getDamage() + day * 0.025f );
    }
 
 }

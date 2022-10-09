@@ -12,7 +12,7 @@ import java.util.List;
 import static net.minecraft.Enchantment.enchantmentsList;
 
 public class Enchantments {
-    public static final Enchantment DEFENCED = new EnchantmentDefence(getNextEnchantmentID(), yq.c,20);
+//    public static final Enchantment DEFENCED = new EnchantmentDefence(getNextEnchantmentID(), yq.c,20);
     public static final Enchantment CRIT = new EnchantmentCrit(getNextEnchantmentID(),yq.c, 10);
     public static final Enchantment EXTEND = new EnchantmentExtend(getNextEnchantmentID(),yq.c, 15);
     public static final Enchantment EMERGENCY = new EnchantmentEmergency(getNextEnchantmentID(),yq.c,15);
@@ -21,7 +21,7 @@ public class Enchantments {
     public static final Enchantment enchantmentFixed = new EnchantmentFixed(getNextEnchantmentID(), yq.c,100);
     public static List<Enchantment> individualEnchantments = new ArrayList<>();
     public static void registerEnchantments(){
-        Enchantments.registerEnchantmentsUnsafe(enchantmentFixed, DEFENCED,CRIT,EXTEND,EMERGENCY,CONQUEROR,BEHEADING);
+        Enchantments.registerEnchantmentsUnsafe(enchantmentFixed, CRIT, EXTEND, EMERGENCY, CONQUEROR, BEHEADING);
     }
 
     public static void registerEnchantmentsUnsafe(Enchantment... enchantments) {

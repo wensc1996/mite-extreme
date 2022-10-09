@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.gui;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,7 +47,7 @@ public class GuiContainerAnvil extends awy implements ICrafting {
             ItemStack var1 = this.u.getSlot(0).getStack();
             ItemStack var2 = this.u.getSlot(1).getStack();
             if(var2.getItem() instanceof ItemEnchantedBook) {
-                int expSums = (var1.getEnhanceTotalLevel() + var2.getEnhanceTotalLevel()) * 1000;
+                int expSums = (var1.getEnhanceTotalLevel() + var2.getEnhanceTotalLevel()) * Configs.wenscConfig.enhancePerLvlCostExp.ConfigValue;
                 if(this.player.experience < expSums) {
                     this.o.b(LocaleI18n.translateToLocal("gui.containerAnvil.needXp") + ":" + expSums, 93, 70, 16720896);
                 } else {

@@ -27,6 +27,11 @@ public abstract class EntityMonsterTrans extends EntityInsentient implements IMo
       super(par1World);
    }
 
+   @Redirect(method = "isValidLightLevel(Lnet/minecraft/EntityInsentient;)Z", at=@At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", ordinal = 1))
+   private static int randLightValue(Random random, int lightValue) {
+      return random.nextInt(lightValue + 3);
+   }
+
    @Redirect(method = {"attackEntityAsMob(Lnet/minecraft/Entity;)Lnet/minecraft/EntityDamageResult;"},
             at = @At(value = "INVOKE",target = "Lnet/minecraft/AttributeInstance;getAttributeValue()D"))
    private double redirectEntityDamageGet(AttributeInstance caller){
