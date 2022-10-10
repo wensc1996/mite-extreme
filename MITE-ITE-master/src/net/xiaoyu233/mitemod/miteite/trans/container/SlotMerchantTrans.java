@@ -44,6 +44,5 @@ public class SlotMerchantTrans extends Slot {
             }
          }
       }
-
    }
 }

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "net/minecraft/SlotAnvilResult")
 class SlotAnvilResultTrans {
-//    注意如果采用此方法注入，里面的静态变量会被注入到创造函数中，如果shadow字段定义为Null,那么后续读取该变量皆为Null
+//    注意如果采用此方法注入，里面的静态变量会被注入到构造函数中，如果shadow字段定义为Null,那么后续读取该变量皆为Null
     @Shadow
     World field_135071_a;
     @Shadow
