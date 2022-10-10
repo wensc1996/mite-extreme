@@ -63,6 +63,7 @@ enchantment.emergency=紧急守备
 enchantment.beheading=斩首
 enchantment.conqueror=征服者
 enchantment.fixed=固定
+enchantment.chain=连锁
 
 entity.EntityZombieLord.name=僵尸领主
 entity.EntityAnnihilationSkeleton.name=湮灭骷髅

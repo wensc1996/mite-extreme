@@ -41,6 +41,10 @@ public class ContainerAnvilTrans extends Container {
     private void removeRepairExpReq(boolean b, CallbackInfoReturnable<Boolean> callbackInfo){
         this.repair_fail_condition = 0;
     }
+    @Redirect(method = "updateRepairOutput",at = @At(ordinal = 0, value = "INVOKE",target = "Lnet/minecraft/ItemStack;isEnchantable()Z"))
+    public boolean isEnchantable(ItemStack item_stack_in_first_slot) {
+        return true;
+    }
 
     @Redirect(method = "updateRepairOutput",at = @At(ordinal = 0, value = "INVOKE",target = "Lnet/minecraft/ItemStack;isItemEnchanted()Z"))
     public boolean updateRepairOutputEnableEnhanted(ItemStack item_stack_in_first_slot) {

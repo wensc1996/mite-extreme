@@ -73,23 +73,6 @@ public class ItemStackTrans {
    }
 
    @Overwrite
-   public boolean isEnchantable() {
-      if (this.getItem() == Item.book) {
-         return false;
-      } else if (!ItemPotion.isBottleOfWater(ReflectHelper.dyCast(this)) && !ItemGoldenApple.isUnenchantedGoldenApple(ReflectHelper.dyCast(this))) {
-         if (this.getMaxStackSize() != 1) {
-            return false;
-         } else if (!this.isItemStackDamageable()) {
-            return false;
-         } else {
-            return this.getItem().getItemEnchantability() > 0;
-         }
-      } else {
-         return true;
-      }
-   }
-
-   @Overwrite
    public ItemStack copy() {
       ItemStack var1 = new ItemStack(this.itemID, this.stackSize, this.subtype);
       var1.setItemDamage(this.damage);

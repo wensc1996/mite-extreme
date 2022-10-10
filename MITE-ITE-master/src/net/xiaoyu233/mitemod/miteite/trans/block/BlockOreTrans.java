@@ -1,8 +1,12 @@
 package net.xiaoyu233.mitemod.miteite.trans.block;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+
+import java.util.Set;
+
 @Mixin(BlockOre.class)
 public class BlockOreTrans extends Block {
 
@@ -62,28 +66,34 @@ public class BlockOreTrans extends Block {
             DedicatedServer.incrementTournamentScoringCounter(info.getResponsiblePlayer(), Item.getItem(id_dropped));
         }
 
+
         float chance = suppress_fortune ? 1.0F : 1.0F + (float)info.getHarvesterFortune() * 0.1F;
-        int dx = 0, dy = 0, dz = 0, count = 0;
-        int total = 0;
-        for(dx = -1; dx <= 1; ++dx) {
-            for(dy = -1; dy <= 1; ++dy) {
-                for(dz = -1; dz <= 1; ++dz) {
-//                    Block searchedBlock = info.world.getBlock(info.x + dx, info.y + dy, info.z + dz);
-//                    if (searchedBlock != null && searchedBlock.blockID == id_dropped && searchedBlock.getItemSubtype(info.getMetadata()) == metadata_dropped) {
-//                        info.world.setBlockToAir(info.x + dx, info.y + dy, info.z + dz);
-//                        ++count;
-//                    }
-                    Block searchedBlock = info.world.getBlock(info.x + dx, info.y + dy, info.z + dz);
-                    BlockBreakInfo entity_item = (new BlockBreakInfo(info.world, info.x + dx, info.y + dy, info.z + dz)).setHarvestedBy(info.getResponsiblePlayer());
-                    if(searchedBlock != null && searchedBlock.blockID == this.blockID && entity_item.getMetadata() == metadata_dropped) {
-                        if (info.world.setBlockToAir(info.x + dx, info.y + dy, info.z + dz))
-                        {
-                            total += super.dropBlockAsEntityItem(entity_item, id_dropped, metadata_dropped, quantity_dropped, chance);
+        int total = 1;
+        if(info.wasHarvestedByPlayer()) {
+            if(EnchantmentManager.hasEnchantment(info.getResponsiblePlayer().getHeldItemStack(), Enchantments.enchantmentChain)) {
+                for(int dx = -1; dx <= 1; ++dx) {
+                    for(int dy = -1; dy <= 1; ++dy) {
+                        for(int dz = -1; dz <= 1; ++dz) {
+                            Block searchedBlock = info.world.getBlock(info.x + dx, info.y + dy, info.z + dz);
+                            if(searchedBlock != null) {
+                                BlockBreakInfo entity_item = (new BlockBreakInfo(info.world, info.x + dx, info.y + dy, info.z + dz)).setHarvestedBy(info.getResponsiblePlayer());;
+                                if(searchedBlock.blockID == this.blockID && searchedBlock.getItemSubtype(entity_item.getMetadata()) == metadata_dropped) {
+                                    if (info.world.setBlockToAir(info.x + dx, info.y + dy, info.z + dz))
+                                    {
+                                        if(info.getResponsiblePlayer().getHeldItem() instanceof ItemTool) {
+                                            info.getResponsiblePlayer().tryDamageHeldItem(DamageSource.generic, ((ItemTool)info.getResponsiblePlayer().getHeldItem()).getToolDecayFromBreakingBlock(info));
+                                        }
+                                        total += super.dropBlockAsEntityItem(entity_item, id_dropped, metadata_dropped, quantity_dropped, chance);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
+
         }
+        super.dropBlockAsEntityItem(info, id_dropped, metadata_dropped, quantity_dropped, chance);
         return total;
     }
 }
