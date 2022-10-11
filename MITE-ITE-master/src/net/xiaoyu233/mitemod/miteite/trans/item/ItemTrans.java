@@ -38,8 +38,8 @@ public abstract class ItemTrans {
    @Shadow
    protected List materials;
 
-   private double soldPrice = -1D;
-   private double price = -1D;
+   private double soldPrice = 0;
+   private double price = 0;
 
    @Inject(method = "<init>()V",at = @At("RETURN"))
    private void injectCtor(CallbackInfo callbackInfo){

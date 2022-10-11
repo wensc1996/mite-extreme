@@ -48,11 +48,10 @@ public class EntityGhastTrans extends EntityFlying implements IMonster {
    public boolean getCanSpawnHere(boolean perform_light_check) {
       if (this.getWorld().isTheNether()) {
          return super.getCanSpawnHere(perform_light_check);
-      } else if (!this.getWorld().isOverworld()) {
+      } else if (this.getWorld().isUnderworld()) {
          return super.getCanSpawnHere(perform_light_check);
-      } else {
-         return this.getWorld().isBloodMoon24HourPeriod() && this.getWorld().getDayOfOverworld() >= Configs.wenscConfig.ghastSpawnLimitDay.ConfigValue && !this.getWorld().anySolidBlockIn(this.boundingBox.addCoord(0.0D, 3.0D, 0.0D)) && this.worldObj.getEntitiesWithinAABB(EntityGhast.class,this.boundingBox.expand(64,64,64)).isEmpty();
       }
+      return false;
    }
 
    @Shadow
@@ -126,11 +125,7 @@ public class EntityGhastTrans extends EntityFlying implements IMonster {
 //               for(int i = 3; i > 0; --i) {
                //No triple shots anymore
                   EntityLargeFirebal var17 = new EntityLargeFireballNB(super.worldObj, this, target_center, 4.0F);
-                  if (this.worldObj.isOverworld()) {
-                     var17.field_92057_e = Math.round((float)this.explosionStrength * Configs.wenscConfig.ghastOverworldBoost.ConfigValue);
-                  } else {
-                     var17.field_92057_e = this.explosionStrength;
-                  }
+                  var17.field_92057_e = this.explosionStrength;
                   var17.accelerationX *= 1.15d;
                   var17.accelerationY *= 1.15d;
                   var17.accelerationZ *= 1.15d;

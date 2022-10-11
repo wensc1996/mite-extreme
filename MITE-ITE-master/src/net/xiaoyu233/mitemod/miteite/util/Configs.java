@@ -14,11 +14,22 @@ public class Configs {
     public static class ConfigItem<T>{
         public String ConfigKey;
         public T ConfigValue;
+        public T min;
+        public T max;
+        public boolean isNeedCompare = false;
         public String ConfigComment;
         ConfigItem(String key, T value, String comment){
             this.ConfigKey = key;
             this.ConfigValue = value;
             this.ConfigComment = comment;
+        }
+        ConfigItem(String key, T value, String comment, T min, T max){
+            this.ConfigKey = key;
+            this.ConfigValue = value;
+            this.isNeedCompare = true;
+            this.min = min;
+            this.max = max;
+            this.ConfigComment = comment + " [范围："+ min + "-" + max +"]";
         }
         public void setConfigValue(T configValue) {
             ConfigValue = configValue;
@@ -33,122 +44,120 @@ public class Configs {
         public static ConfigItem <Boolean> isOpenStrongBoxBreakRecord = new ConfigItem("isOpenStrongBoxBreakRecord", true, "是否开启私人箱子破坏记录");
         public static ConfigItem <Boolean> isRecipeGATorch = new ConfigItem("isRecipeGATorch", true, "是否有一捆火把配方");
         public static ConfigItem <Boolean> isRecipeRingKiller = new ConfigItem("isRecipeRingKiller", true, "是否有魔灵刃配方");
-        public static ConfigItem <Float> inWallDamageForPlayer = new ConfigItem("inWallDamageForPlayer", 10.0F, "玩家墙内窒息伤害(小数)");
-        public static ConfigItem <Double> steppedMobDamageFactor = new ConfigItem("steppedMobDamageFactor", 1d, "渐进伤害每次增幅点数基础值(小数)");
-        public static ConfigItem <Double> steppedMobDamageProgressMax = new ConfigItem("steppedMobDamageProgressMax", 4d, "渐进伤害增幅最大值(小数)");
-        public static ConfigItem <Integer> steppedMobDamageProgressIncreaseDay = new ConfigItem("steppedMobDamageProgressIncreaseDay_v0.1.0", 50, "渐进伤害每次增幅每增加一点所需天数(整数)");
-        public static ConfigItem <Double> steppedPlayerDamageProgress = new ConfigItem("steppedPlayerDamageProgress", 2d, "玩家对怪物渐进伤害(不计附魔)最大值");
-        public static ConfigItem <Double> steppedPlayerDamageIncreasePerLvl = new ConfigItem("steppedPlayerDamageIncreasePerLvl", 0.1d, "玩家对怪物渐进伤害每级加成");
-        public static ConfigItem <Integer> fishingXp = new ConfigItem("fishingXp", 10, "钓鱼经验(整数)");
-        public static ConfigItem <Integer> inRainDebuffTime = new ConfigItem("inRainDebuffTime", 3600, "雨中获得负面效果所需时长(整数)");
+        public static ConfigItem <Float> inWallDamageForPlayer = new ConfigItem("inWallDamageForPlayer", 10.0F, "玩家墙内窒息伤害(小数)", 0f ,100f);
+        public static ConfigItem <Double> steppedMobDamageFactor = new ConfigItem("steppedMobDamageFactor", 1d, "渐进伤害每次增幅点数基础值(小数)", 0d ,100d);
+        public static ConfigItem <Double> steppedMobDamageProgressMax = new ConfigItem("steppedMobDamageProgressMax", 4d, "怪物对玩家渐进伤害增幅最大值(小数)", 0d,100d);
+        public static ConfigItem <Integer> steppedMobDamageProgressIncreaseDay = new ConfigItem("steppedMobDamageProgressIncreaseDay_v0.1.0", 50, "渐进伤害每次增幅每增加一点所需天数(整数)", 0 ,500);
+        public static ConfigItem <Double> steppedPlayerDamageProgress = new ConfigItem("steppedPlayerDamageProgress", 2d, "玩家对怪物渐进伤害(不计附魔)最大值", 0d ,100d);
+        public static ConfigItem <Double> steppedPlayerDamageIncreasePerLvl = new ConfigItem("steppedPlayerDamageIncreasePerLvl", 0.1d, "玩家对怪物渐进伤害每级加成", 0d ,10d);
+        public static ConfigItem <Integer> fishingXp = new ConfigItem("fishingXp", 10, "钓鱼经验(整数)", 0 ,10000);
+        public static ConfigItem <Integer> inRainDebuffTime = new ConfigItem("inRainDebuffTime", 3600, "雨中获得负面效果所需时长(整数)", 0 ,1000000);
         public static ConfigItem <Boolean> firstDayLongerDayTime = new ConfigItem("firstDayLongerDayTime", true, "加长第一天时间(开关)");
-        public static ConfigItem <Integer> playerDefenseCooldown = new ConfigItem("playerDefenseCooldown", 160, "玩家格挡冷却(tick)");
-        public static ConfigItem <Integer> playerDefenceMaxTime = new ConfigItem("playerDefenceMaxTime", 40, "玩家格挡最大时间(tick)");
+        public static ConfigItem <Integer> playerDefenseCooldown = new ConfigItem("playerDefenseCooldown", 160, "玩家格挡冷却(tick)", 0 ,1000000);
+        public static ConfigItem <Integer> playerDefenceMaxTime = new ConfigItem("playerDefenceMaxTime", 40, "玩家格挡最大时间(tick)", 0 ,1000000);
         public static ConfigItem <Boolean> playerDisarmPlayer = new ConfigItem("playerDisarmPlayer", true, "玩家缴械玩家");
-        public static ConfigItem <Double> bloodMoonMaxHostileFraction = new ConfigItem("bloodMoonMaxHostileFraction", 128d, "血月最大刷怪数量系数(小数)");
-        public static ConfigItem <Integer> ghastSpawnLimitDay = new ConfigItem("ghastSpawnLimitDay", 128, "主世界生成恶魂所需天数(整数)");
+        public static ConfigItem <Double> bloodMoonMaxHostileFraction = new ConfigItem("bloodMoonMaxHostileFraction", 128d, "血月最大刷怪数量系数(小数)", 0d ,500d);
         public static ConfigItem <Boolean> annihilationSkeletonSpawnInLight = new ConfigItem("annihilationSkeletonSpawnInLight", false, "主世界湮灭骷髅在光照出生成");
-        public static ConfigItem <Integer> ancientBoneLordSpawnLimitDay = new ConfigItem("ancientBoneLordSpawnLimitDay", 192, "主世界生成远古骷髅公爵所需天数(整数)");
-        public static ConfigItem <Integer> wanderingWitchSpawnChanceOverworld = new ConfigItem("wanderingWitchSpawnChanceOverworld", 33, "主世界流浪女巫生成概率百分比(整数)");
-        public static ConfigItem <Integer> wanderingWitchSpawnLimitDayOverworld = new ConfigItem("wanderingWitchSpawnLimitDayOverworld", 64, "主世界流浪女巫生成天数限制(整数)");
-        public static ConfigItem <Integer> wanderingWitchSpawnLimitDayOther = new ConfigItem("wanderingWitchSpawnLimitDayOther", 64, "地狱及地底世界流浪女巫生成天数限制(整数)");
-        public static ConfigItem <Integer> wanderingWitchSpawnChanceUnderworld = new ConfigItem("wanderingWitchSpawnChanceUnderworld", 50, "地底世界流浪女巫生成概率百分比(整数)");
-        public static ConfigItem <Integer> mobMaxSpawnCountIncreasePerDay = new ConfigItem("mobMaxSpawnCountIncreasePerDay", 1, "每天刷怪数量上限增量(整数)");
+        public static ConfigItem <Integer> ancientBoneLordSpawnLimitDay = new ConfigItem("ancientBoneLordSpawnLimitDay", 192, "主世界生成远古骷髅公爵所需天数(整数)", 0 ,500);
+        public static ConfigItem <Integer> wanderingWitchSpawnChanceOverworld = new ConfigItem("wanderingWitchSpawnChanceOverworld", 33, "主世界流浪女巫生成概率百分比(整数)", 0 ,100);
+        public static ConfigItem <Integer> wanderingWitchSpawnLimitDayOverworld = new ConfigItem("wanderingWitchSpawnLimitDayOverworld", 64, "主世界流浪女巫生成天数限制(整数)", 0 ,500);
+        public static ConfigItem <Integer> wanderingWitchSpawnLimitDayOther = new ConfigItem("wanderingWitchSpawnLimitDayOther", 64, "地狱及地底世界流浪女巫生成天数限制(整数)", 0 ,500);
+        public static ConfigItem <Integer> wanderingWitchSpawnChanceUnderworld = new ConfigItem("wanderingWitchSpawnChanceUnderworld", 50, "地底世界流浪女巫生成概率百分比(整数)", 0 ,100);
+        public static ConfigItem <Integer> mobMaxSpawnCountIncreasePerDay = new ConfigItem("mobMaxSpawnCountIncreasePerDay", 1, "每天刷怪数量上限增量(整数)", 0 ,100);
         public static ConfigItem <Boolean> underworldRandomTeleport = new ConfigItem("underworldRandomTeleport", true, "地底世界随机传送(开关)");
-        public static ConfigItem <Integer> underworldRandomTeleportTimeNew = new ConfigItem("underworldRandomTeleportTimeNew", 132000, "地底世界随机传送时间(整数)");
+        public static ConfigItem <Integer> underworldRandomTeleportTimeNew = new ConfigItem("underworldRandomTeleportTimeNew", 132000, "地底世界随机传送时间(tick)", 0 ,1000000);
         public static ConfigItem <Boolean> underworldDebuff = new ConfigItem("underworldDebuff", true, "地底世界负面效果(开关)");
-        public static ConfigItem <Integer> underworldDebuffPeriod1 = new ConfigItem("underworldDebuffPeriod1", 72000, "地底世界负面效果第一阶段触发时间(整数)");
-        public static ConfigItem <Integer> underworldDebuffPeriod2 = new ConfigItem("underworldDebuffPeriod2", 108000, "地底世界负面效果第二阶段触发时间(整数)");
+        public static ConfigItem <Integer> underworldDebuffPeriod1 = new ConfigItem("underworldDebuffPeriod1", 72000, "地底世界负面效果第一阶段触发时间(tick)", 0 ,1000000);
+        public static ConfigItem <Integer> underworldDebuffPeriod2 = new ConfigItem("underworldDebuffPeriod2", 108000, "地底世界负面效果第二阶段触发时间(tick)", 0 ,1000000);
         public static ConfigItem <Boolean> netherrackDamage = new ConfigItem("netherrackDamage", true, "地狱烫脚(开关)");
-        public static ConfigItem <Integer> netherrackDamageLimitDay = new ConfigItem("netherrackDamageLimitDay", 96, "地狱烫脚所需天数(整数)");
+        public static ConfigItem <Integer> netherrackDamageLimitDay = new ConfigItem("netherrackDamageLimitDay", 96, "地狱烫脚所需天数(整数)", 0 ,500);
         public static ConfigItem <Boolean> netherDebuff = new ConfigItem("netherDebuff", true, "地狱负面效果(开关)");
-        public static ConfigItem <Integer> netherDebuffTime = new ConfigItem("netherDebuffTime", 72000, "地狱负面效果触发时间(tick)");
-        public static ConfigItem <Integer> quartzMaxExpLevel = new ConfigItem("quartzMaxExpLevel", 55, "石英可提供经验最大等级");
-        public static ConfigItem <Integer> diamondExp = new ConfigItem("diamondExp", 400, "钻石经验");
-        public static ConfigItem <Integer> emeraldExp = new ConfigItem("emeraldExp", 300, "绿宝石经验");
-        public static ConfigItem <Integer> quartzExp = new ConfigItem("quartzExp", 35, "石英经验");
-        public static ConfigItem <Integer> goldenAppleEatTime = new ConfigItem("goldenAppleEatTime", 10, "金苹果使用耗时（tick）");
-        public static ConfigItem <Integer> enchantedGoldenAppleEatTime = new ConfigItem("enchantedGoldenAppleEatTime", 10, "附魔金苹果,腐肉汤使用耗时（tick）");
-        public static ConfigItem <Integer> ironToMithrilCookTime = new ConfigItem("ironToMithrilCookTime", 6000, "铁烧制为秘银耗时（tick）");
-        public static ConfigItem <Integer> ironBlockCountToMithril = new ConfigItem("ironBlockCountToMithril", 2, "铁烧制为秘银所需铁块数量");
-        public static ConfigItem <Integer> mithrilToAdamantiumCookTime = new ConfigItem("mithrilToAdamantiumCookTime", 9000, "秘银烧制为艾德曼耗时");
-        public static ConfigItem <Integer> mithrilBlockCountToAdamantium = new ConfigItem("mithrilBlockCountToAdamantium", 1, "秘银烧制为艾德曼所需秘银块数量");
-        public static ConfigItem <Integer> critEnchantmentChanceBoostPerLvl = new ConfigItem("critEnchantmentChanceBoostPerLvl", 2, "暴击附魔每级暴击几率");
-        public static ConfigItem <Float> critEnchantmentDamageBoostPerLvl = new ConfigItem("critEnchantmentDamageBoostPerLvl", 0.4F, "暴击附魔每级额外伤害");
-        public static ConfigItem <Integer> emergencyCooldown = new ConfigItem("emergencyCooldown", 120000, "紧急守备冷却时间（tick）");
-        public static ConfigItem <Double> emergencyCooldownReduceEveryArmor = new ConfigItem("emergencyCooldownReduceEveryArmor", 0.2, "紧急守备每件装备冷却减免百分比");
-        public static ConfigItem <Integer> emergencyHealthRecoverAmount = new ConfigItem("emergencyHealthRecoverAmount", 10, "紧急守备触发后恢复至的血量");
-        public static ConfigItem <Double> conquerorDamageBoostPerLvl = new ConfigItem("conquerorDamageBoostPerLvl", 1d, "征服者每级额外伤害");
-        public static ConfigItem <Float> beheadingChanceBoostPerLvl = new ConfigItem("beheadingChanceBoostPerLvl", 0.05f, "斩首每级头颅额外掉落几率");
-        public static ConfigItem <Double> allProtectionVDefenceFraction = new ConfigItem("allProtectionVDefenceFraction", 0.1d, "全套保护5伤害减免");
+        public static ConfigItem <Integer> netherDebuffTime = new ConfigItem("netherDebuffTime", 72000, "地狱负面效果触发时间(tick)", 0 ,1000000);
+        public static ConfigItem <Integer> quartzMaxExpLevel = new ConfigItem("quartzMaxExpLevel", 55, "石英可提供经验最大等级", 0 ,1000);
+        public static ConfigItem <Integer> diamondExp = new ConfigItem("diamondExp", 400, "钻石经验", 0 ,10000);
+        public static ConfigItem <Integer> emeraldExp = new ConfigItem("emeraldExp", 300, "绿宝石经验", 0 ,10000);
+        public static ConfigItem <Integer> quartzExp = new ConfigItem("quartzExp", 35, "石英经验", 0 ,10000);
+        public static ConfigItem <Integer> goldenAppleEatTime = new ConfigItem("goldenAppleEatTime", 10, "金苹果使用耗时（tick）", 0 ,1000000);
+        public static ConfigItem <Integer> enchantedGoldenAppleEatTime = new ConfigItem("enchantedGoldenAppleEatTime", 10, "附魔金苹果使用耗时（tick）", 0 ,1000000);
+        public static ConfigItem <Integer> ironToMithrilCookTime = new ConfigItem("ironToMithrilCookTime", 6000, "铁烧制为秘银耗时（tick）", 0 ,1000000);
+        public static ConfigItem <Integer> ironBlockCountToMithril = new ConfigItem("ironBlockCountToMithril", 2, "铁烧制为秘银所需铁块数量", 1 ,4);
+        public static ConfigItem <Integer> mithrilToAdamantiumCookTime = new ConfigItem("mithrilToAdamantiumCookTime", 9000, "秘银烧制为艾德曼耗时(tick)", 0 ,1000000);
+        public static ConfigItem <Integer> mithrilBlockCountToAdamantium = new ConfigItem("mithrilBlockCountToAdamantium", 1, "秘银烧制为艾德曼所需秘银块数量", 1 ,4);
+        public static ConfigItem <Integer> critEnchantmentChanceBoostPerLvl = new ConfigItem("critEnchantmentChanceBoostPerLvl", 2, "暴击附魔每级暴击几率", 0 ,100);
+        public static ConfigItem <Float> critEnchantmentDamageBoostPerLvl = new ConfigItem("critEnchantmentDamageBoostPerLvl", 0.4F, "暴击附魔每级额外伤害", 0f ,100f);
+        public static ConfigItem <Integer> emergencyCooldown = new ConfigItem("emergencyCooldown", 120000, "紧急守备冷却时间（tick）", 0 ,1000000);
+        public static ConfigItem <Double> emergencyCooldownReduceEveryArmor = new ConfigItem("emergencyCooldownReduceEveryArmor", 0.2d, "紧急守备每件装备冷却减免百分比", 0d,1d);
+        public static ConfigItem <Integer> emergencyHealthRecoverAmount = new ConfigItem("emergencyHealthRecoverAmount", 10, "紧急守备触发后恢复至的血量", 1,100);
+        public static ConfigItem <Double> conquerorDamageBoostPerLvl = new ConfigItem("conquerorDamageBoostPerLvl", 1d, "征服者每级额外伤害", 0d ,100d);
+        public static ConfigItem <Float> beheadingChanceBoostPerLvl = new ConfigItem("beheadingChanceBoostPerLvl", 0.05f, "斩首每级头颅额外掉落几率", 0f ,1f);
+        public static ConfigItem <Double> allProtectionVDefenceFraction = new ConfigItem("allProtectionVDefenceFraction", 0.1d, "全套保护5伤害减免", 0d ,1d);
         public static ConfigItem <Boolean> mobSpawnerSpeedUpWithPlayers = new ConfigItem("mobSpawnerSpeedUpWithPlayers", true, "刷怪笼在旁边有玩家时加速生怪");
         public static ConfigItem <Boolean> isSpawnExchanger = new ConfigItem("isSpawnExchanger", true, "是否生成转移骷髅");
         public static ConfigItem <Boolean> boneLordTweak = new ConfigItem("boneLordTweak", true, "骷髅领主增强");
         public static ConfigItem <Boolean> skeletonTripleShot = new ConfigItem("skeletonTripleShot", true, "三发骷髅");
         public static ConfigItem <Boolean> compressedSkeleton = new ConfigItem("compressedSkeleton", true, "分裂骷髅");
-        public static ConfigItem <Integer> compressedSkeletonCrackStandTime = new ConfigItem("compressedSkeletonCrackStandTime", 20, "分裂骷髅分裂后停滞时间(tick)");
-        public static ConfigItem <Integer> compressedSkeletonExpandCount = new ConfigItem("compressedSkeletonExpandCount", 4, "分裂骷髅分裂数量");
+        public static ConfigItem <Integer> compressedSkeletonCrackStandTime = new ConfigItem("compressedSkeletonCrackStandTime", 20, "分裂骷髅分裂后停滞时间(tick)", 0 ,1000000);
+        public static ConfigItem <Integer> compressedSkeletonExpandCount = new ConfigItem("compressedSkeletonExpandCount", 4, "分裂骷髅分裂数量",0, 10);
         public static ConfigItem <Boolean> skeletonForceMeleeAttack = new ConfigItem("skeletonForceMeleeAttack", true, "强制骷髅近战");
-        public static ConfigItem <Float> boneLordAndLongdeadChangeWeaponChance = new ConfigItem("boneLordAndLongdeadChangeWeaponChance", 0.25f, "古尸和骷髅领主会切换武器概率");
+        public static ConfigItem <Float> boneLordAndLongdeadChangeWeaponChance = new ConfigItem("boneLordAndLongdeadChangeWeaponChance", 0.25f, "古尸和骷髅领主会切换武器概率",0f, 1f);
         public static ConfigItem <Boolean> batPoisonAttack = new ConfigItem("batPoisonAttack", true, "吸血蝙蝠攻击使玩家中毒");
         public static ConfigItem <Boolean> infernalCreeperBoost = new ConfigItem("infernalCreeperBoost", true, "增强地狱爬行者");
         public static ConfigItem <Boolean> zombiePigmanUseBow = new ConfigItem("zombiePigmanUseBow", true, "猪人带弓");
-        public static ConfigItem <Double> zombiePigmanBoostChance = new ConfigItem("zombiePigmanBoostChance", 0.025D, "精英猪人生成概率");
+        public static ConfigItem <Double> zombiePigmanBoostChance = new ConfigItem("zombiePigmanBoostChance", 0.025d, "精英猪人生成概率",0d, 1d);
         public static ConfigItem <Boolean> zombiePigmanAttackAnimails = new ConfigItem("zombiePigmanAttackAnimails", false, "僵尸猪人攻击动物");
-        public static ConfigItem <Float> ghastOverworldBoost = new ConfigItem("ghastOverworldBoost", 1.25F, "主世界恶魂火球爆炸范围增强倍数");
         public static ConfigItem <Boolean> wolvesAttackPlayersWithMeat = new ConfigItem("wolvesAttackPlayersWithMeat", true, "狼攻击快捷栏有肉的玩家");
-        public static ConfigItem <Integer> villagerWoolToEmeraldShardCount = new ConfigItem("villagerWoolToEmeraldShardCount", 4, "村民用羊毛换绿宝石碎片-羊毛所需数量");
-        public static ConfigItem <Integer> villagerWoolToEmeraldShardShardCount = new ConfigItem("villagerWoolToEmeraldShardShardCount", 1, "村民用羊毛换绿宝石碎片-绿宝石碎片获得数量");
+        public static ConfigItem <Integer> villagerWoolToEmeraldShardCount = new ConfigItem("villagerWoolToEmeraldShardCount", 4, "村民用羊毛换绿宝石碎片-羊毛所需数量", 1 ,8);
+        public static ConfigItem <Integer> villagerWoolToEmeraldShardShardCount = new ConfigItem("villagerWoolToEmeraldShardShardCount", 1, "村民用羊毛换绿宝石碎片-绿宝石碎片获得数量", 1 ,64);
         public static ConfigItem <Boolean> canBoostIronGolem = new ConfigItem("canBoostIronGolem", true, "可以强化铁傀儡");
         public static ConfigItem <Boolean> mobDefense = new ConfigItem("mobDefense", true, "怪物格挡");
         public static ConfigItem <Boolean> mobDisarmWhenDefence = new ConfigItem("mobDisarmWhenDefence", true, "怪物格挡时若有缴械附魔有几率缴械");
         public static ConfigItem <Boolean> mobDisarmWhenAttack = new ConfigItem("mobDisarmWhenAttack", true, "怪物攻击时若有缴械附魔有几率缴械");
         public static ConfigItem <Boolean> mobAttackCauseFire = new ConfigItem("mobAttackCauseFire", true, "怪物有几率在手持装备攻击时使目标着火");
-        public static ConfigItem <Integer> annihilationSkeletonDespawnTime = new ConfigItem("annihilationSkeletonDespawnTime", 3600, "湮灭骷髅被攻击后消失用时(tick)");
-        public static ConfigItem <Float> enderDragonAttackWitherChance = new ConfigItem("enderDragonAttackWitherChance", 0.2f, "末影龙受攻击后给予玩家凋零几率");
-        public static ConfigItem <Float> enderDragonImmuneToArrowHealthPercent = new ConfigItem("enderDragonImmuneToArrowHealthPercent", 0.3f, "末影龙免疫弓箭血量百分比");
+        public static ConfigItem <Integer> annihilationSkeletonDespawnTime = new ConfigItem("annihilationSkeletonDespawnTime", 3600, "湮灭骷髅被攻击后消失用时(tick)", 0 ,1000000);
+        public static ConfigItem <Float> enderDragonAttackWitherChance = new ConfigItem("enderDragonAttackWitherChance", 0.2f, "末影龙受攻击后给予玩家凋零几率",0f, 1f);
+        public static ConfigItem <Float> enderDragonImmuneToArrowHealthPercent = new ConfigItem("enderDragonImmuneToArrowHealthPercent", 0.3f, "末影龙免疫弓箭血量百分比",0f, 1f);
         public static ConfigItem <Boolean> enderDragonAttackSlowness = new ConfigItem("enderDragonAttackSlowness", true, "末影龙攻击玩家给予玩家缓慢效果");
-        public static ConfigItem <Float> netherModAttackFireChance = new ConfigItem("netherModAttackFireChance", 0.5f, "地狱生物攻击火焰附加概率");
-        public static ConfigItem <Integer> slimeAttackDamageMultiplier = new ConfigItem("slimeAttackDamageMultiplier", 1, "绿色史莱姆伤害倍数(整数)");
-        public static ConfigItem <Float> slimeAttackDamageBonus = new ConfigItem("slimeAttackDamageBonus", 4f, "绿色史莱姆伤害加成");
-        public static ConfigItem <Integer> giantZombieSpawnZombieCooldown = new ConfigItem("giantZombieSpawnZombieCooldown", 1200, "巨型僵尸生成僵尸间隔(tick)");
-        public static ConfigItem <Integer> animalIllToDeathTime = new ConfigItem("animalIllToDeathTime", 144000, "生物生病死亡时间(tick)");
-        public static ConfigItem <Integer> breedXpChicken = new ConfigItem("breedXpChicken", 8, "鸡繁殖获得经验");
-        public static ConfigItem <Integer> breedXpSheep = new ConfigItem("breedXpSheep", 10, "羊繁殖获得经验");
-        public static ConfigItem <Integer> breedXpPig = new ConfigItem("breedXpPig", 15, "猪繁殖获得经验");
-        public static ConfigItem <Integer> breedXpCow = new ConfigItem("breedXpCow", 25, "牛繁殖获得经验");
-        public static ConfigItem <Integer> emeraldFrequencyBigHills = new ConfigItem("emeraldFrequencyBigHills", 6, "山地绿宝石矿每区块最少生成个数");
+        public static ConfigItem <Float> netherModAttackFireChance = new ConfigItem("netherModAttackFireChance", 0.5f, "地狱生物攻击火焰附加概率",0f, 1f);
+        public static ConfigItem <Integer> slimeAttackDamageMultiplier = new ConfigItem("slimeAttackDamageMultiplier", 1, "绿色史莱姆伤害倍数(整数)", 0 ,100);
+        public static ConfigItem <Float> slimeAttackDamageBonus = new ConfigItem("slimeAttackDamageBonus", 4f, "绿色史莱姆伤害加成", 0f ,100f);
+        public static ConfigItem <Integer> giantZombieSpawnZombieCooldown = new ConfigItem("giantZombieSpawnZombieCooldown", 1200, "巨型僵尸生成僵尸间隔(tick)", 0 ,1000000);
+        public static ConfigItem <Integer> animalIllToDeathTime = new ConfigItem("animalIllToDeathTime", 144000, "生物生病死亡时间(tick)", 0 ,1000000);
+        public static ConfigItem <Integer> breedXpChicken = new ConfigItem("breedXpChicken", 8, "鸡繁殖获得经验", 0 ,10000);
+        public static ConfigItem <Integer> breedXpSheep = new ConfigItem("breedXpSheep", 10, "羊繁殖获得经验", 0 ,10000);
+        public static ConfigItem <Integer> breedXpPig = new ConfigItem("breedXpPig", 15, "猪繁殖获得经验", 0 ,10000);
+        public static ConfigItem <Integer> breedXpCow = new ConfigItem("breedXpCow", 25, "牛繁殖获得经验", 0 ,10000);
+        public static ConfigItem <Integer> emeraldFrequencyBigHills = new ConfigItem("emeraldFrequencyBigHills", 6, "山地绿宝石矿每区块最少生成个数", 0 ,100);
         public static ConfigItem <Boolean> overworldAdamantiteOre = new ConfigItem("overworldAdamantiteOre", false, "主世界生成艾德曼");
-        public static ConfigItem <Integer> copperFrequencyOverworld = new ConfigItem("copperFrequencyOverworld_v0.0.5", 40, "主世界铜矿生成频率");
-        public static ConfigItem <Integer> silverFrequencyOverworld = new ConfigItem("silverFrequencyOverworld_v0.0.5", 20, "主世界银矿生成频率");
-        public static ConfigItem <Integer> ironFrequencyOverworld = new ConfigItem("ironFrequencyOverworld_v0.0.5", 30, "主世界铁矿生成频率");
-        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld_v0.0.5.3", 25, "主世界金矿生成频率");
-        public static ConfigItem <Integer> mithrilFrequencyOverworld = new ConfigItem("mithrilFrequencyOverworld_v0.0.5", 0, "主世界秘银矿生成频率");
-        public static ConfigItem <Integer> lapisFrequencyOverworld = new ConfigItem("lapisFrequencyOverworld", 4, "主世界青金石矿生成频率");
-        public static ConfigItem <Integer> diamondFrequencyOverworld = new ConfigItem("diamondFrequencyOverworld_v0.0.5", 0, "主世界钻石矿生成频率");
-        public static ConfigItem <Integer> adamantiumFrequencyOverworld = new ConfigItem("adamantiumFrequencyOverworld", 1, "主世界艾德曼矿生成频率");
-        public static ConfigItem <Integer> copperFrequencyUnderworld = new ConfigItem("copperFrequencyUnderworld_v0.0.5", 0, "地底世界铜矿生成频率");
-        public static ConfigItem <Integer> silverFrequencyUnderworld = new ConfigItem("silverFrequencyUnderworld_v0.0.5", 0, "地底世界银矿生成频率");
-        public static ConfigItem <Integer> ironFrequencyUnderworld = new ConfigItem("ironFrequencyUnderworld_v0.0.5", 0, "地底世界铁矿生成频率");
-        public static ConfigItem <Integer> goldFrequencyUnderworld = new ConfigItem("goldFrequencyUnderworld_v0.0.5", 0, "地底世界金矿生成频率");
-        public static ConfigItem <Integer> mithrilFrequencyUnderworld = new ConfigItem("mithrilFrequencyUnderworld_v0.0.5", 6, "地底世界秘银矿生成频率");
-        public static ConfigItem <Integer> lapisFrequencyUnderworld = new ConfigItem("lapisFrequencyUnderworld_v0.0.5", 0, "地底世界青金石矿生成频率");
-        public static ConfigItem <Integer> diamondFrequencyUnderworld = new ConfigItem("diamondFrequencyUnderworld_v0.0.5", 6, "地底世界钻石矿生成频率");
-        public static ConfigItem <Integer> adamantiumFrequencyUnderworld = new ConfigItem("adamantiumFrequencyUnderworld_v0.0.9", 1, "地底世界艾德曼矿生成频率");
-        public static ConfigItem <Integer> underworldMantleBlockOffset = new ConfigItem("underworldMantleBlockOffset_v0.0.2", 75, "地底世界地幔位置向上偏移");
-        public static ConfigItem <Integer> netherAdamantiumMaxCountPerChunk = new ConfigItem("netherAdamantiumMaxCountPerChunk", 2, "地狱艾德曼每个区块最大生成数量");
-        public static ConfigItem <Integer> netherAdamantiumMaxCountPerVein = new ConfigItem("netherAdamantiumMaxCountPerVein", 1, "地狱艾德曼每个矿脉最大矿物生成数量");
+        public static ConfigItem <Integer> copperFrequencyOverworld = new ConfigItem("copperFrequencyOverworld_v0.0.5", 40, "主世界铜矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> silverFrequencyOverworld = new ConfigItem("silverFrequencyOverworld_v0.0.5", 20, "主世界银矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> ironFrequencyOverworld = new ConfigItem("ironFrequencyOverworld_v0.0.5", 30, "主世界铁矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> goldFrequencyOverworld = new ConfigItem("goldFrequencyOverworld_v0.0.5.3", 25, "主世界金矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> mithrilFrequencyOverworld = new ConfigItem("mithrilFrequencyOverworld_v0.0.5", 0, "主世界秘银矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> lapisFrequencyOverworld = new ConfigItem("lapisFrequencyOverworld", 4, "主世界青金石矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> diamondFrequencyOverworld = new ConfigItem("diamondFrequencyOverworld_v0.0.5", 0, "主世界钻石矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> adamantiumFrequencyOverworld = new ConfigItem("adamantiumFrequencyOverworld", 1, "主世界艾德曼矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> copperFrequencyUnderworld = new ConfigItem("copperFrequencyUnderworld_v0.0.5", 0, "地底世界铜矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> silverFrequencyUnderworld = new ConfigItem("silverFrequencyUnderworld_v0.0.5", 0, "地底世界银矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> ironFrequencyUnderworld = new ConfigItem("ironFrequencyUnderworld_v0.0.5", 0, "地底世界铁矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> goldFrequencyUnderworld = new ConfigItem("goldFrequencyUnderworld_v0.0.5", 0, "地底世界金矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> mithrilFrequencyUnderworld = new ConfigItem("mithrilFrequencyUnderworld_v0.0.5", 6, "地底世界秘银矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> lapisFrequencyUnderworld = new ConfigItem("lapisFrequencyUnderworld_v0.0.5", 0, "地底世界青金石矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> diamondFrequencyUnderworld = new ConfigItem("diamondFrequencyUnderworld_v0.0.5", 6, "地底世界钻石矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> adamantiumFrequencyUnderworld = new ConfigItem("adamantiumFrequencyUnderworld_v0.0.9", 1, "地底世界艾德曼矿生成频率", 0 ,100);
+        public static ConfigItem <Integer> underworldMantleBlockOffset = new ConfigItem("underworldMantleBlockOffset_v0.0.2", 75, "地底世界地幔位置向上偏移", 0 ,140);
+        public static ConfigItem <Integer> netherAdamantiumMaxCountPerChunk = new ConfigItem("netherAdamantiumMaxCountPerChunk", 2, "地狱艾德曼每个区块最大生成数量", 0 ,100);
+        public static ConfigItem <Integer> netherAdamantiumMaxCountPerVein = new ConfigItem("netherAdamantiumMaxCountPerVein", 1, "地狱艾德曼每个矿脉最大矿物生成数量", 0 ,100);
         public static ConfigItem <Integer> healthBarXOffset = new ConfigItem("healthBarXOffset", 0, "营养条GUI横向偏移");
         public static ConfigItem <Integer> healthBarYOffset = new ConfigItem("healthBarYOffset", 0, "营养条GUI纵向偏移");
         public static ConfigItem <Boolean> logPlayersInteractWithPortal = new ConfigItem("logPlayersInteractWithPortal", true, "玩家通过传送门时发送警告(开关)");
-        public static ConfigItem <Integer> underworldGateOpenDay = new ConfigItem("underworldGateOpenDay", 1, "地下世界传送门多少天可以打开(主世界天数)");
-        public static ConfigItem <Integer> netherGateOpenDay = new ConfigItem("netherGateOpenDay", 1, "地狱传送门多少天可以打开(主世界天数)");
+        public static ConfigItem <Integer> underworldGateOpenDay = new ConfigItem("underworldGateOpenDay", 1, "地下世界传送门多少天可以打开(主世界天数)", 1 ,500);
+        public static ConfigItem <Integer> netherGateOpenDay = new ConfigItem("netherGateOpenDay", 1, "地狱传送门多少天可以打开(主世界天数)", 1 ,500);
         public static ConfigItem <Boolean> isAfterDeathKeep = new ConfigItem("isAfterDeathKeep", false, "是否死亡不掉落");
         public static ConfigItem <Boolean> isCloseShop = new ConfigItem("isCloseShop", false, "关闭商店系统");
-        public static ConfigItem <Float> plantGrowthRate = new ConfigItem("plantGrowthRate_v0.0.9", 0.5F, "作物生长速度倍率");
-        public static ConfigItem <Integer> whichDayGenVillage = new ConfigItem("whichDayGenVillage", 60, "多少天生成村庄");
-        public static ConfigItem <Integer> maxLevelLimit = new ConfigItem("maxLevelLimit", 300, "玩家最大限制等级");
-        public static ConfigItem <Integer> enhancePerLvlCostExp = new ConfigItem("enhancePerLvlCostExp", 1000, "附魔书附魔每增加一级消耗多少经验");
+        public static ConfigItem <Float> plantGrowthRate = new ConfigItem("plantGrowthRate_v0.0.9", 0.5F, "作物生长速度倍率",0f,1f);
+        public static ConfigItem <Integer> whichDayGenVillage = new ConfigItem("whichDayGenVillage", 60, "多少天生成村庄", 1 ,500);
+        public static ConfigItem <Integer> maxLevelLimit = new ConfigItem("maxLevelLimit", 300, "玩家最大限制等级", 0 ,1000);
+        public static ConfigItem <Integer> enhancePerLvlCostExp = new ConfigItem("enhancePerLvlCostExp", 1000, "附魔书附魔每增加一级消耗多少经验", 0 ,10000);
 //        public static ConfigItem <String> md5String = new ConfigItem("md5String", new lh("wensc").a("mask"), "MD5");
 
     }
@@ -172,7 +181,6 @@ public class Configs {
         wenscMap.put("playerDefenceMaxTime", wenscConfig.playerDefenceMaxTime);
         wenscMap.put("playerDisarmPlayer", wenscConfig.playerDisarmPlayer);
         wenscMap.put("bloodMoonMaxHostileFraction", wenscConfig.bloodMoonMaxHostileFraction);
-        wenscMap.put("ghastSpawnLimitDay", wenscConfig.ghastSpawnLimitDay);
         wenscMap.put("annihilationSkeletonSpawnInLight", wenscConfig.annihilationSkeletonSpawnInLight);
         wenscMap.put("ancientBoneLordSpawnLimitDay", wenscConfig.ancientBoneLordSpawnLimitDay);
         wenscMap.put("wanderingWitchSpawnChanceOverworld", wenscConfig.wanderingWitchSpawnChanceOverworld);
@@ -221,7 +229,6 @@ public class Configs {
         wenscMap.put("zombiePigmanUseBow", wenscConfig.zombiePigmanUseBow);
         wenscMap.put("zombiePigmanBoostChance", wenscConfig.zombiePigmanBoostChance);
         wenscMap.put("zombiePigmanAttackAnimails", wenscConfig.zombiePigmanAttackAnimails);
-        wenscMap.put("ghastOverworldBoost", wenscConfig.ghastOverworldBoost);
         wenscMap.put("wolvesAttackPlayersWithMeat", wenscConfig.wolvesAttackPlayersWithMeat);
         wenscMap.put("villagerWoolToEmeraldShardCount", wenscConfig.villagerWoolToEmeraldShardCount);
         wenscMap.put("villagerWoolToEmeraldShardShardCount", wenscConfig.villagerWoolToEmeraldShardShardCount);
@@ -402,11 +409,20 @@ public class Configs {
                 if(configItem.ConfigValue instanceof Boolean) {
                     configItem.setConfigValue(Boolean.parseBoolean(properties.getProperty(key)));
                 } else if(configItem.ConfigValue instanceof Float) {
-                    configItem.setConfigValue(Float.parseFloat(properties.getProperty(key)));
+                    if(configItem.isNeedCompare) {
+                        float value = Float.parseFloat(properties.getProperty(key));
+                        configItem.setConfigValue(value > (float)configItem.max ? configItem.max : value < (float)configItem.min ? configItem.min : value);
+                    }
                 } else if(configItem.ConfigValue instanceof Double) {
-                    configItem.setConfigValue(Double.parseDouble(properties.getProperty(key)));
+                    if(configItem.isNeedCompare) {
+                        double value = Double.parseDouble(properties.getProperty(key));
+                        configItem.setConfigValue(value > (double)configItem.max ? configItem.max : value < (double)configItem.min ? configItem.min : value);
+                    }
                 } else if(configItem.ConfigValue instanceof Integer) {
-                    configItem.setConfigValue(Integer.parseInt(properties.getProperty(key)));
+                    if(configItem.isNeedCompare) {
+                        int value = Integer.parseInt(properties.getProperty(key));
+                        configItem.setConfigValue(value > (int)configItem.max ? configItem.max : value < (int)configItem.min ? configItem.min : value);
+                    }
                 } else {
                     configItem.setConfigValue(properties.getProperty(key));
                 }
@@ -449,7 +465,7 @@ public class Configs {
     public static void generateShopConfigFile(File file) {
         try{
             FileWriter fileWritter = new FileWriter(file.getName());
-            fileWritter.write("// MITE-Extreme商店配置文件，说明：参数之间使用英文逗号分隔，请严格遵循格式（商品英文名=售出价格,购买价格），价格-1代表不可出售或者不可购买，乱改造成无法启动概不负责\n");
+            fileWritter.write("// MITE-Extreme商店配置文件，说明：参数之间使用英文逗号分隔，请严格遵循格式（商品英文名=售出价格,购买价格），价格小于等于0代表不可出售或者不可购买，价格可以为小数，乱改造成无法启动概不负责\n");
             for (Item item : Item.itemsList) {
                 if(item != null) {
                     if(item instanceof ItemBlock) {
