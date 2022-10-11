@@ -113,7 +113,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public long StoneCount = 0L;
 
-   public int resetAttackMapTimer = 100;
+   public int resetAttackMapTimer = 200;
 
    private int defenseCooldown;
 
@@ -123,7 +123,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public EntityPlayerTrans(World par1World, String par2Str) {
       super(par1World);
-
    }
 
    public void setProtein(int protein) {

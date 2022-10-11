@@ -19,7 +19,6 @@ public class MonsterUtil {
              }
           }
        }
-
     }
 
     public static ItemStack addRandomEnchantment(Random par0Random, ItemStack itemStack, int enchantment_levels,int maxTotalLevel,int maxEnchantmentNum) {
@@ -45,7 +44,6 @@ public class MonsterUtil {
        while (now < maxTier && random.nextInt(Math.max(2 * now + 1 - dayCount / 12, 1)) == 0) {
           ++now;
        }
-
        return now;
     }
 }

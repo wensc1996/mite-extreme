@@ -5,6 +5,7 @@ import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,6 +29,9 @@ public abstract class EntityInsentientTrans extends EntityLiving {
    public boolean picked_up_a_held_item;
    public boolean[] picked_up_a_held_item_array;
    private final Map<EntityPlayer,Integer> playerSteppedCountMap = new HashMap<>();
+
+   public int resetAttackMapTimer = 100;
+
    @Shadow
    protected float defaultPitch;
    @Shadow
@@ -116,6 +120,51 @@ public abstract class EntityInsentientTrans extends EntityLiving {
       return 1.0f;
    }
 
+   @Shadow
+   public int livingSoundTime;
+
+   @Shadow
+   public int getTalkInterval() {
+      return 80;
+   }
+
+   @Shadow
+   public double distanceToNearestPlayer() {
+      return (double)this.worldObj.distanceToNearestPlayer(this.posX, this.posY, this.posZ);
+   }
+
+   @Shadow
+   public void makeLivingSound() {}
+
+   @Shadow
+   public void makeLongDistanceLivingSound() {}
+
+   @Overwrite
+   public void onEntityUpdate() {
+      super.onEntityUpdate();
+      this.worldObj.theProfiler.startSection("mobBaseTick");
+      if (this.isEntityAlive() && this.rand.nextInt(1000) < this.livingSoundTime++) {
+         this.livingSoundTime = -this.getTalkInterval();
+         if (this.worldObj.isRemote) {
+            return;
+         }
+         double distance_to_nearest_player = this.distanceToNearestPlayer();
+         if (distance_to_nearest_player <= 16.0D) {
+            this.makeLivingSound();
+         } else if (distance_to_nearest_player <= 64.0D) {
+            this.makeLongDistanceLivingSound();
+         }
+      }
+      if (!this.worldObj.isRemote) {
+         if(resetAttackMapTimer <= 0) {
+            this.playerSteppedCountMap.clear();
+         } else {
+            resetAttackMapTimer --;
+         }
+      }
+      this.worldObj.theProfiler.endSection();
+   }
+
    @Inject(method = "applyEntityAttributes",at = @At("RETURN"))
    private void injectEntityAttributes(CallbackInfo c){
       this.picked_up_a_held_item_array = new boolean[5];
@@ -153,24 +202,25 @@ public abstract class EntityInsentientTrans extends EntityLiving {
 
    @Inject(method = "attackEntityFrom",at = @At(value = "INVOKE",target = "Lnet/minecraft/EntityLiving;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;",shift = At.Shift.BEFORE))
    private void injectAttackEntityFrom(Damage damage, CallbackInfoReturnable<EntityDamageResult> callbackInfo){
-      double max = Configs.wenscConfig.steppedMobDamageFactor.ConfigValue;
-      if (max != 0.0D) {
-         Entity responsibleEntity = damage.getSource().getResponsibleEntity();
-         ItemStack itemAttackedWith = damage.getItemAttackedWith();
-         if (responsibleEntity instanceof EntityPlayer && itemAttackedWith != null && itemAttackedWith.getItem() instanceof ItemTool) {
-            EntityPlayer player = (EntityPlayer) responsibleEntity;
-            if (this.playerSteppedCountMap.containsKey(responsibleEntity)) {
-               Integer time = this.playerSteppedCountMap.get(responsibleEntity);
-               damage.setAmount((float) (damage.getAmount() +
-                       //Increase per lvl: enchantment + player base
-                       (time * EnchantmentManager.getEnchantmentLevel(Enchantments.CONQUEROR,itemAttackedWith) * Configs.wenscConfig.conquerorDamageBoostPerLvl.ConfigValue) +
-                       (Math.min(max, time * Math.max(0,player.getExperienceLevel()) * Configs.wenscConfig.steppedPlayerDamageIncreasePerLvl.ConfigValue))));
-               this.playerSteppedCountMap.put(player, time + 1);
-            } else {
-               this.playerSteppedCountMap.put(player, 1);
+         double max = Configs.wenscConfig.steppedMobDamageFactor.ConfigValue;
+         if (max != 0.0D) {
+            Entity responsibleEntity = damage.getSource().getResponsibleEntity();
+            ItemStack itemAttackedWith = damage.getItemAttackedWith();
+            if (responsibleEntity instanceof EntityPlayer && itemAttackedWith != null && itemAttackedWith.getItem() instanceof ItemTool) {
+               EntityPlayer player = (EntityPlayer) responsibleEntity;
+               this.resetAttackMapTimer = 100;
+               if (this.playerSteppedCountMap.containsKey(responsibleEntity)) {
+                  Integer time = this.playerSteppedCountMap.get(responsibleEntity);
+                  damage.setAmount((float) (damage.getAmount() +
+                          //Increase per lvl: enchantment + player base
+                          (time * EnchantmentManager.getEnchantmentLevel(Enchantments.CONQUEROR,itemAttackedWith) * Configs.wenscConfig.conquerorDamageBoostPerLvl.ConfigValue) +
+                          (Math.min(max, time * Math.max(0,player.getExperienceLevel()) * Configs.wenscConfig.steppedPlayerDamageIncreasePerLvl.ConfigValue))));
+                  this.playerSteppedCountMap.put(player, time + 1);
+               } else {
+                  this.playerSteppedCountMap.put(player, 1);
+               }
             }
          }
-      }
    }
 
    @Inject(locals = LocalCapture.CAPTURE_FAILHARD,
