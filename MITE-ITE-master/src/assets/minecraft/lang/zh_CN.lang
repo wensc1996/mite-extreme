@@ -70,6 +70,7 @@ entity.EntityAnnihilationSkeleton.name=湮灭骷髅
 entity.EntityWanderingWitch.name=流浪女巫
 entity.EntityZombieDoor.name=僵尸盗贼
 entity.EntityExchanger.name=转移骷髅
+entity.EntityZombieBoss.name=僵尸BOSS
 
 gui.forgingTable.start=开始锻造
 gui.forgingTable.item_req=锻造需要

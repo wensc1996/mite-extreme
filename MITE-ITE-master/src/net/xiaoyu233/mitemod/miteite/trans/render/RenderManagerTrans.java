@@ -1,8 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.trans.render;
 
-import net.minecraft.Entity;
-import net.minecraft.bgl;
-import net.minecraft.bgm;
+import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.entity.EntityAncientDragon;
 import net.xiaoyu233.mitemod.miteite.entity.EntityAnnihilationSkeleton;
 //import net.xiaoyu233.mitemod.miteite.entity.EntityThunderMan;

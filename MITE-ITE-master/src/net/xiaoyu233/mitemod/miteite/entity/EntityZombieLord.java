@@ -11,6 +11,7 @@ public class EntityZombieLord extends EntityZombie {
     }
     private boolean haveTryToSpawnExchanger = false;
 
+
     @Override
     protected void addRandomEquipment() {
         int day = this.getWorld().getDayOfOverworld();

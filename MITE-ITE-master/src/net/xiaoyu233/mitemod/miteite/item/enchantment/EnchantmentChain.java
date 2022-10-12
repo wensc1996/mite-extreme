@@ -39,12 +39,13 @@ public class EnchantmentChain extends Enchantment {
     public boolean canEnchantItem(Item item) {
         if (item instanceof ItemTool) {
             Material material = ((ItemTool)item).getToolMaterial();
-            if (!(material == Materials.vibranium || material == Materials.mithril || material == Materials.adamantium)) {
+            if (!(material == Materials.vibranium || material == Materials.mithril || material == Materials.adamantium || material == Materials.iron || material == Materials.ancient_metal)) {
                 return false;
             }
         }
         return (item instanceof ItemPickaxe || item instanceof ItemWarHammer);
     }
+
     @Override
     public boolean isOnCreativeTab(CreativeModeTab creative_tab)
     {
