@@ -66,9 +66,8 @@ public class BlockOreTrans extends Block {
             DedicatedServer.incrementTournamentScoringCounter(info.getResponsiblePlayer(), Item.getItem(id_dropped));
         }
 
-
         float chance = suppress_fortune ? 1.0F : 1.0F + (float)info.getHarvesterFortune() * 0.1F;
-        int total = 1;
+        int total = super.dropBlockAsEntityItem(info, id_dropped, metadata_dropped, quantity_dropped, chance);
         if(info.wasHarvestedByPlayer()) {
             if(EnchantmentManager.hasEnchantment(info.getResponsiblePlayer().getHeldItemStack(), Enchantments.enchantmentChain)) {
                 for(int dx = -1; dx <= 1; ++dx) {
@@ -76,14 +75,26 @@ public class BlockOreTrans extends Block {
                         for(int dz = -1; dz <= 1; ++dz) {
                             Block searchedBlock = info.world.getBlock(info.x + dx, info.y + dy, info.z + dz);
                             if(searchedBlock != null) {
-                                BlockBreakInfo entity_item = (new BlockBreakInfo(info.world, info.x + dx, info.y + dy, info.z + dz)).setHarvestedBy(info.getResponsiblePlayer());;
-                                if(searchedBlock.blockID == this.blockID && searchedBlock.getItemSubtype(entity_item.getMetadata()) == metadata_dropped) {
-                                    if (info.world.setBlockToAir(info.x + dx, info.y + dy, info.z + dz))
-                                    {
-                                        if(info.getResponsiblePlayer().getHeldItem() instanceof ItemTool) {
-                                            info.getResponsiblePlayer().tryDamageHeldItem(DamageSource.generic, ((ItemTool)info.getResponsiblePlayer().getHeldItem()).getToolDecayFromBreakingBlock(info));
+                                BlockBreakInfo entity_item = (new BlockBreakInfo(info.world, info.x + dx, info.y + dy, info.z + dz)).setHarvestedBy(info.getResponsiblePlayer());
+                                if(searchedBlock.blockID == this.blockID) {
+                                    if(searchedBlock == oreLapis || searchedBlock.getItemSubtype(entity_item.getMetadata()) == metadata_dropped) {
+                                        if (info.world.setBlockToAir(info.x + dx, info.y + dy, info.z + dz))
+                                        {
+                                            total += super.dropBlockAsEntityItem(entity_item, id_dropped, metadata_dropped, quantity_dropped, chance);
+                                            if(info.getResponsiblePlayer().getHeldItem() instanceof ItemTool) {
+                                                if (this.canDropExperienceOrbs()) {
+                                                    int xp_reward_per_unit = Item.getItem(info.block.blockID).getExperienceReward(info.getMetadata());
+                                                    if (xp_reward_per_unit > 0) {
+                                                        this.dropXpOnBlockBreak(info.world, info.x, info.y, info.z, xp_reward_per_unit);
+                                                    }
+                                                }
+                                                info.getResponsiblePlayer().getHeldItem().addExpForTool(info.getHarvesterItemStack(), info.getResponsiblePlayer(), info.block.blockMaterial.getMinHarvestLevel());
+                                                info.getResponsiblePlayer().tryDamageHeldItem(DamageSource.generic, ((ItemTool)info.getResponsiblePlayer().getHeldItem()).getToolDecayFromBreakingBlock(info));
+                                                if(info.getResponsiblePlayer().getHeldItemStack().getMaxDamage() - info.getResponsiblePlayer().getHeldItemStack().getItemDamage() - ((ItemTool)info.getResponsiblePlayer().getHeldItem()).getToolDecayFromBreakingBlock(info) <= 0) {
+                                                    return total;
+                                                }
+                                            }
                                         }
-                                        total += super.dropBlockAsEntityItem(entity_item, id_dropped, metadata_dropped, quantity_dropped, chance);
                                     }
                                 }
                             }
@@ -91,9 +102,7 @@ public class BlockOreTrans extends Block {
                     }
                 }
             }
-
         }
-        super.dropBlockAsEntityItem(info, id_dropped, metadata_dropped, quantity_dropped, chance);
         return total;
     }
 }

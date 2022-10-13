@@ -71,6 +71,10 @@ public abstract class EntityLivingTrans extends Entity {
    protected void checkForAfterDamage(Damage damage, EntityDamageResult result) {
    }
 
+   public boolean getJumping() {
+      return this.isJumping;
+   }
+
    @Shadow
    protected void entityInit() {
    }
