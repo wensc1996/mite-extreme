@@ -1,9 +1,11 @@
 package net.xiaoyu233.mitemod.miteite.entity;
 
+import javafx.beans.binding.MapExpression;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +13,8 @@ public class EntityZombieBoss extends EntityZombie {
     private Enchantment [] enhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering, Enchantments.enchantmentFixed, Enchantments.enchantmentChain};
     private int thunderTick = 0;
     private int attackedCounter = 200;
+    private final HashMap activePotionsMap = new HashMap();
+
     public EntityZombieBoss(World par1World) {
         super(par1World);
     }
@@ -23,6 +27,12 @@ public class EntityZombieBoss extends EntityZombie {
         this.setCurrentItemOrArmor(4, new ItemStack(Items.VIBRANIUM_BOOTS, 1).randomizeForMob(this, true));
         this.addPotionEffect(new MobEffect(1, 2147483647, 0));
         this.addPotionEffect(new MobEffect(5, 2147483647, 0));
+    }
+
+    public void addPotionEffect(MobEffect par1PotionEffect) {
+        if(par1PotionEffect.getPotionID() == 1 || par1PotionEffect.getPotionID() == 5) {
+            super.addPotionEffect(par1PotionEffect);
+        }
     }
 
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
