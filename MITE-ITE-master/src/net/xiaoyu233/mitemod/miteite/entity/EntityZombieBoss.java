@@ -38,7 +38,7 @@ public class EntityZombieBoss extends EntityZombie {
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
             Enchantment dropEnchantment = enhanceSpecialBookList[rand.nextInt(enhanceSpecialBookList.length)];
-            ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevels()));
+            ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
             this.dropItemStack(var11);
             this.dropItemStack(new ItemStack(Items.diamond, 10));
         }
@@ -100,6 +100,7 @@ public class EntityZombieBoss extends EntityZombie {
     public EntityDamageResult attackEntityFrom(Damage damage) {
         if(damage.getSource().damageType.equals("player") || damage.getSource().damageType.equals("mob")) {
             this.attackedCounter = 200;
+            damage.setAmount(damage.getAmount() / 5);
             return super.attackEntityFrom(damage);
         } else {
             return null;

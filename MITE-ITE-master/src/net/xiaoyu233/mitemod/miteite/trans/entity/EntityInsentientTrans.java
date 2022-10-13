@@ -5,6 +5,7 @@ import net.xiaoyu233.mitemod.miteite.entity.EntityZombieBoss;
 import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
+import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -203,22 +204,24 @@ public abstract class EntityInsentientTrans extends EntityLiving {
 
    @Inject(method = "attackEntityFrom",at = @At(value = "INVOKE",target = "Lnet/minecraft/EntityLiving;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;",shift = At.Shift.BEFORE))
    private void injectAttackEntityFrom(Damage damage, CallbackInfoReturnable<EntityDamageResult> callbackInfo){
-         double max = Configs.wenscConfig.steppedMobDamageFactor.ConfigValue;
-         if (max != 0.0D) {
-            Entity responsibleEntity = damage.getSource().getResponsibleEntity();
-            ItemStack itemAttackedWith = damage.getItemAttackedWith();
-            if (responsibleEntity instanceof EntityPlayer && itemAttackedWith != null && itemAttackedWith.getItem() instanceof ItemTool) {
-               EntityPlayer player = (EntityPlayer) responsibleEntity;
-               this.resetAttackMapTimer = 100;
-               if (this.playerSteppedCountMap.containsKey(responsibleEntity)) {
-                  Integer time = this.playerSteppedCountMap.get(responsibleEntity);
-                  damage.setAmount((float) (damage.getAmount() +
-                          //Increase per lvl: enchantment + player base
-                          (time * EnchantmentManager.getEnchantmentLevel(Enchantments.CONQUEROR,itemAttackedWith) * Configs.wenscConfig.conquerorDamageBoostPerLvl.ConfigValue) +
-                          (Math.min(max, time * Math.max(0,player.getExperienceLevel()) * Configs.wenscConfig.steppedPlayerDamageIncreasePerLvl.ConfigValue))));
-                  this.playerSteppedCountMap.put(player, time + 1);
-               } else {
-                  this.playerSteppedCountMap.put(player, 1);
+         if(!(ReflectHelper.dyCast(EntityInsentient.class,this) instanceof EntityZombieBoss)) {
+            double max = Configs.wenscConfig.steppedMobDamageFactor.ConfigValue;
+            if (max != 0.0D) {
+               Entity responsibleEntity = damage.getSource().getResponsibleEntity();
+               ItemStack itemAttackedWith = damage.getItemAttackedWith();
+               if (responsibleEntity instanceof EntityPlayer && itemAttackedWith != null && itemAttackedWith.getItem() instanceof ItemTool) {
+                  EntityPlayer player = (EntityPlayer) responsibleEntity;
+                  this.resetAttackMapTimer = 100;
+                  if (this.playerSteppedCountMap.containsKey(responsibleEntity)) {
+                     Integer time = this.playerSteppedCountMap.get(responsibleEntity);
+                     damage.setAmount((float) (damage.getAmount() +
+                             //Increase per lvl: enchantment + player base
+                             (time * EnchantmentManager.getEnchantmentLevel(Enchantments.CONQUEROR,itemAttackedWith) * Configs.wenscConfig.conquerorDamageBoostPerLvl.ConfigValue) +
+                             (Math.min(max, time * Math.max(0,player.getExperienceLevel()) * Configs.wenscConfig.steppedPlayerDamageIncreasePerLvl.ConfigValue))));
+                     this.playerSteppedCountMap.put(player, time + 1);
+                  } else {
+                     this.playerSteppedCountMap.put(player, 1);
+                  }
                }
             }
          }

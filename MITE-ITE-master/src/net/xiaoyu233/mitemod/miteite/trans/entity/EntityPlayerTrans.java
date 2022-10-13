@@ -5,6 +5,7 @@ import net.xiaoyu233.fml.relaunch.server.Main;
 import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
 import net.xiaoyu233.mitemod.miteite.block.BlockSpawn;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
+import net.xiaoyu233.mitemod.miteite.entity.EntityZombieBoss;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
 import net.xiaoyu233.mitemod.miteite.item.*;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
@@ -268,7 +269,9 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
                   ((EntityLiving)target).addPotionEffect(new MobEffect(MobEffectList.moveSlowdown.id, stunning * 50, stunning * 5));
                }
 
-               this.heal((float)EnchantmentManager.getVampiricTransfer(this, (EntityLiving)target, damage), EnumEntityFX.vampiric_gain);
+               if(!(target instanceof EntityZombieBoss)) {
+                  this.heal((float)EnchantmentManager.getVampiricTransfer(this, (EntityLiving)target, damage), EnumEntityFX.vampiric_gain);
+               }
             }
 
             if (knockback > 0) {
