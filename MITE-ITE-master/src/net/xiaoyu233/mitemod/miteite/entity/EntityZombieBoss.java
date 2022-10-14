@@ -4,15 +4,17 @@ import javafx.beans.binding.MapExpression;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 public class EntityZombieBoss extends EntityZombie {
-    private Enchantment [] enhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering, Enchantments.enchantmentFixed, Enchantments.enchantmentChain};
+    private Enchantment [] enhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering, Enchantments.enchantmentFixed, Enchantments.enchantmentChain, Enchantments.EMERGENCY};
     private int thunderTick = 0;
     private int attackedCounter = 200;
+
     private final HashMap activePotionsMap = new HashMap();
 
     public EntityZombieBoss(World par1World) {
@@ -46,9 +48,9 @@ public class EntityZombieBoss extends EntityZombie {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.setEntityAttribute(GenericAttributes.attackDamage, 12.0D);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 1000);
-        this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
+        this.setEntityAttribute(GenericAttributes.attackDamage, Configs.wenscConfig.zombieBossBaseDamage.ConfigValue);
+        this.setEntityAttribute(GenericAttributes.maxHealth, Configs.wenscConfig.zombieBossMaxHealth.ConfigValue);
+        this.setEntityAttribute(GenericAttributes.movementSpeed, 0.45D);
     }
 
     @Override
@@ -99,6 +101,9 @@ public class EntityZombieBoss extends EntityZombie {
     @Override
     public EntityDamageResult attackEntityFrom(Damage damage) {
         if(damage.getSource().damageType.equals("player") || damage.getSource().damageType.equals("mob")) {
+            if(damage.getSource().getResponsibleEntity() instanceof EntityIronGolem) {
+                return null;
+            }
             this.attackedCounter = 200;
             damage.setAmount(damage.getAmount() / 5);
             return super.attackEntityFrom(damage);
@@ -139,6 +144,7 @@ public class EntityZombieBoss extends EntityZombie {
                 for (int i = 0; i< entities.size(); i++) {
                     if(entities.get(i) instanceof EntityPlayer) {
                         EntityPlayer player = ((EntityPlayer) entities.get(i));
+                        player.isAttackByBossCounter = 200;
                         if(player.motionY != 0) {
                             if(!this.canPathTo(MathHelper.floor_double(player.getFootPos().xCoord), player.getFootBlockPosY(), MathHelper.floor_double(player.getFootPos().zCoord), 50)) {
                                 WorldServer var20 = (WorldServer)this.worldObj;

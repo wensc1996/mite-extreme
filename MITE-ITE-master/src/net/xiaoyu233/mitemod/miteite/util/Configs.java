@@ -158,6 +158,13 @@ public class Configs {
         public static ConfigItem <Integer> whichDayGenVillage = new ConfigItem("whichDayGenVillage", 60, "多少天生成村庄", 1 ,500);
         public static ConfigItem <Integer> maxLevelLimit = new ConfigItem("maxLevelLimit", 300, "玩家最大限制等级", 0 ,1000);
         public static ConfigItem <Integer> enhancePerLvlCostExp = new ConfigItem("enhancePerLvlCostExp", 1000, "附魔书附魔每增加一级消耗多少经验", 0 ,10000);
+
+        public static ConfigItem <Double> zombieBossMaxHealth = new ConfigItem("zombieBossMaxHealth", 1000d, "僵尸BOSS最大血量", 1d ,10000d);
+        public static ConfigItem <Double> zombieBossBaseDamage = new ConfigItem("zombieBossBaseDamage", 12d, "僵尸BOSS基础攻击伤害", 1d ,100d);
+        public static ConfigItem <Float> zombieBossSpawnPercent = new ConfigItem("zombieBossSpawnPercent", 0.5f, "挖掘刷怪笼多大几率刷出僵尸BOSS", 0f,1f);
+
+        public static ConfigItem <Integer> creeperFuseTime = new ConfigItem("creeperFuseTime", 30, "苦力怕蓄力时间", 10,1000);
+
 //        public static ConfigItem <String> md5String = new ConfigItem("md5String", new lh("wensc").a("mask"), "MD5");
 
     }
@@ -285,6 +292,10 @@ public class Configs {
         wenscMap.put("whichDayGenVillage", wenscConfig.whichDayGenVillage);
         wenscMap.put("maxLevelLimit", wenscConfig.maxLevelLimit);
         wenscMap.put("enhancePerLvlCostExp", wenscConfig.enhancePerLvlCostExp);
+        wenscMap.put("zombieBossMaxHealth", wenscConfig.zombieBossMaxHealth);
+        wenscMap.put("zombieBossBaseDamage", wenscConfig.zombieBossBaseDamage);
+        wenscMap.put("zombieBossSpawnPercent", wenscConfig.zombieBossSpawnPercent);
+        wenscMap.put("creeperFuseTime", wenscConfig.creeperFuseTime);
 
 //        wenscMap.put("md5", wenscConfig.md5String);
 

@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.entity.EntityExchanger;
+import net.xiaoyu233.mitemod.miteite.entity.EntityZombieBoss;
 import net.xiaoyu233.mitemod.miteite.entity.EntityZombieDoor;
 import net.xiaoyu233.mitemod.miteite.entity.EntityZombieLord;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
@@ -37,6 +38,9 @@ public abstract class WorldServerTrans extends World {
    @Shadow
    @Final
    private PlayerChunkMap thePlayerManager;
+
+   @Shadow
+   private IntHashMap entityIdMap;
    @Shadow
    @Final
    private PortalTravelAgent worldTeleporter;
@@ -77,6 +81,22 @@ public abstract class WorldServerTrans extends World {
    public EntityInsentient tryCreateNewLivingEntityCloseToP(int x, int y, int z, int min_distance, int max_distance, Class entity_living_class, EnumCreatureType enum_creature_type) {
       return this.tryCreateNewLivingEntityCloseTo(x, y, z, min_distance, max_distance, entity_living_class, enum_creature_type);
    }
+
+   @Overwrite
+   protected void onEntityAdded(Entity par1Entity) {
+      if(par1Entity instanceof EntityZombieBoss) {
+         ((EntityZombieBoss) par1Entity).heal(((EntityZombieBoss) par1Entity).getMaxHealth());
+      }
+      super.onEntityAdded(par1Entity);
+      this.entityIdMap.addKey(par1Entity.entityId, par1Entity);
+      Entity[] var2 = par1Entity.getParts();
+      if (var2 != null) {
+         for(int var3 = 0; var3 < var2.length; ++var3) {
+            this.entityIdMap.addKey(var2[var3].entityId, var2[var3]);
+         }
+      }
+   }
+
    @Overwrite
    public Class getSuitableCreature(EnumCreatureType creature_type, int x, int y, int z) {
       boolean check_depth = this.isOverworld();

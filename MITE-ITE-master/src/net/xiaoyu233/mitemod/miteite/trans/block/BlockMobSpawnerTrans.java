@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.block;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.entity.EntityExchanger;
 import net.xiaoyu233.mitemod.miteite.entity.EntityZombieBoss;
+import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,7 +17,7 @@ public class BlockMobSpawnerTrans extends BlockContainer {
     @Overwrite
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         this.dropXpOnBlockBreak(info.world, info.x, info.y, info.z, 15 + info.world.rand.nextInt(15) + info.world.rand.nextInt(15));
-        if(info.world.isUnderworld() && info.world.rand.nextInt(5) == 0) {
+        if(info.world.isUnderworld() && info.world.rand.nextFloat() < Configs.wenscConfig.zombieBossSpawnPercent.ConfigValue) {
             EntityZombieBoss entityZombieBoss = new EntityZombieBoss(info.world);
             entityZombieBoss.setPosition(info.x, info.y, info.z);
             entityZombieBoss.refreshDespawnCounter(-9600);

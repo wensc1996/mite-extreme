@@ -2,12 +2,14 @@ package net.xiaoyu233.mitemod.miteite.trans.world;
 
 import net.minecraft.*;
 import net.minecraft.client.main.Main;
+import net.xiaoyu233.mitemod.miteite.entity.EntityZombieBoss;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Mixin(bdd.class)
@@ -25,6 +27,9 @@ public class WorldClientTrans extends World {
    @Final
    private Minecraft worldLogAgent;
 
+   @Shadow
+   private Set vecPool = new HashSet();
+
    public WorldClientTrans(IDataManager par1ISaveHandler, String par2Str, WorldProvider par3WorldProvider, WorldSettings par4WorldSettings, MethodProfiler par5Profiler, IConsoleLogManager par6ILogAgent, long world_creation_time, long total_world_time) {
       super(par1ISaveHandler, par2Str, par3WorldProvider, par4WorldSettings, par5Profiler, par6ILogAgent, world_creation_time, total_world_time);
    }
@@ -37,6 +42,17 @@ public class WorldClientTrans extends World {
    @Shadow
    public Entity getEntityByID(int var1) {
       return null;
+   }
+
+   @Overwrite
+   protected void onEntityAdded(Entity par1Entity) {
+      if(par1Entity instanceof EntityZombieBoss) {
+         ((EntityZombieBoss) par1Entity).heal(((EntityZombieBoss) par1Entity).getMaxHealth());
+      }
+      super.onEntityAdded(par1Entity);
+      if (this.theCalendar.contains(par1Entity)) {
+         this.theCalendar.remove(par1Entity);
+      }
    }
 
    @Overwrite

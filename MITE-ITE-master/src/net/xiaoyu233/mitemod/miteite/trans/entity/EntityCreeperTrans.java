@@ -36,6 +36,7 @@ public class EntityCreeperTrans extends EntityMonster {
       int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld(), 0) : 0;
       this.explosionRadius = 1.25f;
 //      this.setExplosionTime(Math.max(this.getExplosionTime() * 3 - (int)((double)day * 0.6D), 40));
+      this.setExplosionTime(Configs.wenscConfig.creeperFuseTime.ConfigValue);
    }
 
    public int getExplosionTime() {

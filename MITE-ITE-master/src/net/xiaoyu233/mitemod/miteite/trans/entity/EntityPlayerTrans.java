@@ -91,6 +91,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public double money = 0D;
 
+   public int isAttackByBossCounter = 0;
+
    ItemStack itemRingKiller;
 
    public void setOp(boolean op) {
@@ -129,6 +131,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public void setProtein(int protein) {
       this.protein = MathHelper.clamp_int(protein, 0, 10240000);
    }
+
 
    private void activeEmergency(List<ItemStack> emergencyItemList) {
 
@@ -348,14 +351,14 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    @Override
    public void addPotionEffect(MobEffect par1PotionEffect) {
-      ItemStack helmet = this.getHelmet();
-      if (helmet != null &&
-              //Bad only
-              MobEffectList.get(par1PotionEffect.getPotionID()).f()
-      ){
-         par1PotionEffect.setDuration((int) (par1PotionEffect.getDuration() * (1 - ArmorModifierTypes.IMMUNITY.getModifierValue(helmet.getTagCompound()))));
-      }
-      super.addPotionEffect(par1PotionEffect);
+         ItemStack helmet = this.getHelmet();
+         if (helmet != null &&
+                 //Bad only
+                 MobEffectList.get(par1PotionEffect.getPotionID()).f()
+         ){
+            par1PotionEffect.setDuration((int) (par1PotionEffect.getDuration() * (1 - ArmorModifierTypes.IMMUNITY.getModifierValue(helmet.getTagCompound()))));
+         }
+         super.addPotionEffect(par1PotionEffect);
    }
 
 //   @Overwrite
@@ -425,6 +428,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.spawnStoneZ = par1EntityPlayer.spawnStoneZ;
       this.isFirstLogin = par1EntityPlayer.isFirstLogin;
       this.money = par1EntityPlayer.money;
+      this.isAttackByBossCounter = par1EntityPlayer.isAttackByBossCounter;
    }
 
    public double plusMoney(double singleMoney){
@@ -455,6 +459,9 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.spawnStoneY = par1NBTTagCompound.getInteger("spawnStoneY");
       this.spawnStoneZ = par1NBTTagCompound.getInteger("spawnStoneZ");
       this.spawnStoneWorldId = par1NBTTagCompound.getInteger("spawnStoneWorldId");
+      if (par1NBTTagCompound.hasKey("isAttackByBossCounter")) {
+         this.isAttackByBossCounter = par1NBTTagCompound.getInteger("isAttackByBossCounter");
+      }
 
       if (par1NBTTagCompound.hasKey("AttackCountMap")) {
          NBTTagList attackCountMap = par1NBTTagCompound.getTagList("AttackCountMap");
@@ -769,7 +776,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
                    target = "Lnet/minecraft/EntityLiving;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
    private EntityDamageResult redirectEntityAttack(EntityLiving caller,Damage damage){
       // 如果收到伤害，计时5S，打一次计时5S，持续打持续计时
-      this.resetAttackMapTimer = 100;
+      this.resetAttackMapTimer = 200;
       // 每天在渐进增强 progress = 1/50 2/50 50/50
       double progress = Math.min(Configs.wenscConfig.steppedMobDamageProgressMax.ConfigValue, (this.getWorld().getDayOfOverworld()) / (float)Configs.wenscConfig.steppedMobDamageProgressIncreaseDay.ConfigValue);
       if (progress != 0.0D) {
@@ -793,9 +800,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             }
          }
       }
-
-
-
 
 
       if (damage.getResponsibleEntityP() != null && this.getHeldItem() != null && this.rand.nextInt(10) > 8) {
@@ -900,6 +904,11 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
       // 服务端
       if (!this.worldObj.isRemote) {
+
+         if(isAttackByBossCounter > 0) {
+            --isAttackByBossCounter;
+            this.removePotionEffect(MobEffectList.damageBoost.id);
+         }
          // 一旦收到攻击，开始计时5S，如果5S正常结束表示未持续收到伤害，则清空
          if(resetAttackMapTimer <= 0) {
             this.attackCountMap.clear();
@@ -1058,6 +1067,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       par1NBTTagCompound.setInteger("spawnStoneY", this.spawnStoneY);
       par1NBTTagCompound.setInteger("spawnStoneZ", this.spawnStoneZ);
       par1NBTTagCompound.setInteger("spawnStoneWorldId", this.spawnStoneWorldId);
+      par1NBTTagCompound.setInteger("isAttackByBossCounter", this.isAttackByBossCounter);
 
       NBTTagList nbtTagList = new NBTTagList();
       for (Entry<Entity, Integer> integerEntry : this.attackCountMap.entrySet()) {
