@@ -93,6 +93,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public int isAttackByBossCounter = 0;
 
+   public int bossResetDamageBoostCounter = 0;
+
+   public int bossTargetCounter = 0;
+
    ItemStack itemRingKiller;
 
    public void setOp(boolean op) {
@@ -116,7 +120,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public long StoneCount = 0L;
 
-   public int resetAttackMapTimer = 200;
+   public int resetAttackMapTimer = 0;
 
    private int defenseCooldown;
 
@@ -428,7 +432,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.spawnStoneZ = par1EntityPlayer.spawnStoneZ;
       this.isFirstLogin = par1EntityPlayer.isFirstLogin;
       this.money = par1EntityPlayer.money;
-      this.isAttackByBossCounter = par1EntityPlayer.isAttackByBossCounter;
+      this.bossResetDamageBoostCounter = par1EntityPlayer.bossResetDamageBoostCounter;
    }
 
    public double plusMoney(double singleMoney){
@@ -454,13 +458,15 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.inRainCounter = par1NBTTagCompound.getInteger("InRainCounter");
       this.vision_dimming = par1NBTTagCompound.getFloat("vision_dimming");
       this.money = par1NBTTagCompound.getDouble("money");
+      this.resetAttackMapTimer = par1NBTTagCompound.getInteger("resetAttackMapTimer");
+
 
       this.spawnStoneX = par1NBTTagCompound.getInteger("spawnStoneX");
       this.spawnStoneY = par1NBTTagCompound.getInteger("spawnStoneY");
       this.spawnStoneZ = par1NBTTagCompound.getInteger("spawnStoneZ");
       this.spawnStoneWorldId = par1NBTTagCompound.getInteger("spawnStoneWorldId");
-      if (par1NBTTagCompound.hasKey("isAttackByBossCounter")) {
-         this.isAttackByBossCounter = par1NBTTagCompound.getInteger("isAttackByBossCounter");
+      if (par1NBTTagCompound.hasKey("bossResetDamageBoostCounter")) {
+         this.bossResetDamageBoostCounter = par1NBTTagCompound.getInteger("bossResetDamageBoostCounter");
       }
 
       if (par1NBTTagCompound.hasKey("AttackCountMap")) {
@@ -905,8 +911,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       // 服务端
       if (!this.worldObj.isRemote) {
 
-         if(isAttackByBossCounter > 0) {
-            --isAttackByBossCounter;
+         if(bossResetDamageBoostCounter > 0) {
+            --bossResetDamageBoostCounter;
             this.removePotionEffect(MobEffectList.damageBoost.id);
          }
          // 一旦收到攻击，开始计时5S，如果5S正常结束表示未持续收到伤害，则清空
@@ -1067,7 +1073,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       par1NBTTagCompound.setInteger("spawnStoneY", this.spawnStoneY);
       par1NBTTagCompound.setInteger("spawnStoneZ", this.spawnStoneZ);
       par1NBTTagCompound.setInteger("spawnStoneWorldId", this.spawnStoneWorldId);
-      par1NBTTagCompound.setInteger("isAttackByBossCounter", this.isAttackByBossCounter);
+      par1NBTTagCompound.setInteger("bossResetDamageBoostCounter", this.bossResetDamageBoostCounter);
+      par1NBTTagCompound.setInteger("resetAttackMapTimer", this.resetAttackMapTimer);
 
       NBTTagList nbtTagList = new NBTTagList();
       for (Entry<Entity, Integer> integerEntry : this.attackCountMap.entrySet()) {

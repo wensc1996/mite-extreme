@@ -50,7 +50,7 @@ public class EntityZombieBoss extends EntityZombie {
         super.applyEntityAttributes();
         this.setEntityAttribute(GenericAttributes.attackDamage, Configs.wenscConfig.zombieBossBaseDamage.ConfigValue);
         this.setEntityAttribute(GenericAttributes.maxHealth, Configs.wenscConfig.zombieBossMaxHealth.ConfigValue);
-        this.setEntityAttribute(GenericAttributes.movementSpeed, 0.45D);
+        this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
     }
 
     @Override
@@ -104,12 +104,25 @@ public class EntityZombieBoss extends EntityZombie {
             if(damage.getSource().getResponsibleEntity() instanceof EntityIronGolem) {
                 return null;
             }
+            if(damage.getSource().getResponsibleEntity() instanceof EntityPlayer) {
+                EntityPlayer player = ((EntityPlayer) damage.getSource().getResponsibleEntity());
+                player.removePotionEffect(MobEffectList.damageBoost.id);
+                player.bossResetDamageBoostCounter = 200;
+            }
             this.attackedCounter = 200;
             damage.setAmount(damage.getAmount() / 5);
             return super.attackEntityFrom(damage);
         } else {
             return null;
         }
+    }
+
+    @Override
+    public EntityDamageResult attackEntityAsMob(Entity target) {
+        if(target instanceof EntityPlayer) {
+            ((EntityPlayer) target).isAttackByBossCounter = 30;
+        }
+        return super.attackEntityAsMob(target);
     }
 
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
@@ -122,10 +135,20 @@ public class EntityZombieBoss extends EntityZombie {
         this.attackedCounter = par1NBTTagCompound.getShort("attackedCounter");
     }
 
+    public void addThunderAttack(EntityPlayer player, float damage) {
+        if(player != null) {
+            WorldServer var20 = (WorldServer)this.worldObj;
+            var20.addWeatherEffect(new EntityLightning(var20, player.posX, player.posY, player.posZ));
+            player.attackEntityFrom(new Damage(DamageSource.divine_lightning, damage));
+        }
+    }
+
     public void onUpdate() {
         super.onUpdate();
+        this.generateRandomParticles(EnumParticle.splash);
         if (!this.getWorld().isRemote){
             thunderTick ++;
+            EntityLiving target = this.getTarget();
             if(attackedCounter <= 0) {
                 if(this.getHealth() < this.getMaxHealth()) {
                     this.heal(this.getMaxHealth());
@@ -133,33 +156,42 @@ public class EntityZombieBoss extends EntityZombie {
             } else {
                 attackedCounter --;
             }
+            if(thunderTick % 20 == 0) {
+                if(target != null && target instanceof EntityPlayer) {
+                    if(((EntityPlayer) target).isAttackByBossCounter <= 0) {
+                        addThunderAttack((EntityPlayer)target, 3f);
+                    }
+                }
+            }
+            if(target != null && target instanceof EntityPlayer) {
+                if(((EntityPlayer) target).isAttackByBossCounter > 0) {
+                    --((EntityPlayer) target).isAttackByBossCounter;
+                }
+            }
             if(thunderTick == 60) {
                 List entities =  this.getNearbyEntities(16, 16);
                 if(entities.size() > 0) {
                     Object targetPlayer = entities.get(rand.nextInt(entities.size()));
                     if(targetPlayer instanceof EntityPlayer) {
-                        this.setTarget((EntityLiving)targetPlayer);
-                    }
-                }
-                for (int i = 0; i< entities.size(); i++) {
-                    if(entities.get(i) instanceof EntityPlayer) {
-                        EntityPlayer player = ((EntityPlayer) entities.get(i));
-                        player.isAttackByBossCounter = 200;
-                        if(player.motionY != 0) {
-                            if(!this.canPathTo(MathHelper.floor_double(player.getFootPos().xCoord), player.getFootBlockPosY(), MathHelper.floor_double(player.getFootPos().zCoord), 50)) {
-                                WorldServer var20 = (WorldServer)this.worldObj;
-                                var20.addWeatherEffect(new EntityLightning(var20, player.posX, player.posY, player.posZ));
-                                player.attackEntityFrom(new Damage(DamageSource.divine_lightning, 10F));
-                            }
-                        } else {
-                            if(!this.canPathTo(MathHelper.floor_double(player.getFootPos().xCoord), MathHelper.floor_double(player.getFootPos().yCoord), MathHelper.floor_double(player.getFootPos().zCoord), 50)) {
-                                WorldServer var20 = (WorldServer)this.worldObj;
-                                var20.addWeatherEffect(new EntityLightning(var20, player.posX, player.posY, player.posZ));
-                                player.attackEntityFrom(new Damage(DamageSource.divine_lightning, 10F));
-                            }
+                        if(!((EntityPlayer) targetPlayer).isOp()) {
+                            this.setTarget((EntityPlayer)targetPlayer);
                         }
                     }
                 }
+//                for (int i = 0; i< entities.size(); i++) {
+//                    if(entities.get(i) instanceof EntityPlayer) {
+//                        EntityPlayer player = ((EntityPlayer) entities.get(i));
+//                        if(player.motionY != 0) {
+//                            if(!this.canPathTo(MathHelper.floor_double(player.getFootPos().xCoord), player.getFootBlockPosY(), MathHelper.floor_double(player.getFootPos().zCoord), 50)) {
+//                                this.addThunderAttack(player, 10f);
+//                            }
+//                        } else {
+//                            if(!this.canPathTo(MathHelper.floor_double(player.getFootPos().xCoord), MathHelper.floor_double(player.getFootPos().yCoord), MathHelper.floor_double(player.getFootPos().zCoord), 50)) {
+//                                this.addThunderAttack(player, 10f);
+//                            }
+//                        }
+//                    }
+//                }
                 thunderTick = 0;
             }
         }

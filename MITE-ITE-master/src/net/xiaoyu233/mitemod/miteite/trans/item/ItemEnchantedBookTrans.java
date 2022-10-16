@@ -13,6 +13,6 @@ public class ItemEnchantedBookTrans extends Item {
 
     @Inject(method = "<init>", at=@At("RETURN"))
     public void changeMaterial(CallbackInfo callbackInfo) {
-        this.setMaterial(Materials.vibranium);
+        this.setMaterial(Materials.copper);
     }
 }
