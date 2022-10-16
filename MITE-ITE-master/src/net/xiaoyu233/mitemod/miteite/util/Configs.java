@@ -75,7 +75,7 @@ public class Configs {
         public static ConfigItem <Integer> netherDebuffTime = new ConfigItem("netherDebuffTime", 72000, "地狱负面效果触发时间(tick)", 0 ,1000000);
         public static ConfigItem <Integer> quartzMaxExpLevel = new ConfigItem("quartzMaxExpLevel", 55, "石英可提供经验最大等级", 0 ,1000);
         public static ConfigItem <Integer> diamondExp = new ConfigItem("diamondExp", 400, "钻石经验", 0 ,10000);
-        public static ConfigItem <Integer> emeraldExp = new ConfigItem("emeraldExp", 300, "绿宝石经验", 0 ,10000);
+        public static ConfigItem <Integer> emeraldExp = new ConfigItem("emeraldExp", 400, "绿宝石经验", 0 ,10000);
         public static ConfigItem <Integer> quartzExp = new ConfigItem("quartzExp", 35, "石英经验", 0 ,10000);
         public static ConfigItem <Integer> goldenAppleEatTime = new ConfigItem("goldenAppleEatTime", 10, "金苹果使用耗时（tick）", 0 ,1000000);
         public static ConfigItem <Integer> enchantedGoldenAppleEatTime = new ConfigItem("enchantedGoldenAppleEatTime", 10, "附魔金苹果使用耗时（tick）", 0 ,1000000);
@@ -420,20 +420,23 @@ public class Configs {
                 if(configItem.ConfigValue instanceof Boolean) {
                     configItem.setConfigValue(Boolean.parseBoolean(properties.getProperty(key)));
                 } else if(configItem.ConfigValue instanceof Float) {
+                    float value = Float.parseFloat(properties.getProperty(key));
                     if(configItem.isNeedCompare) {
-                        float value = Float.parseFloat(properties.getProperty(key));
-                        configItem.setConfigValue(value > (float)configItem.max ? configItem.max : value < (float)configItem.min ? configItem.min : value);
+                        value = value > (float)configItem.max ? (float) configItem.max : Math.max(value, (float) configItem.min);
                     }
+                    configItem.setConfigValue(value);
                 } else if(configItem.ConfigValue instanceof Double) {
+                    double value = Double.parseDouble(properties.getProperty(key));
                     if(configItem.isNeedCompare) {
-                        double value = Double.parseDouble(properties.getProperty(key));
-                        configItem.setConfigValue(value > (double)configItem.max ? configItem.max : value < (double)configItem.min ? configItem.min : value);
+                        value = value > (double)configItem.max ? (double) configItem.max : Math.max(value, (double) configItem.min);
                     }
+                    configItem.setConfigValue(value);
                 } else if(configItem.ConfigValue instanceof Integer) {
+                    int value = Integer.parseInt(properties.getProperty(key));
                     if(configItem.isNeedCompare) {
-                        int value = Integer.parseInt(properties.getProperty(key));
-                        configItem.setConfigValue(value > (int)configItem.max ? configItem.max : value < (int)configItem.min ? configItem.min : value);
+                        value = value > (int)configItem.max ? (int) configItem.max : Math.max(value, (int) configItem.min);
                     }
+                    configItem.setConfigValue(value);
                 } else {
                     configItem.setConfigValue(properties.getProperty(key));
                 }
