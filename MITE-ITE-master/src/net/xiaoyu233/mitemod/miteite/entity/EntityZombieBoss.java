@@ -159,7 +159,7 @@ public class EntityZombieBoss extends EntityZombie {
             if(thunderTick % 20 == 0) {
                 if(target != null && target instanceof EntityPlayer) {
                     if(((EntityPlayer) target).isAttackByBossCounter <= 0) {
-                        addThunderAttack((EntityPlayer)target, 3f);
+                        addThunderAttack((EntityPlayer)target, 4f);
                     }
                 }
             }
