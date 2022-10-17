@@ -2,18 +2,18 @@ package net.xiaoyu233.mitemod.miteite.entity;
 
 import javafx.beans.binding.MapExpression;
 import net.minecraft.*;
+import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class EntityZombieBoss extends EntityZombie {
     private Enchantment [] enhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering, Enchantments.enchantmentFixed, Enchantments.enchantmentChain, Enchantments.EMERGENCY};
     private int thunderTick = 0;
     private int attackedCounter = 200;
+    public Map<String, Float> attackDamageMap = new HashMap<>();
 
     private final HashMap activePotionsMap = new HashMap();
 
@@ -39,6 +39,7 @@ public class EntityZombieBoss extends EntityZombie {
 
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
+            this.broadcastDamage("僵尸BOSS挑战成功");
             Enchantment dropEnchantment = enhanceSpecialBookList[rand.nextInt(enhanceSpecialBookList.length)];
             ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
             this.dropItemStack(var11);
@@ -98,22 +99,51 @@ public class EntityZombieBoss extends EntityZombie {
         return false;
     }
 
+
+
     @Override
     public EntityDamageResult attackEntityFrom(Damage damage) {
         if(damage.getSource().damageType.equals("player") || damage.getSource().damageType.equals("mob")) {
-            if(damage.getSource().getResponsibleEntity() instanceof EntityIronGolem) {
-                return null;
-            }
             if(damage.getSource().getResponsibleEntity() instanceof EntityPlayer) {
                 EntityPlayer player = ((EntityPlayer) damage.getSource().getResponsibleEntity());
                 player.removePotionEffect(MobEffectList.damageBoost.id);
                 player.bossResetDamageBoostCounter = 200;
+                this.attackedCounter = 200;
+                float damegeAmount = damage.getAmount() / 5;
+                if(attackDamageMap.containsKey(player.getEntityName())) {
+                    attackDamageMap.put(player.getEntityName(), attackDamageMap.get(player.getEntityName()) + damegeAmount < 1 ? 1 : damegeAmount);
+                } else {
+                    attackDamageMap.put(player.getEntityName(), damegeAmount < 1 ? 1 : damegeAmount);
+                }
+                damage.setAmount(damegeAmount);
+                return super.attackEntityFrom(damage);
             }
-            this.attackedCounter = 200;
-            damage.setAmount(damage.getAmount() / 5);
-            return super.attackEntityFrom(damage);
+            return null;
         } else {
             return null;
+        }
+    }
+
+
+    public void broadcastDamage(String stateMessage) {
+        MinecraftServer server = MinecraftServer.F();
+        Iterator var4 = server.getConfigurationManager().playerEntityList.iterator();
+
+        List<Map.Entry<String,Float>> list = new ArrayList<>(attackDamageMap.entrySet());
+        Collections.sort(list, (e1, e2) -> (int) Math.floor(e2.getValue() - e1.getValue()));
+        while(var4.hasNext()) {
+            Object o = var4.next();
+            EntityPlayer player = (EntityPlayer)o;
+            for(int i = 0; i < Math.min(list.size(), 5); i++) {
+                player.sendChatToPlayer(ChatMessage.createFromText("--" + stateMessage + "-伤害排名--"));
+                player.sendChatToPlayer(ChatMessage.createFromText("第")
+                        .appendComponent(ChatMessage.createFromText("§6" + (i + 1)))
+                        .appendComponent(ChatMessage.createFromText("§r名: "))
+                        .appendComponent(ChatMessage.createFromText("§n" + list.get(i).getKey()))
+                        .appendComponent(ChatMessage.createFromText("§r - "))
+                        .appendComponent(ChatMessage.createFromText("§b" + String.format("%.2f", list.get(i).getValue())))
+                        .appendComponent(ChatMessage.createFromText("§r点伤害")));
+            }
         }
     }
 
@@ -143,6 +173,14 @@ public class EntityZombieBoss extends EntityZombie {
         }
     }
 
+    public void healAndBroadcast() {
+        if(this.getHealth() < this.getMaxHealth()) {
+            this.heal(this.getMaxHealth());
+            this.broadcastDamage("僵尸BOSS挑战失败");
+            this.attackDamageMap.clear();
+        }
+    }
+
     public void onUpdate() {
         super.onUpdate();
         this.generateRandomParticles(EnumParticle.splash);
@@ -150,9 +188,7 @@ public class EntityZombieBoss extends EntityZombie {
             thunderTick ++;
             EntityLiving target = this.getTarget();
             if(attackedCounter <= 0) {
-                if(this.getHealth() < this.getMaxHealth()) {
-                    this.heal(this.getMaxHealth());
-                }
+                this.healAndBroadcast();
             } else {
                 attackedCounter --;
             }
@@ -167,31 +203,17 @@ public class EntityZombieBoss extends EntityZombie {
                 if(((EntityPlayer) target).isAttackByBossCounter > 0) {
                     --((EntityPlayer) target).isAttackByBossCounter;
                 }
+            } else {
+                this.healAndBroadcast();
             }
             if(thunderTick == 60) {
-                List entities =  this.getNearbyEntities(16, 16);
+                List entities = Arrays.asList(this.getNearbyEntities(16, 16).stream().filter(entity -> entity instanceof EntityPlayer && !((EntityPlayer) entity).isPlayerInCreative()).toArray());
                 if(entities.size() > 0) {
                     Object targetPlayer = entities.get(rand.nextInt(entities.size()));
                     if(targetPlayer instanceof EntityPlayer) {
-                        if(!((EntityPlayer) targetPlayer).isOp()) {
-                            this.setTarget((EntityPlayer)targetPlayer);
-                        }
+                        this.setTarget((EntityPlayer)targetPlayer);
                     }
                 }
-//                for (int i = 0; i< entities.size(); i++) {
-//                    if(entities.get(i) instanceof EntityPlayer) {
-//                        EntityPlayer player = ((EntityPlayer) entities.get(i));
-//                        if(player.motionY != 0) {
-//                            if(!this.canPathTo(MathHelper.floor_double(player.getFootPos().xCoord), player.getFootBlockPosY(), MathHelper.floor_double(player.getFootPos().zCoord), 50)) {
-//                                this.addThunderAttack(player, 10f);
-//                            }
-//                        } else {
-//                            if(!this.canPathTo(MathHelper.floor_double(player.getFootPos().xCoord), MathHelper.floor_double(player.getFootPos().yCoord), MathHelper.floor_double(player.getFootPos().zCoord), 50)) {
-//                                this.addThunderAttack(player, 10f);
-//                            }
-//                        }
-//                    }
-//                }
                 thunderTick = 0;
             }
         }

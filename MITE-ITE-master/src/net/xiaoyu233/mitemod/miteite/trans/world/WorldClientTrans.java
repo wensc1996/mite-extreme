@@ -47,7 +47,7 @@ public class WorldClientTrans extends World {
    @Overwrite
    protected void onEntityAdded(Entity par1Entity) {
       if(par1Entity instanceof EntityZombieBoss) {
-         ((EntityZombieBoss) par1Entity).heal(((EntityZombieBoss) par1Entity).getMaxHealth());
+         ((EntityZombieBoss) par1Entity).healAndBroadcast();
       }
       super.onEntityAdded(par1Entity);
       if (this.theCalendar.contains(par1Entity)) {

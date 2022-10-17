@@ -85,7 +85,7 @@ public abstract class WorldServerTrans extends World {
    @Overwrite
    protected void onEntityAdded(Entity par1Entity) {
       if(par1Entity instanceof EntityZombieBoss) {
-         ((EntityZombieBoss) par1Entity).heal(((EntityZombieBoss) par1Entity).getMaxHealth());
+         ((EntityZombieBoss) par1Entity).healAndBroadcast();
       }
       super.onEntityAdded(par1Entity);
       this.entityIdMap.addKey(par1Entity.entityId, par1Entity);
