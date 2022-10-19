@@ -111,7 +111,7 @@ public class EntityZombieBoss extends EntityZombie {
                 this.attackedCounter = 200;
                 float damegeAmount = damage.getAmount() / 5;
                 if(attackDamageMap.containsKey(player.getEntityName())) {
-                    attackDamageMap.put(player.getEntityName(), attackDamageMap.get(player.getEntityName()) + damegeAmount < 1 ? 1 : damegeAmount);
+                    attackDamageMap.put(player.getEntityName(), attackDamageMap.get(player.getEntityName()) + (damegeAmount < 1 ? 1 : damegeAmount));
                 } else {
                     attackDamageMap.put(player.getEntityName(), damegeAmount < 1 ? 1 : damegeAmount);
                 }
