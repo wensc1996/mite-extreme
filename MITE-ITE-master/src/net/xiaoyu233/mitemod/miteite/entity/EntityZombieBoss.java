@@ -195,7 +195,6 @@ public class EntityZombieBoss extends EntityZombie {
 
     public void onUpdate() {
         super.onUpdate();
-        this.generateRandomParticles(EnumParticle.splash);
         if (!this.getWorld().isRemote){
             thunderTick ++;
             EntityLiving target = this.getTarget();
@@ -204,25 +203,29 @@ public class EntityZombieBoss extends EntityZombie {
             } else {
                 attackedCounter --;
             }
+            if(target != null && target instanceof EntityPlayer && target.isEntityAlive()) {
+                if(((EntityPlayer) target).isAttackByBossCounter > 0) {
+                    --((EntityPlayer) target).isAttackByBossCounter;
+                }
+            }
 
             if(thunderTick % 20 == 0) {
                 if(target != null && target instanceof EntityPlayer) {
                     if(((EntityPlayer) target).isAttackByBossCounter <= 0) {
                         addThunderAttack((EntityPlayer)target, 4f);
                     }
+                } else {
+                    if(!this.setSurroundingPlayersAsTarget()) {
+                        this.healAndBroadcast();
+                        if(thunderTick == 60) {
+                            thunderTick = 0;
+                            return;
+                        }
+                    }
                 }
                 if(thunderTick == 60) {
                     this.setSurroundingPlayersAsTarget();
                     thunderTick = 0;
-                }
-            }
-            if(target != null && target instanceof EntityPlayer) {
-                if(((EntityPlayer) target).isAttackByBossCounter > 0) {
-                    --((EntityPlayer) target).isAttackByBossCounter;
-                }
-            } else {
-                if(!this.setSurroundingPlayersAsTarget()) {
-                    this.healAndBroadcast();
                 }
             }
         }
