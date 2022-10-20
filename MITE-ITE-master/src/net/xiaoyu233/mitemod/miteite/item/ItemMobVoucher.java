@@ -7,10 +7,15 @@ import java.util.List;
 public class ItemMobVoucher extends Item {
     String entityName = "";
     public ItemMobVoucher(int id, String entityName) {
-        super(id, Materials.copper, "voucher/voucher_" + entityName);
+        super(id, Materials.diamond, "voucher/voucher_" + entityName);
         this.entityName = entityName;
         this.setMaxStackSize(8);
         this.setCreativeTab(CreativeModeTab.tabMaterials);
+    }
+
+    @Override
+    public boolean canCatchFire() {
+        return false;
     }
 
     public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {

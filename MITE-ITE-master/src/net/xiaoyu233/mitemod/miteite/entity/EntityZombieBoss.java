@@ -109,14 +109,14 @@ public class EntityZombieBoss extends EntityZombie {
                 player.removePotionEffect(MobEffectList.damageBoost.id);
                 player.bossResetDamageBoostCounter = 200;
                 this.attackedCounter = 200;
-                float damegeAmount = damage.getAmount() / 5;
+                damage.setAmount(damage.getAmount() / 5);
+                EntityDamageResult originDamage = super.attackEntityFrom(damage);
                 if(attackDamageMap.containsKey(player.getEntityName())) {
-                    attackDamageMap.put(player.getEntityName(), attackDamageMap.get(player.getEntityName()) + (damegeAmount < 1 ? 1 : damegeAmount));
+                    attackDamageMap.put(player.getEntityName(), attackDamageMap.get(player.getEntityName()) + originDamage.getAmountOfHealthLost());
                 } else {
-                    attackDamageMap.put(player.getEntityName(), damegeAmount < 1 ? 1 : damegeAmount);
+                    attackDamageMap.put(player.getEntityName(), originDamage.getAmountOfHealthLost());
                 }
-                damage.setAmount(damegeAmount);
-                return super.attackEntityFrom(damage);
+                return originDamage;
             }
             return null;
         } else {
@@ -173,6 +173,18 @@ public class EntityZombieBoss extends EntityZombie {
         }
     }
 
+    public boolean setSurroundingPlayersAsTarget() {
+        List entities = Arrays.asList(this.getNearbyEntities(16, 16).stream().filter(entity -> entity instanceof EntityPlayer && !((EntityPlayer) entity).isPlayerInCreative()).toArray());
+        if(entities.size() > 0) {
+            Object targetPlayer = entities.get(rand.nextInt(entities.size()));
+            if(targetPlayer instanceof EntityPlayer) {
+                this.setTarget((EntityPlayer)targetPlayer);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void healAndBroadcast() {
         if(this.getHealth() < this.getMaxHealth()) {
             this.heal(this.getMaxHealth());
@@ -192,11 +204,16 @@ public class EntityZombieBoss extends EntityZombie {
             } else {
                 attackedCounter --;
             }
+
             if(thunderTick % 20 == 0) {
                 if(target != null && target instanceof EntityPlayer) {
                     if(((EntityPlayer) target).isAttackByBossCounter <= 0) {
                         addThunderAttack((EntityPlayer)target, 4f);
                     }
+                }
+                if(thunderTick == 60) {
+                    this.setSurroundingPlayersAsTarget();
+                    thunderTick = 0;
                 }
             }
             if(target != null && target instanceof EntityPlayer) {
@@ -204,17 +221,9 @@ public class EntityZombieBoss extends EntityZombie {
                     --((EntityPlayer) target).isAttackByBossCounter;
                 }
             } else {
-                this.healAndBroadcast();
-            }
-            if(thunderTick == 60) {
-                List entities = Arrays.asList(this.getNearbyEntities(16, 16).stream().filter(entity -> entity instanceof EntityPlayer && !((EntityPlayer) entity).isPlayerInCreative()).toArray());
-                if(entities.size() > 0) {
-                    Object targetPlayer = entities.get(rand.nextInt(entities.size()));
-                    if(targetPlayer instanceof EntityPlayer) {
-                        this.setTarget((EntityPlayer)targetPlayer);
-                    }
+                if(!this.setSurroundingPlayersAsTarget()) {
+                    this.healAndBroadcast();
                 }
-                thunderTick = 0;
             }
         }
     }
