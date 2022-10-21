@@ -130,7 +130,11 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
          }
          if (this.rand.nextFloat() < this.adjustProbability(0.05f)) {
             Enchantment var12 = this.villagerEnhanceSpecialBookList[this.rand.nextInt(villagerEnhanceSpecialBookList.length)];
-            int var13 = MathHelper.getRandomIntegerInRange(this.rand, 1, var12.getNumLevelsForVibranium());
+            int currentMaxLevelSpecial = 1;
+            if (this.buyingList != null) {
+               currentMaxLevelSpecial = (int) Math.round(Math.sqrt(this.buyingList.size()));
+            }
+            int var13 = MathHelper.getRandomIntegerInRange(this.rand, 1, currentMaxLevelSpecial > var12.getNumLevelsForVibranium() ? var12.getNumLevelsForVibranium() : currentMaxLevelSpecial);
             ItemStack var14 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var12, var13));
             var6 = var13 * 5 + this.rand.nextInt(10);
             if(var6 > 32) {

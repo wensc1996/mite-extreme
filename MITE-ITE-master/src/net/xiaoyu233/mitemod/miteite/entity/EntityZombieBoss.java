@@ -42,7 +42,8 @@ public class EntityZombieBoss extends EntityZombie {
         if (recently_hit_by_player){
             this.broadcastDamage("僵尸BOSS挑战成功");
             this.dropItemStack(new ItemStack(Items.diamond, 10));
-            if(rand.nextFloat() < (nonLevelsBookList.length / (enhanceSpecialBookList.length + nonLevelsBookList.length))) {
+            float percent = (float) nonLevelsBookList.length / ((float)enhanceSpecialBookList.length + (float)nonLevelsBookList.length);
+            if(rand.nextFloat() < percent && rand.nextInt(5) == 0) {
                 Enchantment dropEnchantment = nonLevelsBookList[rand.nextInt(nonLevelsBookList.length)];
                 ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
                 this.dropItemStack(var11);
