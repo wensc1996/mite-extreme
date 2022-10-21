@@ -10,7 +10,8 @@ import net.xiaoyu233.mitemod.miteite.util.Configs;
 import java.util.*;
 
 public class EntityZombieBoss extends EntityZombie {
-    private Enchantment [] enhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering, Enchantments.enchantmentFixed, Enchantments.enchantmentChain, Enchantments.EMERGENCY};
+    private Enchantment [] enhanceSpecialBookList = new Enchantment[] {Enchantment.protection, Enchantment.sharpness,  Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering};
+    private Enchantment [] nonLevelsBookList = new Enchantment[] {Enchantments.enchantmentFixed, Enchantments.enchantmentChain, Enchantments.EMERGENCY};
     private int thunderTick = 0;
     private int attackedCounter = 200;
     public Map<String, Float> attackDamageMap = new HashMap<>();
@@ -40,10 +41,17 @@ public class EntityZombieBoss extends EntityZombie {
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
             this.broadcastDamage("僵尸BOSS挑战成功");
-            Enchantment dropEnchantment = enhanceSpecialBookList[rand.nextInt(enhanceSpecialBookList.length)];
-            ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
-            this.dropItemStack(var11);
             this.dropItemStack(new ItemStack(Items.diamond, 10));
+            if(rand.nextFloat() < (nonLevelsBookList.length / (enhanceSpecialBookList.length + nonLevelsBookList.length))) {
+                Enchantment dropEnchantment = nonLevelsBookList[rand.nextInt(nonLevelsBookList.length)];
+                ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
+                this.dropItemStack(var11);
+                return;
+            }
+            Enchantment dropEnchantment = enhanceSpecialBookList[rand.nextInt(enhanceSpecialBookList.length)];
+            int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, dropEnchantment.getNumLevelsForVibranium());
+            ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, var10));
+            this.dropItemStack(var11);
         }
     }
 
