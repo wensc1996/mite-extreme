@@ -18,11 +18,16 @@ public class ItemEnchantedBookTrans extends Item {
 
     @Inject(method = "<init>", at=@At("RETURN"))
     public void changeMaterial(CallbackInfo callbackInfo) {
-        this.setMaterial(Materials.diamond);
+        this.setMaterial(Materials.copper);
     }
 
     @Shadow
     public void addEnchantment(ItemStack par1ItemStack, EnchantmentInstance par2EnchantmentData) {}
+
+    @Override
+    public boolean isHarmedByAcid() {
+        return false;
+    }
 
     @Overwrite
     public StructurePieceTreasure func_92112_a(Random par1Random, int par2, int par3, int par4) {

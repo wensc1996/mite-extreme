@@ -44,16 +44,16 @@ public class WorldClientTrans extends World {
       return null;
    }
 
-   @Overwrite
-   protected void onEntityAdded(Entity par1Entity) {
-      if(par1Entity instanceof EntityZombieBoss) {
-         ((EntityZombieBoss) par1Entity).healAndBroadcast();
-      }
-      super.onEntityAdded(par1Entity);
-      if (this.theCalendar.contains(par1Entity)) {
-         this.theCalendar.remove(par1Entity);
-      }
-   }
+//   @Overwrite
+//   protected void onEntityAdded(Entity par1Entity) {
+////      if(par1Entity instanceof EntityZombieBoss) {
+////         ((EntityZombieBoss) par1Entity).healAndBroadcast();
+////      }
+//      super.onEntityAdded(par1Entity);
+//      if (this.theCalendar.contains(par1Entity)) {
+//         this.theCalendar.remove(par1Entity);
+//      }
+//   }
 
    @Overwrite
    public void tick() {
