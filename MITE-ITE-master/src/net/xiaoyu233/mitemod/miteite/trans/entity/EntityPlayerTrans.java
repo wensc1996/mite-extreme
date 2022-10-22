@@ -217,7 +217,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
          ItemStack heldItemStack = this.getHeldItemStack();
 
          //Check for crit enchantment
-         if (EnchantmentManager.hasEnchantment(heldItemStack, Enchantments.CRIT)) {
+         if (EnchantmentManager.hasEnchantment(heldItemStack, Enchantments.CRIT) && !(target instanceof EntityZombieBoss)) {
             int critLevel = EnchantmentManager.getEnchantmentLevel(Enchantments.CRIT, heldItemStack);
             critical = this.rand.nextInt(10) < Configs.wenscConfig.critEnchantmentChanceBoostPerLvl.ConfigValue * critLevel;
             if (critical) {
@@ -432,7 +432,6 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.spawnStoneZ = par1EntityPlayer.spawnStoneZ;
       this.isFirstLogin = par1EntityPlayer.isFirstLogin;
       this.money = par1EntityPlayer.money;
-      this.bossResetDamageBoostCounter = par1EntityPlayer.bossResetDamageBoostCounter;
    }
 
    public double plusMoney(double singleMoney){
@@ -459,6 +458,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       this.vision_dimming = par1NBTTagCompound.getFloat("vision_dimming");
       this.money = par1NBTTagCompound.getDouble("money");
       this.resetAttackMapTimer = par1NBTTagCompound.getInteger("resetAttackMapTimer");
+      this.isAttackByBossCounter = par1NBTTagCompound.getInteger("isAttackByBossCounter");
 
 
       this.spawnStoneX = par1NBTTagCompound.getInteger("spawnStoneX");
@@ -875,7 +875,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       float damage = ((ItemRingKiller)itemRingKiller.getItem()).getRingKillerSkillDamage();
       for(int i = 0; i< targets.size(); i++) {
          EntityMonster entityMonster = targets.get(i) instanceof EntityMonster ? (EntityMonster)targets.get(i) : null;
-         if(entityMonster != null && (!EntityEnderman.class.isInstance(entityMonster) && !EntitySilverfish.class.isInstance(entityMonster))) {
+         if(entityMonster != null && (!EntityEnderman.class.isInstance(entityMonster) && !EntitySilverfish.class.isInstance(entityMonster) && !EntityZombieBoss.class.isInstance(entityMonster))) {
             entityMonster.attackEntityFrom(new Damage(DamageSource.causePlayerDamage(this.getAsPlayer()), damage));
          }
       }
@@ -910,6 +910,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
       // 服务端
       if (!this.worldObj.isRemote) {
+
+         if(this.isAttackByBossCounter > 0) {
+            --this.isAttackByBossCounter;
+         }
 
          if(bossResetDamageBoostCounter > 0) {
             --bossResetDamageBoostCounter;
@@ -1075,6 +1079,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       par1NBTTagCompound.setInteger("spawnStoneWorldId", this.spawnStoneWorldId);
       par1NBTTagCompound.setInteger("bossResetDamageBoostCounter", this.bossResetDamageBoostCounter);
       par1NBTTagCompound.setInteger("resetAttackMapTimer", this.resetAttackMapTimer);
+      par1NBTTagCompound.setInteger("isAttackByBossCounter", this.isAttackByBossCounter);
 
       NBTTagList nbtTagList = new NBTTagList();
       for (Entry<Entity, Integer> integerEntry : this.attackCountMap.entrySet()) {
