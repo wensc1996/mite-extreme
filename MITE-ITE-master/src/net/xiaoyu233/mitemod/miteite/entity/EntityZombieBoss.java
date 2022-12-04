@@ -16,8 +16,6 @@ public class EntityZombieBoss extends EntityZombie {
     private int attackedCounter = 200;
     public Map<String, Float> attackDamageMap = new HashMap<>();
 
-    private final HashMap activePotionsMap = new HashMap();
-
     public EntityZombieBoss(World par1World) {
         super(par1World);
     }
@@ -57,7 +55,7 @@ public class EntityZombieBoss extends EntityZombie {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.setEntityAttribute(GenericAttributes.attackDamage, Configs.wenscConfig.zombieBossBaseDamage.ConfigValue);
+        this.setEntityAttribute(GenericAttributes.attackDamage, 12d + Configs.wenscConfig.zombieBossBaseDamage.ConfigValue);
         this.setEntityAttribute(GenericAttributes.maxHealth, Configs.wenscConfig.zombieBossMaxHealth.ConfigValue);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
     }
@@ -107,8 +105,6 @@ public class EntityZombieBoss extends EntityZombie {
         return false;
     }
 
-
-
     @Override
     public EntityDamageResult attackEntityFrom(Damage damage) {
         if(damage.getSource().damageType.equals("player") || damage.getSource().damageType.equals("mob")) {
@@ -119,10 +115,15 @@ public class EntityZombieBoss extends EntityZombie {
                 this.attackedCounter = 200;
                 damage.setAmount(damage.getAmount() / 5);
                 EntityDamageResult originDamage = super.attackEntityFrom(damage);
-                if(attackDamageMap.containsKey(player.getEntityName())) {
-                    attackDamageMap.put(player.getEntityName(), attackDamageMap.get(player.getEntityName()) + originDamage.getAmountOfHealthLost());
-                } else {
-                    attackDamageMap.put(player.getEntityName(), originDamage.getAmountOfHealthLost());
+                try {
+                    if(attackDamageMap.containsKey(player.getEntityName())) {
+                        attackDamageMap.put(player.getEntityName(), attackDamageMap.get(player.getEntityName()) + originDamage.getAmountOfHealthLost());
+                    } else {
+                        attackDamageMap.put(player.getEntityName(), originDamage.getAmountOfHealthLost());
+                    }
+                } catch (Exception e) {
+                    Minecraft.setErrorMessage("BOSS伤害计算错误分析");
+                    Minecraft.setErrorMessage(e.getMessage());
                 }
                 return originDamage;
             }
@@ -166,11 +167,31 @@ public class EntityZombieBoss extends EntityZombie {
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setShort("attackedCounter", (short)this.attackedCounter);
+        par1NBTTagCompound.setShort("thunderTick", (short)this.thunderTick);
+
+        NBTTagList nbtTagList = new NBTTagList();
+        for (Map.Entry<String, Float> integerEntry : this.attackDamageMap.entrySet()) {
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setString("Attacker", (integerEntry).getKey());
+            compound.setFloat("Damage", (integerEntry).getValue());
+            nbtTagList.appendTag(compound);
+        }
+        par1NBTTagCompound.setTag("AttackDamageMap", nbtTagList);
     }
 
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.attackedCounter = par1NBTTagCompound.getShort("attackedCounter");
+        this.thunderTick = par1NBTTagCompound.getShort("thunderTick");
+        if (par1NBTTagCompound.hasKey("AttackDamageMap")) {
+            NBTTagList attackCountMap = par1NBTTagCompound.getTagList("AttackDamageMap");
+            int count = attackCountMap.tagCount();
+
+            for(int i = 0; i < count; ++i) {
+                NBTTagCompound a = (NBTTagCompound)attackCountMap.tagAt(i);
+                this.attackDamageMap.put(a.getString("Attacker"), a.getFloat("Damage"));
+            }
+        }
     }
 
     public void addThunderAttack(EntityPlayer player, float damage) {
@@ -205,30 +226,19 @@ public class EntityZombieBoss extends EntityZombie {
         super.onUpdate();
         if (!this.getWorld().isRemote){
             thunderTick ++;
-            EntityLiving target = this.getTarget();
             if(attackedCounter <= 0) {
                 this.healAndBroadcast();
             } else {
                 attackedCounter --;
             }
-            if(target != null && target instanceof EntityPlayer && target.isEntityAlive()) {
-                if(((EntityPlayer) target).isAttackByBossCounter > 0) {
-                    --((EntityPlayer) target).isAttackByBossCounter;
-                }
+            EntityLiving target = this.getTarget();
+            if(!(target instanceof EntityPlayer)) {
+                this.healAndBroadcast();
             }
-
             if(thunderTick % 20 == 0) {
                 if(target != null && target instanceof EntityPlayer) {
                     if(((EntityPlayer) target).isAttackByBossCounter <= 0) {
-                        addThunderAttack((EntityPlayer)target, 4f);
-                    }
-                } else {
-                    if(!this.setSurroundingPlayersAsTarget()) {
-                        this.healAndBroadcast();
-                        if(thunderTick == 60) {
-                            thunderTick = 0;
-                            return;
-                        }
+                        addThunderAttack((EntityPlayer)target, 10f);
                     }
                 }
                 if(thunderTick == 60) {
