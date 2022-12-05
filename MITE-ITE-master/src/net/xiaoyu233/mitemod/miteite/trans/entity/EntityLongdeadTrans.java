@@ -45,9 +45,9 @@ public class EntityLongdeadTrans extends EntitySkeletonTrans {
       super.applyEntityAttributes();
       int day = this.getWorld() != null ? this.getWorld().getDayOfOverworld() : 0;
       this.setEntityAttribute(GenericAttributes.followRange, 40.0D);
-      this.setEntityAttribute(GenericAttributes.maxHealth, (this.isGuardian() ? 26.0D : 15.0D) + day / 16D);
+      this.setEntityAttribute(GenericAttributes.maxHealth, (this.isGuardian() ? 26.0D : 15.0D) + day / 8D);
       this.setEntityAttribute(GenericAttributes.movementSpeed, 0.28999999165534973D);
-      this.setEntityAttribute(GenericAttributes.attackDamage, (this.isGuardian() ? 10.0D : 8.0D) + day / 20D);
+      this.setEntityAttribute(GenericAttributes.attackDamage, (this.isGuardian() ? 10.0D : 8.0D) + day / 10D);
    }
 
    protected void enchantEquipment(ItemStack item_stack) {

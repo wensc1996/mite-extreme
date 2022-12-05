@@ -28,10 +28,10 @@ public class EntityZombieLord extends EntityZombie {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         int day = this.getWorld().getDayOfOverworld();
-        double x = day / 10 - 10;
+        double x = day / 5 - 5;
         double rate = (0.5+ x / (20 + Math.abs(x)));
         int healthRate = Math.min(day / 16, 10);
-        this.setEntityAttribute(GenericAttributes.attackDamage, 12.0D + (double)day / 48.0D);
+        this.setEntityAttribute(GenericAttributes.attackDamage, 12.0D + (double)day / 24.0D);
         this.setEntityAttribute(GenericAttributes.maxHealth, rate * 60 + healthRate * 15);
         this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
     }

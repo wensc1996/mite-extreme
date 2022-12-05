@@ -47,6 +47,15 @@ public class ItemStackTrans {
       this.setItemSubtype(subtype);
    }
 
+   // 重复附魔的问题，书可以附魔的问题
+   @Inject(method = "isEnchantable", at = @At("HEAD"), cancellable = true)
+   public void isEnchantable(CallbackInfoReturnable callbackInfoReturnable) {
+      if (this.getItem() == Item.book) {
+         callbackInfoReturnable.setReturnValue(false);
+         callbackInfoReturnable.cancel();
+      }
+   }
+
    @Redirect(method = "getTooltip",at = @At(value = "INVOKE",target = "Lnet/minecraft/Translator;addToList(Lnet/minecraft/EnumChatFormat;Ljava/lang/String;Ljava/util/List;)V",ordinal = 0))
    private void removeChangeQualityInfo(EnumChatFormat enum_chat_formatting, String key, List list){
       //Do nothing to remove

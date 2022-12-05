@@ -77,9 +77,29 @@ public class MITEITEEvents {
                 }
             }
 
+            if (par2Str.startsWith("enchantment ")) {
+                itemStack = player.getHeldItemStack();
+                String msg = par2Str.substring(12);
+                String[] pos = msg.split(" ");
+                if(pos.length >= 2) {
+                    Enchantment injectEnchant = Enchantment.get(Short.parseShort(pos[0]));
+                    if (injectEnchant != null) {
+                        itemStack.addEnchantment(injectEnchant, Short.parseShort(pos[1]));
+                    }
+                }
+                event.setExecuteSuccess(true);
+            }
+
+            if (par2Str.startsWith("enchantment reset")) {
+                itemStack = player.getHeldItemStack();
+                if(itemStack != null) {
+                    itemStack.clearEnchantTagList();
+                }
+                event.setExecuteSuccess(true);
+            }
+
             String msg;
             if (par2Str.startsWith("teleport ")) {
-                System.out.println(par2Str);
                 msg = par2Str.substring(9);
                 String[] pos = msg.split(" ");
                 double[] poses = new double[3];

@@ -36,7 +36,10 @@ public class Items extends Item{
 
     public static final Item lavaInPipes = new ItemLavaInPipes(Constant.getNextItemID(), Materials.lava);
 
-    public static final Item clubIron = new ItemClubMetal(770, Material.iron);
+    public static final Item clubIron = new ItemClubMetal(Constant.getNextItemID(), Material.iron);
+    public static final Item clubMithril = new ItemClubMetal(Constant.getNextItemID(), Material.mithril);
+    public static final Item clubAdamantium = new ItemClubMetal(Constant.getNextItemID(), Material.adamantium);
+    public static final Item clubVibranium = new ItemClubMetal(Constant.getNextItemID(), Materials.vibranium);
 
     public static final Item ringKillerCopper = new ItemRingKiller(Constant.getNextItemID(), Materials.copper).setUnlocalizedName("ringKillerCopper");
     public static final Item ringKillerIron = new ItemRingKiller(Constant.getNextItemID(), Materials.iron).setUnlocalizedName("ringKillerIron");
@@ -53,6 +56,10 @@ public class Items extends Item{
     public static final Item voucherPigman = new ItemMobVoucher(Constant.getNextItemID(), "pigman");
     public static final Item voucherWitch = new ItemMobVoucher(Constant.getNextItemID(), "witch");
     public static final Item voucherCore = new ItemMobVoucher(Constant.getNextItemID(), "core");
+    public static final Item voucherFishing = new ItemMobVoucher(Constant.getNextItemID(), "fishing");
+    public static final Item voucherPlanting = new ItemMobVoucher(Constant.getNextItemID(), "planting");
+    public static final Item voucherVillager = new ItemMobVoucher(Constant.getNextItemID(), "villager");
+    public static final Item voucherClubCore = new ItemMobVoucher(Constant.getNextItemID(), "club_core");
 
     public static final Item itemDynamicCore = new ItemDynamicCore(Constant.getNextItemID(), Materials.redstone).setUnlocalizedName("dynamic_core");
 
@@ -95,7 +102,7 @@ public class Items extends Item{
         Items.doorIron.setSoldPrice(60D);
         Items.doorMithril.setSoldPrice(120D);
         Items.doorAdamantium.setSoldPrice(180D);
-        Items.ingotCopper.setSoldPrice(5D);
+        Items.ingotCopper.setSoldPrice(10D);
         Items.ingotSilver.setSoldPrice(10D);
         Items.ingotGold.setSoldPrice(10D);
         Items.ingotIron.setSoldPrice(20D);
@@ -153,6 +160,10 @@ public class Items extends Item{
         register("enhance_stone/universal",UNIVERSAL_ENHANCE_STONE , CreativeModeTab.tabMaterials);
 
         register("iron_club", clubIron).setUnlocalizedName("iron_club").setLowestCraftingDifficultyToProduce(1.0F);
+        register("mithril_club", clubMithril).setUnlocalizedName("mithril_club").setLowestCraftingDifficultyToProduce(1.0F);
+        register("adamantium_club", clubAdamantium).setUnlocalizedName("adamantium_club").setLowestCraftingDifficultyToProduce(1.0F);
+        register("vibranium_club", clubVibranium).setUnlocalizedName("vibranium_club").setLowestCraftingDifficultyToProduce(1.0F);
+
         register("stack_torch", Stack_Torch).setUnlocalizedName("stack_torch").setMaxStackSize(64).setCraftingDifficultyAsComponent(1.0E-9F);
 
         register("lava_in_pipes", lavaInPipes).setUnlocalizedName("lava_in_pipes").setLowestCraftingDifficultyToProduce(1.0F);
@@ -163,7 +174,6 @@ public class Items extends Item{
         register("ring_killer/ring_killer_adamantium", ringKillerAdamantium).setUnlocalizedName("ring_killer_adamantium").setLowestCraftingDifficultyToProduce(1.0F);
         register("ring_killer/ring_killer_vibranium", ringKillerVibranium).setUnlocalizedName("ring_killer_vibranium").setLowestCraftingDifficultyToProduce(1.0F);
 
-
         register("voucher/voucher_exchanger", voucherExchanger).setUnlocalizedName("voucher_exchanger").setLowestCraftingDifficultyToProduce(1.0F);
         register("voucher/voucher_door", voucherDoor).setUnlocalizedName("voucher_door").setLowestCraftingDifficultyToProduce(1.0F);
         register("voucher/voucher_zombie_lord", voucherZombieLord).setUnlocalizedName("voucher_zombie_lord").setLowestCraftingDifficultyToProduce(1.0F);
@@ -171,6 +181,10 @@ public class Items extends Item{
         register("voucher/voucher_pigman", voucherPigman).setUnlocalizedName("voucher_pigman").setLowestCraftingDifficultyToProduce(1.0F);
         register("voucher/voucher_witch", voucherWitch).setUnlocalizedName("voucher_witch").setLowestCraftingDifficultyToProduce(1.0F);
         register("voucher/voucher_core", voucherCore).setUnlocalizedName("voucher_core").setLowestCraftingDifficultyToProduce(1.0F);
+        register("voucher/voucher_fishing", voucherFishing).setUnlocalizedName("voucher_fishing").setLowestCraftingDifficultyToProduce(1.0F);
+        register("voucher/voucher_planting", voucherPlanting).setUnlocalizedName("voucher_planting").setLowestCraftingDifficultyToProduce(1.0F);
+        register("voucher/voucher_villager", voucherVillager).setUnlocalizedName("voucher_villager").setLowestCraftingDifficultyToProduce(1.0F);
+        register("voucher/voucher_club_core", voucherClubCore).setUnlocalizedName("voucher_club_core").setLowestCraftingDifficultyToProduce(1.0F);
 
         register("dynamic_core", itemDynamicCore).setUnlocalizedName("dynamic_core").setLowestCraftingDifficultyToProduce(1.0F);
 
@@ -181,7 +195,11 @@ public class Items extends Item{
         register.registerShapelessRecipe(new ItemStack(Blocks.blockLantern, 1), true,Blocks.torchWood, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget, ironNugget);
         register.registerShapelessRecipe(new ItemStack(Items.voucherCore, 1), true, Items.voucherAnnihilationSkeleton, Items.voucherDoor, Items.voucherExchanger, Items.voucherPigman, Items.voucherZombieLord, Items.voucherWitch);
         register.registerShapedRecipe(new ItemStack(clubIron, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.ironNugget , '*', Items.ingotIron});
+        register.registerShapedRecipe(new ItemStack(clubMithril, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.mithrilNugget , '*', Items.ingotMithril});
+        register.registerShapedRecipe(new ItemStack(clubAdamantium, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.adamantiumNugget , '*', Items.ingotAdamantium});
+        register.registerShapedRecipe(new ItemStack(clubVibranium, 1), true, new Object[]{"###", "#*#"," A ", '#', Items.VIBRANIUM_NUGGET , '*', Items.VIBRANIUM_INGOT, 'A', Items.voucherClubCore});
         register.registerShapedRecipe(new ItemStack(itemDynamicCore, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.ingotIron , 'B', Blocks.glass, 'C', Blocks.blockRedstone});
+        register.registerShapelessRecipe(new ItemStack(Items.voucherClubCore, 1), true, Items.voucherFishing, Items.voucherVillager, Items.voucherPlanting);
 
         if(Configs.wenscConfig.isRecipeGATorch.ConfigValue) {
             register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{Block.wood, Item.silk, Item.coal, Item.coal});

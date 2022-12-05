@@ -34,9 +34,9 @@ public class EntityRevenantTrans extends EntityZombie {
       int day = this.getWorld() != null ? this.getWorld().getDayOfOverworld() : 0;
       this.setEntityAttribute(GenericAttributes.followRange, 64.0D);
       this.setEntityAttribute(GenericAttributes.movementSpeed, 0.2800000011920929D);
-      this.setEntityAttribute(GenericAttributes.attackDamage, 12.0D + day / 24d);
+      this.setEntityAttribute(GenericAttributes.attackDamage, 12.0D + day / 12d);
       this.setEntityAttribute(EntityZombie.field_110186_bp, this.getRNG().nextDouble() * 0.10000000149011612D);
-      this.setEntityAttribute(GenericAttributes.maxHealth, 35.0D + day / 16D);
+      this.setEntityAttribute(GenericAttributes.maxHealth, 35.0D + day / 8D);
    }
 
    protected void enchantEquipment(ItemStack item_stack) {

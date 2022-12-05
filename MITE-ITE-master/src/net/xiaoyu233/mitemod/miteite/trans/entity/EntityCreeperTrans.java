@@ -27,7 +27,7 @@ public class EntityCreeperTrans extends EntityMonster {
       super.applyEntityAttributes();
       int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld(), 0) : 0;
       this.setEntityAttribute(GenericAttributes.movementSpeed).setAttribute(this.worldObj.isUnderworld() ? 0.3D : 0.25D);
-      this.setEntityAttribute(GenericAttributes.maxHealth, 20 + (double)day / 8.0D);
+      this.setEntityAttribute(GenericAttributes.maxHealth, 20 + (double)day / 4.0D);
       this.setEntityAttribute(GenericAttributes.followRange, 64.0D);
    }
 

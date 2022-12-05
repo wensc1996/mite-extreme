@@ -16,6 +16,6 @@ public class EnchantmentVampiricTrans {
             }
         }
 
-        return item instanceof ItemSword || item instanceof ItemScythe;
+        return item instanceof ItemSword || item instanceof ItemScythe || item instanceof ItemCudgel;
     }
 }

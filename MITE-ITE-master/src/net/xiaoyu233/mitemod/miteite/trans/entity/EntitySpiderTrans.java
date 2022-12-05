@@ -18,8 +18,8 @@ public class EntitySpiderTrans extends EntityArachnid {
    protected void applyEntityAttributes() {
       super.applyEntityAttributes();
       int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld() - 32, 0) : 0;
-      this.setEntityAttribute(GenericAttributes.maxHealth, this.getEntityAttributeValue(GenericAttributes.maxHealth) * 1.5D + (double)day / 24.0D);
-      this.setEntityAttribute(GenericAttributes.attackDamage, this.getEntityAttributeValue(GenericAttributes.attackDamage) + (double)day / 24.0D);
+      this.setEntityAttribute(GenericAttributes.maxHealth, this.getEntityAttributeValue(GenericAttributes.maxHealth) * 1.5D + (double)day / 12.0D);
+      this.setEntityAttribute(GenericAttributes.attackDamage, this.getEntityAttributeValue(GenericAttributes.attackDamage) + (double)day / 12.0D);
       this.setEntityAttribute(GenericAttributes.followRange, 64.0D);
    }
 }
