@@ -113,7 +113,7 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
          if (this.timeUntilReset <= 0) {
             if (this.needsInitilization) {
                if(rand.nextInt(50) == 0) {
-                  this.dropItemStack(new ItemStack(Items.voucherVillager, 1));
+                   this.dropItemStack(new ItemStack(Items.voucherVillager, 1));
                }
                if (this.buyingList.size() > 1) {
                   Iterator var3 = this.buyingList.iterator();
@@ -186,11 +186,8 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
             var2.add(new MerchantRecipe(new ItemStack(Item.diamond, 3), new ItemStack(Item.emerald, 4)));
          }
          Enchantment var8 = (Enchantment)villagerEnhanceSimpleBookList[this.rand.nextInt(villagerEnhanceSimpleBookList.length)];
-         int currentMaxLevel = 1;
-         if (this.buyingList != null) {
-            currentMaxLevel = (int) Math.round(Math.sqrt(this.buyingList.size()));
-         }
-         int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, currentMaxLevel > var8.getNumLevelsForVibranium() ? var8.getNumLevelsForVibranium() : currentMaxLevel);
+
+         int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, var8.getNumLevelsForVibranium());
          ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var8, var10));
          var6 = var10 * 5 + this.rand.nextInt(10);
          if(var6 > 32) {

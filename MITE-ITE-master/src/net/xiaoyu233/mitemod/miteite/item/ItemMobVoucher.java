@@ -33,7 +33,7 @@ public class ItemMobVoucher extends Item {
                     break;
                 case "fishing":
                     info.add(EnumChatFormat.BROWN + Translator.getFormatted("振金棒凭证材料之一", new Object[0]));
-                    info.add(EnumChatFormat.BLUE + Translator.getFormatted("钓鱼1/30概率获得", new Object[0]));
+                    info.add(EnumChatFormat.BLUE + Translator.getFormatted("钓鱼1/48概率获得", new Object[0]));
                     break;
                 case "planting":
                     info.add(EnumChatFormat.BROWN + Translator.getFormatted("振金棒凭证材料之一", new Object[0]));

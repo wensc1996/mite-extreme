@@ -47,8 +47,7 @@ public class EntityZombieBoss extends EntityZombie {
                 return;
             }
             Enchantment dropEnchantment = enhanceSpecialBookList[rand.nextInt(enhanceSpecialBookList.length)];
-            int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, dropEnchantment.getNumLevelsForVibranium());
-            ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, var10));
+            ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
             this.dropItemStack(var11);
         }
     }

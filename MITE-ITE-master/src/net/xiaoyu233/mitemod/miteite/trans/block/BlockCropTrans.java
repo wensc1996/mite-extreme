@@ -63,10 +63,6 @@ public class BlockCropTrans extends BlockGrowingPlant {
          if (this.isBlighted(info.getMetadata())) {
             return 0;
          } else {
-            if(info.world.rand.nextInt(50) == 0) {
-               this.dropBlockAsEntityItem(info, new ItemStack(Items.voucherPlanting, 1));
-            }
-
             ItemStack item_stack = info.getHarvesterItemStack();
             Item item = item_stack == null ? null : item_stack.getItem();
             ItemTool tool = item instanceof ItemTool ? (ItemTool)item : null;
@@ -83,6 +79,10 @@ public class BlockCropTrans extends BlockGrowingPlant {
             } else {
                if (!this.isMature(info.getMetadata()) || info.wasSelfDropped()) {
                   return 0;
+               }
+
+               if(info.world.rand.nextInt(50) == 0) {
+                  this.dropBlockAsEntityItem(info, new ItemStack(Items.voucherPlanting, 1));
                }
 
                num_drops = this.dropBlockAsEntityItem(info, this.getCropItem(), 0, this.getMatureYield(), 1.0F + harvesting_enchantment);
