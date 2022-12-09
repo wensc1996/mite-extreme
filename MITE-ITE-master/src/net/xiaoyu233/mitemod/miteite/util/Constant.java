@@ -10,8 +10,13 @@ import java.util.Random;
 public class Constant {
     public static final double[] ENHANCE_FACTORS;
     public static final bjo icons_ite = new bjo("textures/gui/icons_ite.png");
+<<<<<<< HEAD
     public static final String MITE_ITE_VERSION = "v0.1.1.15";
     public static final int MITE_ITE_VER_NUM = 39;
+=======
+    public static final String MITE_ITE_VERSION = "v0.1.1.14";
+    public static final int MITE_ITE_VER_NUM = 38;
+>>>>>>> ab7e169ffeffcf7933dc106847770eda3b972d6d
     public static final bjo RES_VIBRANIUM_SINGLE = new bjo("textures/entity/chest/vibranium_single.png");
     public static int nextItemID = 2024;
     public static int nextBlockID = 160;
