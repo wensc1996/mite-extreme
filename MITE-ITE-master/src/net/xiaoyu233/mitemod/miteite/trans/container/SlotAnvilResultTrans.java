@@ -27,7 +27,9 @@ class SlotAnvilResultTrans {
         ItemStack var1 = this.repairContainer.getRepairInputInventoryTrans().getStackInSlot(0);
         ItemStack var2 = this.repairContainer.getRepairInputInventoryTrans().getStackInSlot(1);
         if(var1 != null && var2 != null && var2.getItem() instanceof ItemEnchantedBook) {
-            par1EntityPlayer.experience -= (var1.getEnhanceTotalLevel() + var2.getEnhanceTotalLevel()) * Configs.wenscConfig.enhancePerLvlCostExp.ConfigValue;
+            if(!par1EntityPlayer.isOp()) {
+                par1EntityPlayer.experience -= (var1.getEnhanceTotalLevel() + var2.getEnhanceTotalLevel()) * Configs.wenscConfig.enhancePerLvlCostExp.ConfigValue;
+            }
         }
     }
 }

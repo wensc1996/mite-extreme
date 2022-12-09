@@ -27,6 +27,20 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
 
    private Object [] villagerEnhanceSimpleBookList;
 
+   @Shadow
+   private int randomTickDivider;
+   @Shadow
+   Village villageObj;
+   @Shadow
+   private EntityPlayer buyingPlayer;
+   @Shadow
+   private int timeUntilReset;
+   @Shadow
+   private boolean needsInitilization;
+   @Shadow
+   private String lastBuyingPlayer;
+   @Shadow
+   private boolean field_82190_bM;
 
    public EntityVillagerTrans(World par1World) {
       super(par1World);
@@ -57,12 +71,74 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
    }
 
    @Shadow
+   public EntityVillager func_90012_b(EntityAgeable par1EntityAgeable) {
+      return null;
+   }
+
+
+   @Shadow
    private static ItemStack getRandomSizedStack(int par0, Random par1Random) {
       return new ItemStack(1);
    }
 
    @Shadow
    public void a(MerchantRecipeList merchantRecipeList) {
+   }
+
+   @Shadow
+   public boolean isTrading() {
+      return this.buyingPlayer != null;
+   }
+
+   @Overwrite
+   protected void updateAITick() {
+      if (--this.randomTickDivider <= 0) {
+         this.worldObj.villageCollectionObj.addVillagerPosition(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
+         this.randomTickDivider = 70 + this.rand.nextInt(50);
+         this.villageObj = this.worldObj.villageCollectionObj.findNearestVillage(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ), 32);
+         if (this.villageObj == null) {
+            this.detachHome();
+         } else {
+            ChunkCoordinates var1 = this.villageObj.getCenter();
+            this.setHomeArea(var1.posX, var1.posY, var1.posZ, (int)((float)this.villageObj.getVillageRadius() * 0.6F));
+            if (this.field_82190_bM) {
+               this.field_82190_bM = false;
+               this.villageObj.func_82683_b(5);
+            }
+         }
+      }
+
+      if (!this.isTrading() && this.timeUntilReset > 0) {
+         --this.timeUntilReset;
+         if (this.timeUntilReset <= 0) {
+            if (this.needsInitilization) {
+               if(rand.nextInt(50) == 0) {
+                   this.dropItemStack(new ItemStack(Items.voucherVillager, 1));
+               }
+               if (this.buyingList.size() > 1) {
+                  Iterator var3 = this.buyingList.iterator();
+
+                  while(var3.hasNext()) {
+                     MerchantRecipe var2 = (MerchantRecipe)var3.next();
+                     if (var2.func_82784_g()) {
+                        var2.func_82783_a(this.rand.nextInt(6) + this.rand.nextInt(6) + 2);
+                     }
+                  }
+               }
+
+               this.addDefaultEquipmentAndRecipies(1);
+               this.needsInitilization = false;
+               if (this.villageObj != null && this.lastBuyingPlayer != null) {
+                  this.worldObj.setEntityState(this, EnumEntityState.villager_pleased);
+                  this.villageObj.setReputationForPlayer(this.lastBuyingPlayer, 1);
+               }
+            }
+
+            this.addPotionEffect(new MobEffect(MobEffectList.regeneration.id, 200, 0));
+         }
+      }
+
+      super.updateAITick();
    }
 
    @Overwrite
@@ -110,11 +186,8 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
             var2.add(new MerchantRecipe(new ItemStack(Item.diamond, 3), new ItemStack(Item.emerald, 4)));
          }
          Enchantment var8 = (Enchantment)villagerEnhanceSimpleBookList[this.rand.nextInt(villagerEnhanceSimpleBookList.length)];
-         int currentMaxLevel = 1;
-         if (this.buyingList != null) {
-            currentMaxLevel = (int) Math.round(Math.sqrt(this.buyingList.size()));
-         }
-         int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, currentMaxLevel > var8.getNumLevelsForVibranium() ? var8.getNumLevelsForVibranium() : currentMaxLevel);
+
+         int var10 = MathHelper.getRandomIntegerInRange(this.rand, 1, var8.getNumLevelsForVibranium());
          ItemStack var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(var8, var10));
          var6 = var10 * 5 + this.rand.nextInt(10);
          if(var6 > 32) {
@@ -298,11 +371,6 @@ public abstract class EntityVillagerTrans extends EntityAgeable implements IMerc
    @Shadow
    private float adjustProbability(float par1) {
       return 0.0F;
-   }
-
-   @Shadow
-   public EntityAgeable createChild(EntityAgeable var1) {
-      return null;
    }
 
    @Shadow

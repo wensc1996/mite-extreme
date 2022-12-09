@@ -75,7 +75,7 @@ public class Configs {
         public static ConfigItem <Integer> netherDebuffTime = new ConfigItem("netherDebuffTime", 72000, "地狱负面效果触发时间(tick)", 0 ,1000000);
         public static ConfigItem <Integer> quartzMaxExpLevel = new ConfigItem("quartzMaxExpLevel", 55, "石英可提供经验最大等级", 0 ,1000);
         public static ConfigItem <Integer> diamondExp = new ConfigItem("diamondExp", 400, "钻石经验", 0 ,10000);
-        public static ConfigItem <Integer> emeraldExp = new ConfigItem("emeraldExp", 400, "绿宝石经验", 0 ,10000);
+        public static ConfigItem <Integer> emeraldExp = new ConfigItem("emeraldExp", 300, "绿宝石经验", 0 ,10000);
         public static ConfigItem <Integer> quartzExp = new ConfigItem("quartzExp", 35, "石英经验", 0 ,10000);
         public static ConfigItem <Integer> goldenAppleEatTime = new ConfigItem("goldenAppleEatTime", 10, "金苹果使用耗时（tick）", 0 ,1000000);
         public static ConfigItem <Integer> enchantedGoldenAppleEatTime = new ConfigItem("enchantedGoldenAppleEatTime", 10, "附魔金苹果使用耗时（tick）", 0 ,1000000);
@@ -157,7 +157,7 @@ public class Configs {
         public static ConfigItem <Float> plantGrowthRate = new ConfigItem("plantGrowthRate_v0.0.9", 0.5F, "作物生长速度倍率",0f,1f);
         public static ConfigItem <Integer> whichDayGenVillage = new ConfigItem("whichDayGenVillage", 60, "多少天生成村庄", 1 ,500);
         public static ConfigItem <Integer> maxLevelLimit = new ConfigItem("maxLevelLimit", 300, "玩家最大限制等级", 0 ,1000);
-        public static ConfigItem <Integer> enhancePerLvlCostExp = new ConfigItem("enhancePerLvlCostExp", 1000, "附魔书附魔每增加一级消耗多少经验", 0 ,10000);
+        public static ConfigItem <Integer> enhancePerLvlCostExp = new ConfigItem("enhancePerLvlCostExp", 500, "附魔书附魔每增加一级消耗多少经验", 0 ,10000);
 
         public static ConfigItem <Double> zombieBossMaxHealth = new ConfigItem("zombieBossMaxHealth", 1000d, "僵尸BOSS最大血量", 1d ,10000d);
         public static ConfigItem <Double> zombieBossBaseDamage = new ConfigItem("zombieBossBaseDamage", 12d, "僵尸BOSS基础攻击伤害", 1d ,100d);
@@ -299,7 +299,7 @@ public class Configs {
 
 //        wenscMap.put("md5", wenscConfig.md5String);
 
-        String filePth = "wensc-extreme.cfg";
+        String filePth = "mite-extreme.cfg";
         File file_mite = new File(filePth);
         if (file_mite.exists()) {
             Properties properties = new Properties();
@@ -327,13 +327,13 @@ public class Configs {
                 e.printStackTrace();
                 JFrame jFrame = new JFrame();
                 jFrame.setAlwaysOnTop(true);
-                JOptionPane.showMessageDialog(jFrame, "创建wensc-extreme.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
+                JOptionPane.showMessageDialog(jFrame, "mite-extreme.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
                 System.exit(0);
             }
         }
     }
     public static void beginToLoadShopConfig() {
-        String shopConfigFilePath = "wensc-extreme-shop.cfg";
+        String shopConfigFilePath = "mite-extreme-shop.cfg";
         File shopConfigFile = new File(shopConfigFilePath);
         if (shopConfigFile.exists()) {
             Properties properties = new Properties();
@@ -360,7 +360,7 @@ public class Configs {
                 e.printStackTrace();
                 JFrame jFrame = new JFrame();
                 jFrame.setAlwaysOnTop(true);
-                JOptionPane.showMessageDialog(jFrame, "创建wensc-extreme-shop.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
+                JOptionPane.showMessageDialog(jFrame, "mite-extreme-shop.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
                 System.exit(0);
             }
         }

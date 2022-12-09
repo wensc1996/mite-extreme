@@ -90,15 +90,14 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
       int day = this.getWorld() != null ? this.getWorld().getDayOfOverworld() : 0;
       this.setEntityAttribute(GenericAttributes.followRange, 64.0D);
       if (this.getSkeletonType() == WITHER_SKELETON_ID) {
-         this.setEntityAttribute(GenericAttributes.maxHealth, 45D + (double)day / 16.0D);
+         this.setEntityAttribute(GenericAttributes.maxHealth, 45D + (double)day / 8.0D);
          this.setEntityAttribute(GenericAttributes.movementSpeed, 0.25D);
-         this.setEntityAttribute(GenericAttributes.attackDamage, 13.0D + (double)day / 24.0D);
+         this.setEntityAttribute(GenericAttributes.attackDamage, 13.0D + (double)day / 12.0D);
       } else {
-         this.setEntityAttribute(GenericAttributes.maxHealth, 15.0D + (double)day / 14.0D);
+         this.setEntityAttribute(GenericAttributes.maxHealth, 15.0D + (double)day / 7.0D);
          this.setEntityAttribute(GenericAttributes.movementSpeed, 0.30000001192092896D);
-         this.setEntityAttribute(GenericAttributes.attackDamage, 8 + day / 24d);
+         this.setEntityAttribute(GenericAttributes.attackDamage, 8 + day / 12d);
       }
-
    }
 
    @Override

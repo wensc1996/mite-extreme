@@ -22,6 +22,9 @@ item.enhance_stone/adamantium.name=淬炼石
 item.enhance_stone/universal.name=精粹录
 
 item.iron_club.name=铁棒
+item.mithril_club.name=秘银棒
+item.adamantium_club.name=艾德曼棒
+item.vibranium_club.name=振金棒
 item.ring_killer_copper.name=铜魔灵刃
 item.ring_killer_iron.name=铁魔灵刃
 item.ring_killer_ancient.name=远古魔灵刃
@@ -123,3 +126,7 @@ item.voucher_annihilation_skeleton.name=湮灭骷髅,远古骷髅领主凭证
 item.voucher_zombie_lord.name=僵尸领主凭证
 item.voucher_door.name=僵尸盗贼,地狱苦力怕凭证
 item.voucher_exchanger.name=转移骷髅凭证
+item.voucher_club_core.name=棒核心
+item.voucher_fishing.name=垂钓凭证
+item.voucher_planting.name=种植凭证
+item.voucher_villager.name=村民凭证
