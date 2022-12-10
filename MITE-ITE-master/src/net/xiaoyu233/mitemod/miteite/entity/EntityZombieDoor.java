@@ -29,7 +29,7 @@ public class EntityZombieDoor extends EntityZombie {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         int day = this.getWorld().getDayOfOverworld();
-        double x = day / 7 - 7;
+        double x = day / 8 - 8;
         double rate = (0.5+ x / (20 + Math.abs(x)));
         int healthRate = Math.min(day / 16, 10);
         this.setEntityAttribute(GenericAttributes.attackDamage, rate * 50);
@@ -86,7 +86,7 @@ public class EntityZombieDoor extends EntityZombie {
                 }
                 if(Configs.wenscConfig.isSpawnExchanger.ConfigValue) {
                     if(haveTryToSpawnExchanger == false) {
-                        if( rand.nextInt(5) == 0) {
+                        if( rand.nextInt(10) == 0) {
                             EntityExchanger entityExchanger = new EntityExchanger(this.worldObj);
                             entityExchanger.setPosition(this.posX, this.posY, this.posZ);
                             entityExchanger.refreshDespawnCounter(-9600);
