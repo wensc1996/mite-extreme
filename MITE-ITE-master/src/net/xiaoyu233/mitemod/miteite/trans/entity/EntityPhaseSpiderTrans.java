@@ -18,7 +18,7 @@ public class EntityPhaseSpiderTrans extends EntityWoodSpider {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         int day = this.getWorld() != null ? this.getWorld().getDayOfOverworld() : 0;
-        this.setEntityAttribute(GenericAttributes.attackDamage, 3.0D + day / 8D);
+        this.setEntityAttribute(GenericAttributes.attackDamage, 3.0D + day / 16D);
     }
 
 }

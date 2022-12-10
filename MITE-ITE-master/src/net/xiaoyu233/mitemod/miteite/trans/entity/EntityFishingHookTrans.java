@@ -61,9 +61,7 @@ public abstract class EntityFishingHookTrans extends Entity {
          }
       }
 
-      if (this.worldObj.getBiomeGenForCoords(x, z) == BiomeBase.ocean && count == 0L && this.rand.nextInt(5) == 0) {
-         return Item.fishLargeRaw;
-      }
+
       if (this.rand.nextInt(3) == 0) {
          if (this.rand.nextInt(16) == 0) {
             return Items.voucherFishing;
@@ -80,6 +78,10 @@ public abstract class EntityFishingHookTrans extends Entity {
          if (this.rand.nextInt(2) == 0) {
             return fishTypeListStage2[this.rand.nextInt(4)];
          }
+      }
+
+      if (this.worldObj.getBiomeGenForCoords(x, z) == BiomeBase.ocean && count == 0L && this.rand.nextInt(10) == 0) {
+         return Item.fishLargeRaw;
       }
 
       return Item.fishRaw;

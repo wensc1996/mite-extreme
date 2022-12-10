@@ -59,7 +59,7 @@ public abstract class EntityEarthElementalTrans extends EntityAnimalWatcher {
       int day = this.getWorld() != null ? Math.max(this.getWorld().getDayOfOverworld(), 0) : 0;
       this.setEntityAttribute(GenericAttributes.followRange, 20.0D);
       this.setEntityAttribute(GenericAttributes.movementSpeed, 0.20000000298023224D);
-      this.setEntityAttribute(GenericAttributes.attackDamage, 12.0D + (double)day / 8.0D);
+      this.setEntityAttribute(GenericAttributes.attackDamage, 12.0D + (double)day / 16.0D);
       if (this.getWorld().isTheNether()){
          this.setEntityAttribute(GenericAttributes.maxHealth, 60.0D);
       }else {
