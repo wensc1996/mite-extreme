@@ -14,6 +14,13 @@ public class EntityRevenantTrans extends EntityZombie {
       super(world);
    }
 
+   protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
+      super.dropFewItems(recently_hit_by_player, damage_source);
+      if (recently_hit_by_player){
+         this.dropItemStack(new ItemStack(Items.dyePowder, 5, 4));
+      }
+   }
+
    @Overwrite
    protected void addRandomEquipment() {
       this.addRandomWeapon();

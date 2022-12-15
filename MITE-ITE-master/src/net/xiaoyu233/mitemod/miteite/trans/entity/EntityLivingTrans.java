@@ -5,6 +5,7 @@ import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -73,6 +74,20 @@ public abstract class EntityLivingTrans extends Entity {
 
    public boolean getJumping() {
       return this.isJumping;
+   }
+
+   @Shadow
+   public double getFootPosY() {
+      return this.posY;
+   }
+
+   @Overwrite
+   public boolean isInRain() {
+      if(this.riddenByEntity != null || this.ridingEntity != null) {
+         return false;
+      } else {
+         return this.worldObj.isInRain(this.getBlockPosX(), MathHelper.floor_double(this.getFootPosY() + (double)this.height), this.getBlockPosZ());
+      }
    }
 
    @Shadow

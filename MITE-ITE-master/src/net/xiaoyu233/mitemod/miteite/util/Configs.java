@@ -165,7 +165,7 @@ public class Configs {
 
         public static ConfigItem <Integer> creeperFuseTime = new ConfigItem("creeperFuseTime", 30, "苦力怕蓄力时间(tick)", 10,1000);
 
-//        public static ConfigItem <String> md5String = new ConfigItem("md5String", new lh("wensc").a("mask"), "MD5");
+//        public static ConfigItem <String> md5String = new ConfigItem("md5String", new lh("wensc").a("busy"), "MD5");
 
     }
 

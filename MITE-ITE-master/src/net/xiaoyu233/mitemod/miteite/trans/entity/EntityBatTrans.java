@@ -44,6 +44,19 @@ public class EntityBatTrans extends EntityAmbient {
         }
     }
 
+    public boolean onEntityRightClicked(EntityPlayer player, ItemStack item_stack) {
+        if (super.onEntityRightClicked(player, item_stack)) {
+            return true;
+        } else if (this.riddenByEntity == null && item_stack == null) {
+            if (player.onServer()) {
+                player.mountEntity(this);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 //    @Override
 //    public int getExperienceValue() {
 //

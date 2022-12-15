@@ -3,10 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.world;
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.fml.util.ReflectHelper;
-import net.xiaoyu233.mitemod.miteite.entity.EntityExchanger;
-import net.xiaoyu233.mitemod.miteite.entity.EntityZombieBoss;
-import net.xiaoyu233.mitemod.miteite.entity.EntityZombieDoor;
-import net.xiaoyu233.mitemod.miteite.entity.EntityZombieLord;
+import net.xiaoyu233.mitemod.miteite.entity.*;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.WorldUtil;
 import org.spongepowered.asm.mixin.Final;
@@ -160,6 +157,9 @@ public abstract class WorldServerTrans extends World {
             }
          } else {
             if (entity_class == EntityExchanger.class && Configs.wenscConfig.isSpawnExchanger.ConfigValue) {
+               return entity_class;
+            }
+            if (entity_class == EntityMirrorSkeleton.class) {
                return entity_class;
             }
             if (entity_class == EntityZombieLord.class) {

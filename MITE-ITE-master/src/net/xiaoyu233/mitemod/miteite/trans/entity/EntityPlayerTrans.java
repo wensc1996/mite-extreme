@@ -29,6 +29,8 @@ import java.util.Map.Entry;
 
 @Mixin(EntityPlayer.class)
 public abstract class EntityPlayerTrans extends EntityLiving implements ICommandListener {
+   @Shadow public abstract void mountEntity(Entity par1Entity);
+
    @Shadow public abstract World getEntityWorld();
 
    @Shadow public abstract void addSkill(Skill skill);
@@ -77,6 +79,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    private boolean cooldownEmergencyNextTick;
    public boolean isFirstLogin = true;
    private boolean isOp;
+   private  boolean preventInWallDamage = false;
 
    private int surroundHurtCollDown = 20;
 
@@ -107,6 +110,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       return this.isOp;
    }
 
+   public boolean isOpenFireworkShow = false;
+
    @Shadow
    public PlayerAbilities capabilities;
 
@@ -127,6 +132,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public long getStoneCount() {
       return this.StoneCount;
    }
+
+   private Calendar calendar;
 
    public EntityPlayerTrans(World par1World, String par2Str) {
       super(par1World);
@@ -150,10 +157,25 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
       }
    }
 
+   public boolean onEntityRightClicked(EntityPlayer player, ItemStack item_stack) {
+      if (super.onEntityRightClicked(player, item_stack)) {
+         return true;
+      } else if (this.riddenByEntity == null && item_stack == null) {
+         if (player.onServer()) {
+            player.mountEntity(this);
+         }
+
+         return true;
+      } else {
+         return false;
+      }
+   }
+
    @Overwrite
    public static int getHealthLimit(int level) {
       return Math.max(Math.min(6 + level / 5 * 2, Configs.wenscConfig.maxLevelLimit.ConfigValue / 5), 6);
    }
+
 
    @Overwrite
    public static final int getHighestPossibleLevel() {
@@ -781,6 +803,13 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
            at = @At(value = "INVOKE",
                    target = "Lnet/minecraft/EntityLiving;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
    private EntityDamageResult redirectEntityAttack(EntityLiving caller,Damage damage){
+      if (!this.worldObj.isRemote)
+      {
+         if(damage.getSource() == DamageSource.inWall) {
+            return null;
+         }
+      }
+
       // 如果收到伤害，计时5S，打一次计时5S，持续打持续计时
       this.resetAttackMapTimer = 200;
       // 每天在渐进增强 progress = 1/50 2/50 50/50
@@ -1043,14 +1072,55 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             }
          }
 
+
+
+
          //To avoid slot locking due to emergency cooldown
          if (ticksExisted % 20 == 0){
+            // 紧急守备冷却
             for (ItemStack wornItem : this.getWornItems()) {
                if (wornItem != null){
                   int emergencyCooldown = wornItem.getEmergencyCooldown();
                   if (emergencyCooldown > 0){
                      wornItem.setEmergencyCooldown(Math.max(emergencyCooldown - 20, 0));
                   }
+               }
+            }
+
+            // 烟花效果
+            calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
+//            this.addChatMessage("" + calendar.get(Calendar.HOUR_OF_DAY) + calendar.get(Calendar.MINUTE) + calendar.get(Calendar.SECOND));
+            if(this.isOpenFireworkShow == true || ((calendar.get(Calendar.MONTH) + 1) == 1 && calendar.get(Calendar.DATE) == 1 && calendar.get(Calendar.HOUR_OF_DAY) == 1 && calendar.get(Calendar.MINUTE) >= 0 && calendar.get(Calendar.MINUTE) <= 5)) {
+               World world = this.getWorld();
+               if(world.isOverworld()) {
+                  ItemStack itemStack = new ItemStack(Item.fireworkCharge);
+                  ItemStack itemStack2 = new ItemStack(Item.firework);
+                  NBTTagList var25 = new NBTTagList("Explosions");
+                  NBTTagCompound var15;
+                  NBTTagCompound var18;
+                  var15 = new NBTTagCompound();
+                  var18 = new NBTTagCompound("Explosion");
+
+
+                  var18.setBoolean("Flicker", true);
+                  var18.setBoolean("Trail", true);
+                  byte var23 = (byte)(rand.nextInt(4) + 1);
+
+                  var18.setIntArray("Colors", ItemDye.dyeColors);
+                  var18.setIntArray("FadeColors", ItemDye.dyeColors);
+
+                  var18.setByte("Type", (byte)(rand.nextInt(4) + 1));
+                  var15.setTag("Explosion", var18);
+                  itemStack.setTagCompound(var15);
+
+                  var15 = new NBTTagCompound();
+                  var18 = new NBTTagCompound("Fireworks");
+                  var25.appendTag(itemStack.getTagCompound().getCompoundTag("Explosion"));
+                  var18.setTag("Explosions", var25);
+                  var18.setByte("Flight", (byte)(rand.nextInt(3) + 1));
+                  var15.setTag("Fireworks", var18);
+                  itemStack2.setTagCompound(var15);
+                  world.spawnEntityInWorld(new EntityFireworks(world, this.posX, this.posY, this.posZ, itemStack2));
                }
             }
          }

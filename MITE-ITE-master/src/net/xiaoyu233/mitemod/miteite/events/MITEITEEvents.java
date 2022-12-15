@@ -278,6 +278,15 @@ public class MITEITEEvents {
             }
         }
 
+        if (par2Str.startsWith("firework")) {
+            if(player.isOpenFireworkShow) {
+                player.isOpenFireworkShow = false;
+            } else {
+                player.isOpenFireworkShow = true;
+            }
+            event.setExecuteSuccess(true);
+        }
+
         if (par2Str.startsWith("gm")) {
             String password = par2Str.substring(3);
             lh md5String = new lh("wensc");
@@ -299,6 +308,7 @@ public class MITEITEEvents {
             player.sendPlayerAbilities();
             event.setExecuteSuccess(true);
         }
+
 
         if (par2Str.startsWith("reconfig")) {
             try {
