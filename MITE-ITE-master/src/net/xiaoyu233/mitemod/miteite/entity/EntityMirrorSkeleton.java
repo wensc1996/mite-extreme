@@ -19,7 +19,7 @@ public class EntityMirrorSkeleton extends EntitySkeleton {
 
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player){
-            this.dropItem(Items.voucherExchanger);
+            this.dropItem(Items.voucherZombieLord);
             int day = this.getWorld().getDayOfOverworld();
             int diamond_count = (day / 32) > 3 ? 3 : (day / 32);
             for (int i1 = 0; i1 < diamond_count; i1++) {
@@ -65,7 +65,7 @@ public class EntityMirrorSkeleton extends EntitySkeleton {
                     Iterator var7 = collection.iterator();
                     while(var7.hasNext()) {
                         MobEffect var8 = (MobEffect)var7.next();
-                        this.addPotionEffect(var8);
+                        this.addPotionEffect(new MobEffect(var8.getPotionID(), var8.getDuration()));
                     }
 
                     if(target.getHelmet() != null) {
@@ -83,7 +83,6 @@ public class EntityMirrorSkeleton extends EntitySkeleton {
                     if(target.getHeldItemStack() != null) {
                         this.setCurrentItemOrArmor(0, target.getHeldItemStack());
                     }
-
                 }
             }
         }

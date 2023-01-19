@@ -59,6 +59,7 @@ public class Blocks extends Block{
     public static final Block blockStairsColorful15 = new BlockStairsColorful(191, blockColorful, 15);
 
     public static final BlockSpawn blockSpawn = (new BlockSpawn(192, Material.stone));
+
     static {
         try {
             Field field = Block.class.getDeclaredField("is_normal_cube_lookup");
@@ -134,6 +135,7 @@ public class Blocks extends Block{
         registerItemBlock(blockStairsColorful13, "colorful_stair");
         registerItemBlock(blockStairsColorful14, "colorful_stair");
         registerItemBlock(blockStairsColorful15, "colorful_stair");
+
     }
 
     private static void registerItemBlock(Block block,String resourceLocation){

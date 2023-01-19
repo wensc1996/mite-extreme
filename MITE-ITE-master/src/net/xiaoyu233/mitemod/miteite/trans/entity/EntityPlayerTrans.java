@@ -160,7 +160,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public boolean onEntityRightClicked(EntityPlayer player, ItemStack item_stack) {
       if (super.onEntityRightClicked(player, item_stack)) {
          return true;
-      } else if (this.riddenByEntity == null && item_stack == null) {
+      } else if (this.riddenByEntity == null && player.riddenByEntity == null && player.ridingEntity == null && this.ridingEntity == null && item_stack == null) {
          if (player.onServer()) {
             player.mountEntity(this);
          }
@@ -1090,38 +1090,36 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
             // 烟花效果
             calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 //            this.addChatMessage("" + calendar.get(Calendar.HOUR_OF_DAY) + calendar.get(Calendar.MINUTE) + calendar.get(Calendar.SECOND));
-            if(this.isOpenFireworkShow == true || ((calendar.get(Calendar.MONTH) + 1) == 1 && calendar.get(Calendar.DATE) == 1 && calendar.get(Calendar.HOUR_OF_DAY) == 1 && calendar.get(Calendar.MINUTE) >= 0 && calendar.get(Calendar.MINUTE) <= 5)) {
+            if(this.isOpenFireworkShow == true || ((calendar.get(Calendar.MONTH) + 1) == 1 && calendar.get(Calendar.DATE) == 1 && calendar.get(Calendar.HOUR_OF_DAY) == 0 && calendar.get(Calendar.MINUTE) >= 0 && calendar.get(Calendar.MINUTE) <= 5)) {
                World world = this.getWorld();
-               if(world.isOverworld()) {
-                  ItemStack itemStack = new ItemStack(Item.fireworkCharge);
-                  ItemStack itemStack2 = new ItemStack(Item.firework);
-                  NBTTagList var25 = new NBTTagList("Explosions");
-                  NBTTagCompound var15;
-                  NBTTagCompound var18;
-                  var15 = new NBTTagCompound();
-                  var18 = new NBTTagCompound("Explosion");
+               ItemStack itemStack = new ItemStack(Item.fireworkCharge);
+               ItemStack itemStack2 = new ItemStack(Item.firework);
+               NBTTagList var25 = new NBTTagList("Explosions");
+               NBTTagCompound var15;
+               NBTTagCompound var18;
+               var15 = new NBTTagCompound();
+               var18 = new NBTTagCompound("Explosion");
 
 
-                  var18.setBoolean("Flicker", true);
-                  var18.setBoolean("Trail", true);
-                  byte var23 = (byte)(rand.nextInt(4) + 1);
+               var18.setBoolean("Flicker", true);
+               var18.setBoolean("Trail", true);
+               byte var23 = (byte)(rand.nextInt(4) + 1);
 
-                  var18.setIntArray("Colors", ItemDye.dyeColors);
-                  var18.setIntArray("FadeColors", ItemDye.dyeColors);
+               var18.setIntArray("Colors", ItemDye.dyeColors);
+               var18.setIntArray("FadeColors", ItemDye.dyeColors);
 
-                  var18.setByte("Type", (byte)(rand.nextInt(4) + 1));
-                  var15.setTag("Explosion", var18);
-                  itemStack.setTagCompound(var15);
+               var18.setByte("Type", (byte)(rand.nextInt(4) + 1));
+               var15.setTag("Explosion", var18);
+               itemStack.setTagCompound(var15);
 
-                  var15 = new NBTTagCompound();
-                  var18 = new NBTTagCompound("Fireworks");
-                  var25.appendTag(itemStack.getTagCompound().getCompoundTag("Explosion"));
-                  var18.setTag("Explosions", var25);
-                  var18.setByte("Flight", (byte)(rand.nextInt(3) + 1));
-                  var15.setTag("Fireworks", var18);
-                  itemStack2.setTagCompound(var15);
-                  world.spawnEntityInWorld(new EntityFireworks(world, this.posX, this.posY, this.posZ, itemStack2));
-               }
+               var15 = new NBTTagCompound();
+               var18 = new NBTTagCompound("Fireworks");
+               var25.appendTag(itemStack.getTagCompound().getCompoundTag("Explosion"));
+               var18.setTag("Explosions", var25);
+               var18.setByte("Flight", (byte)(rand.nextInt(3) + 1));
+               var15.setTag("Fireworks", var18);
+               itemStack2.setTagCompound(var15);
+               world.spawnEntityInWorld(new EntityFireworks(world, this.posX, this.posY + 5, this.posZ, itemStack2));
             }
          }
          if (this.defenseCooldown > 0){
