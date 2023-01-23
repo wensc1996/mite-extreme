@@ -164,8 +164,6 @@ public class Configs {
         public static ConfigItem <Float> zombieBossSpawnPercent = new ConfigItem("zombieBossSpawnPercent", 0.5f, "挖掘刷怪笼多大几率刷出僵尸BOSS", 0f,1f);
 
         public static ConfigItem <Integer> creeperFuseTime = new ConfigItem("creeperFuseTime", 30, "苦力怕蓄力时间(tick)", 10,1000);
-        public static ConfigItem <Boolean> isActiveSecondaryAttribute = new ConfigItem("isActiveSecondaryAttribute", false, "是否开启副属性升级");
-
 
 //        public static ConfigItem <String> md5String = new ConfigItem("md5String", new lh("wensc").a("busy"), "MD5");
 
@@ -298,7 +296,6 @@ public class Configs {
         wenscMap.put("zombieBossBaseDamage", wenscConfig.zombieBossBaseDamage);
         wenscMap.put("zombieBossSpawnPercent", wenscConfig.zombieBossSpawnPercent);
         wenscMap.put("creeperFuseTime", wenscConfig.creeperFuseTime);
-        wenscMap.put("isActiveSecondaryAttribute", wenscConfig.isActiveSecondaryAttribute);
 
 //        wenscMap.put("md5", wenscConfig.md5String);
 
