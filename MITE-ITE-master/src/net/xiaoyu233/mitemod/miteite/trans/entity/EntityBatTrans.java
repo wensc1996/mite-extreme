@@ -7,8 +7,10 @@ import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityBat.class)
@@ -16,6 +18,9 @@ public class EntityBatTrans extends EntityAmbient {
     private boolean spawnedByWitch;
     private EntityWanderingWitch spawnerWitch;
     private int spawnWorldID;
+
+    @Shadow
+    private int prevent_hang_countdown;
 
     public EntityBatTrans(World par1World) {
         super(par1World);
@@ -41,6 +46,20 @@ public class EntityBatTrans extends EntityAmbient {
     public void addPotionEffect(MobEffect par1PotionEffect) {
         if (!this.spawnedByWitch){
             super.addPotionEffect(par1PotionEffect);
+        }
+    }
+
+    @Overwrite
+    private boolean isPreventedFromHanging() {
+        return this.riddenByEntity != null || this.prevent_hang_countdown > 0 || this.getAttackTarget() != null || this.hurtResistantTime > 0 || this.worldObj.getClosestPlayerToEntity(this, 4.0, true) != null;
+    }
+
+    @Redirect(method = "updateAITasks", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLiving;getEyePos()Lnet/minecraft/Vec3D;"))
+    public Vec3D changeByMountSkeleton(EntityLiving entityLiving) {
+        if(this.riddenByEntity instanceof EntitySkeleton) {
+            return entityLiving.getFootPos();
+        } else {
+            return entityLiving.getEyePos();
         }
     }
 

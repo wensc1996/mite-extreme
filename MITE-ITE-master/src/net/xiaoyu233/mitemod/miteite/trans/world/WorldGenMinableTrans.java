@@ -79,6 +79,10 @@ public class WorldGenMinableTrans {
                do {
                   relative_height = rand.nextFloat();
                } while(relative_height >= rand.nextFloat());
+            } else if (block == Blocks.fancyRed) {
+               do {
+                  relative_height = rand.nextFloat();
+               } while(relative_height >= rand.nextFloat());
             } else {
                if (block != Block.oreLapis) {
                   Minecraft.setErrorMessage("WorldGenMinable: unknown ore id " + this.minableBlockId);
@@ -132,6 +136,8 @@ public class WorldGenMinableTrans {
       } else if (block == Block.oreRedstone) {
          return 0;
       } else if (block == Block.oreDiamond) {
+         return 0;
+      } else if (block == Blocks.fancyRed) {
          return 0;
       } else if (block == Block.oreLapis) {
          return 8;

@@ -1,10 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.item;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.item.ArmorModifierTypes;
-import net.xiaoyu233.mitemod.miteite.item.IUpgradableItem;
-import net.xiaoyu233.mitemod.miteite.item.Materials;
-import net.xiaoyu233.mitemod.miteite.item.ModifierUtils;
+import net.xiaoyu233.mitemod.miteite.item.*;
 import net.xiaoyu233.mitemod.miteite.util.ItemUtil;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.util.StringUtil;
@@ -94,6 +91,9 @@ public abstract class ItemArmorTrans extends Item implements IDamageableItem, IU
          }
 
          total_defense = MathHelper.tryFitToNearestInteger(total_defense, 1.0E-4F);
+         if(owner instanceof EntityPlayer) {
+            total_defense += (float) ((EntityPlayer) owner).getGemSumNumeric(GemModifierTypes.protection);
+         }
          return total_defense;
       }
    }
@@ -124,6 +124,10 @@ public abstract class ItemArmorTrans extends Item implements IDamageableItem, IU
          }
 
          if (extended_info) {
+            info.add("§5宝石:");
+            info.add(" §3护甲增加:§6" + ItemStack.field_111284_a.format(itemStack.getGemMaxNumeric(GemModifierTypes.protection)));
+            info.add(" §3生命增加:§6" + ItemStack.field_111284_a.format(itemStack.getGemMaxNumeric(GemModifierTypes.health)));
+            info.add(" §3恢复增加:§6" + ItemStack.field_111284_a.format(itemStack.getGemMaxNumeric(GemModifierTypes.recover)));
             NBTTagCompound compound = itemStack.stackTagCompound.getCompoundTag("modifiers");
             if (!compound.hasNoTags()) {
                info.add("装备强化:");
@@ -203,7 +207,7 @@ public abstract class ItemArmorTrans extends Item implements IDamageableItem, IU
                return 0;
             }
 
-            protection = 15;
+            protection = 11;
          }
       } else {
          protection = 8;

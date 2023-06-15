@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
 import net.xiaoyu233.fml.util.ReflectHelper;
+import net.xiaoyu233.mitemod.miteite.item.GemModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
@@ -81,6 +82,8 @@ public abstract class EntityLivingTrans extends Entity {
       return this.posY;
    }
 
+
+
    @Overwrite
    public boolean isInRain() {
       if(this.riddenByEntity != null || this.ridingEntity != null) {
@@ -145,10 +148,18 @@ public abstract class EntityLivingTrans extends Entity {
 
    @Redirect(method = "onEntityUpdate",at = @At(ordinal = 1,value = "INVOKE",target = "Lnet/minecraft/EntityLiving;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
    private EntityDamageResult injectModifyPlayerInWallDamage(EntityLiving caller,Damage damage){
+      // 取消蝙蝠骑士窒息伤害
+      if(ReflectHelper.dyCast(this) instanceof EntitySkeleton) {
+         if(((EntitySkeleton)ReflectHelper.dyCast(this)).ridingEntity != null) {
+            return null;
+         }
+      }
+      // 取消玩家窒息伤害
       if (ReflectHelper.dyCast(this) instanceof EntityPlayer) {
-        return this.attackEntityFrom(new Damage(DamageSource.inWall, Configs.wenscConfig.inWallDamageForPlayer.ConfigValue));
-      }else {
-        return this.attackEntityFrom(new Damage(DamageSource.inWall, 1.0f));
+//        return this.attackEntityFrom(new Damage(DamageSource.inWall, Configs.wenscConfig.inWallDamageForPlayer.ConfigValue));
+         return null;
+      } else {
+         return this.attackEntityFrom(new Damage(DamageSource.inWall, 1.0f));
       }
    }
 

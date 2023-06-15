@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
+import net.xiaoyu233.mitemod.miteite.entity.EntityExchanger;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
@@ -37,6 +38,7 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
    @Final
    private boolean forceMeleeAttack;
    private boolean willChangeWeapon;
+   public boolean haveTrySpawnBat = false;
 
    @Shadow
    private void addRandomEquipment(){
@@ -142,6 +144,7 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
 
    @Inject(method = "onLivingUpdate",at = @At("RETURN"))
    public void injectLivingUpdate(CallbackInfo callbackInfo) {
+
       if (this.willChangeWeapon){
          if (this.stowed_item_stack != null && (this.getHeldItemStack() == null || this.getTicksExistedWithOffset() % 10 == 0)) {
             if (this.getHeldItemStack() == null) {
@@ -354,6 +357,23 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
       }
 
       this.setCombatTask();
+
+      if(rand.nextInt(5) == 0) {
+         EntityBat entityBat;
+         // 近战骷髅
+         if(this.getSkeletonType() > 0) {
+            entityBat = new EntityVampireBat(this.worldObj);
+         } else {
+            entityBat = new EntityBat(this.worldObj);
+         }
+         entityBat.setPosition(this.posX, this.posY, this.posZ);
+         this.worldObj.spawnEntityInWorld(entityBat);
+         entityBat.onSpawnWithEgg(null);
+         entityBat.setAttackTarget(this.getTarget());
+         entityBat.entityFX(EnumEntityFX.summoned);
+         this.mountEntity(entityBat);
+      }
+
       return par1EntityLivingData;
    }
 

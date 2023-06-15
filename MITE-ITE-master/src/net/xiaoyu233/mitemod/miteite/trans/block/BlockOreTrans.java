@@ -1,10 +1,15 @@
 package net.xiaoyu233.mitemod.miteite.trans.block;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Set;
 
@@ -53,6 +58,8 @@ public class BlockOreTrans extends Block {
                 id_dropped = Item.emerald.itemID;
             } else if (this == oreNetherQuartz) {
                 id_dropped = Item.netherQuartz.itemID;
+            } else if(this == Blocks.fancyRed){
+                id_dropped = Items.fancyRed.itemID;
             } else {
                 id_dropped = this.blockID;
             }

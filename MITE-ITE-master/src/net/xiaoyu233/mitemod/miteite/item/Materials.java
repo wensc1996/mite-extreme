@@ -50,10 +50,10 @@ public class Materials extends Material {
             return 5.0F;
         } else if (this == adamantium) {
             return 6.0F;
+        } else if (this == vibranium) {
+            return 7.0F;
         } else if (this == diamond) {
             return 4.0F;
-        } else if (this == vibranium) {
-            return 9.0F;
         } else {
             Minecraft.setErrorMessage("getDamageVsEntity: unhandled material " + this.name);
             return 0.0F;

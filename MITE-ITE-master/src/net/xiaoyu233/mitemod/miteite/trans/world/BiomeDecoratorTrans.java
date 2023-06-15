@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.world;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -16,6 +17,8 @@ public class BiomeDecoratorTrans {
    private static final int COPPER_FREQUENCY_UNDERWORLD = Configs.wenscConfig.copperFrequencyUnderworld.ConfigValue;
    private static final int DIAMOND_FREQUENCY_OVERWORLD = Configs.wenscConfig.diamondFrequencyOverworld.ConfigValue;
    private static final int DIAMOND_FREQUENCY_UNDERWORLD = Configs.wenscConfig.diamondFrequencyUnderworld.ConfigValue;
+
+   private static final int FANCY_RED_FREQUENCY_UNDERWORLD = Configs.wenscConfig.fancyRedFrequencyUnderworld.ConfigValue;
    private static final int GOLD_FREQUENCY_OVERWORLD = Configs.wenscConfig.goldFrequencyOverworld.ConfigValue;
    private static final int GOLD_FREQUENCY_UNDERWORLD = Configs.wenscConfig.goldFrequencyUnderworld.ConfigValue;
    private static final int IRON_FREQUENCY_OVERWORLD = Configs.wenscConfig.ironFrequencyOverworld.ConfigValue;
@@ -54,6 +57,8 @@ public class BiomeDecoratorTrans {
    protected World currentWorld;
    @Shadow
    protected WorldGenMinable diamondGen;
+
+   protected WorldGenMinable fancyRedGen = new WorldGenMinable(Blocks.fancyRed.blockID, 3);
    @Shadow
    protected WorldGenMinable dirtGen;
    @Shadow
@@ -191,6 +196,7 @@ public class BiomeDecoratorTrans {
          this.genMinable(ADAMANTIUM_FREQUENCY_UNDERWORLD, this.adamantiteGen, false);
          this.genMinable(5, this.redstoneGen);
          this.genMinable(DIAMOND_FREQUENCY_UNDERWORLD, this.diamondGen);
+         this.genMinable(FANCY_RED_FREQUENCY_UNDERWORLD, this.fancyRedGen);
          this.genMinable(LAPIS_FREQUENCY_UNDERWORLD, this.lapisGen);
          if (this.currentWorld.underworld_y_offset != 0) {
             this.genMinable(50, this.silverfishGen);

@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.GemModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.Materials;
 import net.xiaoyu233.mitemod.miteite.item.recipe.ForgingTableLevel;
@@ -60,6 +61,10 @@ public class Blocks extends Block{
 
     public static final BlockSpawn blockSpawn = (new BlockSpawn(192, Material.stone));
 
+    public static final Block fancyRed = (new BlockFancyRed(193, Material.diamond, 4)).setCreativeTab(CreativeModeTab.tabBlock);
+
+    public static final Block gemSetting = (new BlockGemSetting(194, Material.stone, (new BlockConstants()).setNeverHidesAdjacentFaces())).setUnlocalizedName("gem_setting").setCreativeTab(CreativeModeTab.tabDecorations);
+
     static {
         try {
             Field field = Block.class.getDeclaredField("is_normal_cube_lookup");
@@ -114,6 +119,8 @@ public class Blocks extends Block{
 
         registerItemBlock(blockGotcha, "gotcha");
         registerItemBlock(blockSpawn, "block_spawn");
+        registerItemBlock(fancyRed, "fancy_red");
+        registerItemBlock(gemSetting, "gem_setting");
 
         registerItemBlock(blockColorful, "colorful");
         registerItemBlock(blockColorfulBrick, "colorful_brick");
@@ -216,6 +223,19 @@ public class Blocks extends Block{
                 'I', Items.ingotIron,
                 'T',new ItemStack(Block.workbench,1,7),
                 'O',Blocks.obsidian);
+
+        for(int i = 0; i < GemModifierTypes.values().length; i++) {
+            register.registerShapedRecipe(new ItemStack(Blocks.gemSetting,1, 0),false,
+                    "AAA",
+                    "BCB",
+                    "BBB",
+                    'A', Items.ingotIron,
+                    'B',Block.planks,
+                    'C',new ItemStack(Items.itemEnhanceGem, 1, i)
+            );
+        }
+
+
         register.registerShapedRecipe(new ItemStack(Blocks.chestVibranium), true,
                 "III",
                 "I I",
@@ -225,6 +245,15 @@ public class Blocks extends Block{
         registerForgingTableUpgradeRecipes(register,ForgingTableLevel.MITHRIL,Item.ingotAdamantium);
         registerForgingTableUpgradeRecipes(register,ForgingTableLevel.ADAMANTIUM, VIBRANIUM_INGOT);
         RecipesFurnace.smelting().addSmelting(Blocks.netherAdamantiumOre.blockID, new ItemStack(Item.ingotAdamantium));
+
+        RecipesFurnace.smelting().addSmelting(Blocks.blockCopper.blockID, new ItemStack(Items.itemEnhanceGemBox));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockSilver.blockID, new ItemStack(Items.itemEnhanceGemBox));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockGold.blockID, new ItemStack(Items.itemEnhanceGemBox));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockIron.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 0));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockAncientMetal.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 1));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockMithril.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 2));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockAdamantium.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 3));
+        RecipesFurnace.smelting().addSmelting(Blocks.blockVibranium.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 4));
     }
 
     private static void registerForgingTableUpgradeRecipes(RecipeRegister register, ForgingTableLevel originalLevel, Item ingot){

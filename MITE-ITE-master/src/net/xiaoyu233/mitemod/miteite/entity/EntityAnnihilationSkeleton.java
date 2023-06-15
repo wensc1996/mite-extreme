@@ -150,9 +150,12 @@ public class EntityAnnihilationSkeleton extends EntitySkeleton {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.setEntityAttribute(GenericAttributes.maxHealth,30);
-        this.setEntityAttribute(GenericAttributes.attackDamage,Integer.MAX_VALUE);
-        this.setEntityAttribute(GenericAttributes.movementSpeed, 0.2772D);
+        boolean boneLordTweak = Configs.wenscConfig.boneLordTweak.ConfigValue;
+        int day = this.getWorld() != null ? this.getWorld().getDayOfOverworld() : 0;
+        this.setEntityAttribute(GenericAttributes.followRange, 48.0D);
+        this.setEntityAttribute(GenericAttributes.movementSpeed, 0.30000001192092896D);
+        this.setEntityAttribute(GenericAttributes.attackDamage, (boneLordTweak ? 13D + (double)day / 5D : 16.0D) * 3D);
+        this.setEntityAttribute(GenericAttributes.maxHealth, (boneLordTweak ? 40D + (double)day / 3D : 25.0D) * 3D);
     }
 
     @Override
@@ -167,7 +170,6 @@ public class EntityAnnihilationSkeleton extends EntitySkeleton {
             }
         }
         return super.attackEntityFrom(damage);
-
     }
 
     @Override

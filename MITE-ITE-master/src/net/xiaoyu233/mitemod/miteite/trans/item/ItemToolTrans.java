@@ -2,10 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.item;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.item.IUpgradableItem;
-import net.xiaoyu233.mitemod.miteite.item.Materials;
-import net.xiaoyu233.mitemod.miteite.item.ModifierUtils;
-import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
+import net.xiaoyu233.mitemod.miteite.item.*;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
@@ -88,11 +85,12 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
          }
 
          if (extended_info) {
+            info.add("§5宝石:");
+            info.add(" §3攻击增加:§6" + ItemStack.field_111284_a.format(item_stack.getGemMaxNumeric(GemModifierTypes.damage)));
             NBTTagCompound compound = item_stack.stackTagCompound.getCompoundTag("modifiers");
             if (!compound.hasNoTags()) {
                info.add("工具强化:");
                ToolModifierTypes[] var8 = ToolModifierTypes.values();
-
                for (ToolModifierTypes value : var8) {
                   if (compound.hasKey(value.nbtName)) {
                      info.add("  " + value.color.toString() + value.displayName + "§r " + StringUtil.intToRoman(compound.getInteger(value.nbtName)));
@@ -101,7 +99,6 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
             }
          }
       }
-
    }
 
    private int applyCalculateDurabilityModifier(int origin, ItemStack stack) {
@@ -120,7 +117,7 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
 
    public Multimap<String, AttributeModifier> getAttrModifiers(ItemStack stack) {
       Multimap<String, AttributeModifier> var1 = super.getAttrModifiers(stack);
-      var1.put(GenericAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(Item.field_111210_e, "Tool modifier", (double)this.damageVsEntity + (double)this.getAttackDamageBounce(stack) + (double)this.getEnhancedDamage(stack), 0));
+      var1.put(GenericAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(Item.field_111210_e, "Tool modifier", (double)this.damageVsEntity + (double)this.getAttackDamageBounce(stack), 0));
       return var1;
    }
 
